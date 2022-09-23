@@ -1,5 +1,4 @@
-//import { createI18n } from 'vue-i18n'
-import { createI18n } from 'vue-i18n/index'
+import { createI18n } from 'vue-i18n'
 
 function loadLocaleMessages () {
     const locales = require.context('./locales', true, /[A-Za-z0-9-_,\s]+\.json$/i)
@@ -15,8 +14,8 @@ function loadLocaleMessages () {
 }
 
 export default createI18n({
-    locale: zucConfig.default_language,
-    fallbackLocale: zucConfig.default_language,
+    locale: 'en',
+    fallbackLocale: 'en',
     silentTranslationWarn: true,
     messages: loadLocaleMessages()
 })
