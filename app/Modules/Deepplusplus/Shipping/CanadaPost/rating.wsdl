@@ -1,0 +1,561 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://www.canadapost.ca/ws/soap/ship/rate/v3" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" name="rating" targetNamespace="http://www.canadapost.ca/ws/soap/ship/rate/v3">
+	<wsdl:types>
+		<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.canadapost.ca/ws/soap/ship/rate/v3">
+			<xsd:element name="get-rates-request">
+				<xsd:complexType>
+					<xsd:all>
+						<xsd:element minOccurs="0" name="locale" type="tns:locale"/>
+						<xsd:element name="platform-id" type="tns:PlatformIDType" minOccurs="0"/>
+						<xsd:element name="mailing-scenario">
+							<xsd:complexType>
+								<xsd:all>
+									<xsd:element name="customer-number" type="tns:CustomerIDType" minOccurs="0"/>
+									<xsd:element name="contract-id" type="tns:ContractIDType" minOccurs="0"/>
+                                    <xsd:element name="promo-code" type="tns:PromoCodeType" minOccurs="0"/>
+									<xsd:element name="quote-type" minOccurs="0">
+										<xsd:simpleType>
+											<xsd:restriction base="xsd:string">
+												<xsd:enumeration value="commercial"/>
+												<xsd:enumeration value="counter"/>
+											</xsd:restriction>
+										</xsd:simpleType>
+									</xsd:element>
+									<xsd:element name="expected-mailing-date" type="xsd:date" minOccurs="0"/>
+									<xsd:element name="options" minOccurs="0">
+										<xsd:complexType>
+											<xsd:sequence>
+												<xsd:element name="option" maxOccurs="20">
+													<xsd:complexType>
+														<xsd:all>
+															<xsd:element name="option-code">
+																<xsd:simpleType>
+																	<xsd:restriction base="xsd:normalizedString">
+																		<xsd:minLength value="1"/>
+																		<xsd:maxLength value="10"/>
+																	</xsd:restriction>
+																</xsd:simpleType>
+															</xsd:element>
+															<xsd:element name="option-amount" type="tns:CostTypeNonZero" minOccurs="0"/>
+															<xsd:element name="comment" type="xsd:normalizedString" minOccurs="0"/>
+														</xsd:all>
+													</xsd:complexType>
+												</xsd:element>
+											</xsd:sequence>
+										</xsd:complexType>
+									</xsd:element>
+									<xsd:element name="parcel-characteristics">
+										<xsd:complexType>
+											<xsd:all>
+												<xsd:element name="weight">
+													<xsd:simpleType>
+														<xsd:restriction base="xsd:decimal">
+															<xsd:minExclusive value="0"/>
+															<xsd:maxInclusive value="99.999"/>
+															<xsd:fractionDigits value="3"/>
+														</xsd:restriction>
+													</xsd:simpleType>
+												</xsd:element>
+												<xsd:element name="dimensions" minOccurs="0">
+													<xsd:complexType>
+														<xsd:all>
+															<xsd:element name="length" type="tns:DimensionMeasurementType"/>
+															<xsd:element name="width" type="tns:DimensionMeasurementType"/>
+															<xsd:element name="height" type="tns:DimensionMeasurementType"/>
+														</xsd:all>
+													</xsd:complexType>
+												</xsd:element>
+												<xsd:element name="unpackaged" type="xsd:boolean" minOccurs="0"/>
+												<xsd:element name="mailing-tube" type="xsd:boolean" minOccurs="0"/>
+												<xsd:element name="oversized" type="xsd:boolean" minOccurs="0"/>
+											</xsd:all>
+										</xsd:complexType>
+									</xsd:element>
+									<xsd:element name="services" minOccurs="0">
+										<xsd:complexType>
+											<xsd:sequence>
+												<xsd:element name="service-code" type="tns:ServiceCodeType" maxOccurs="20"/>
+											</xsd:sequence>
+										</xsd:complexType>
+									</xsd:element>
+									<xsd:element name="origin-postal-code" type="tns:PostalCodeType"/>
+									<xsd:element name="destination">
+										<xsd:complexType>
+											<xsd:choice>
+												<xsd:element name="domestic">
+													<xsd:complexType>
+														<xsd:all>
+															<xsd:element name="postal-code" type="tns:PostalCodeType"/>
+														</xsd:all>
+													</xsd:complexType>
+												</xsd:element>
+												<xsd:element name="united-states">
+													<xsd:complexType>
+														<xsd:all>
+															<xsd:element name="zip-code" type="tns:ZipCodeType"/>
+														</xsd:all>
+													</xsd:complexType>
+												</xsd:element>
+												<xsd:element name="international">
+													<xsd:complexType>
+														<xsd:all>
+															<xsd:element name="country-code" type="tns:CountryCodeType"/>
+														</xsd:all>
+													</xsd:complexType>
+												</xsd:element>
+											</xsd:choice>
+										</xsd:complexType>
+									</xsd:element>
+								</xsd:all>
+							</xsd:complexType>
+						</xsd:element>
+					</xsd:all>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="get-rates-response">
+				<xsd:complexType>
+					<xsd:choice>
+						<xsd:element name="price-quotes">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element name="price-quote" minOccurs="0" maxOccurs="unbounded">
+										<xsd:complexType>
+											<xsd:all>
+												<xsd:element name="service-code" type="tns:ServiceCodeType"/>
+												<xsd:element name="service-name" type="xsd:normalizedString"/>
+												<xsd:element name="price-details">
+													<xsd:complexType>
+														<xsd:all>
+															<xsd:element name="base" type="xsd:decimal"/>
+															<xsd:element name="taxes" minOccurs="0">
+																<xsd:complexType>
+																	<xsd:all>
+																		<xsd:element name="gst" type="tns:TaxType" minOccurs="0"/>
+																		<xsd:element name="pst" type="tns:TaxType" minOccurs="0"/>
+																		<xsd:element name="hst" type="tns:TaxType" minOccurs="0"/>
+																	</xsd:all>
+																</xsd:complexType>
+															</xsd:element>
+															<xsd:element name="due" type="xsd:decimal"/>
+															<xsd:element name="options" minOccurs="0">
+																<xsd:complexType>
+																	<xsd:sequence>
+																		<xsd:element name="option" maxOccurs="20">
+																			<xsd:complexType>
+																				<xsd:all>
+																					<xsd:element name="option-code" type="xsd:normalizedString"/>
+																					<xsd:element name="option-name" type="xsd:normalizedString"/>
+																					<xsd:element name="option-price" type="xsd:decimal"/>
+																					<xsd:element name="qualifier" minOccurs="0">
+																						<xsd:complexType>
+																							<xsd:all>
+																								<xsd:element name="step-size" type="xsd:decimal" minOccurs="0"/>
+																								<xsd:element name="step-cost" type="xsd:decimal" minOccurs="0"/>
+																								<xsd:element name="included-amount" type="xsd:decimal" minOccurs="0"/>
+																								<xsd:element name="max-value" type="xsd:decimal" minOccurs="0"/>
+																								<xsd:element name="included" type="xsd:boolean" minOccurs="0"/>
+																								<xsd:element name="percent" type="xsd:decimal" minOccurs="0"/>
+																							</xsd:all>
+																						</xsd:complexType>
+																					</xsd:element>
+																				</xsd:all>
+																			</xsd:complexType>
+																		</xsd:element>
+																	</xsd:sequence>
+																</xsd:complexType>
+															</xsd:element>
+															<xsd:element name="adjustments" minOccurs="0">
+																<xsd:complexType>
+																	<xsd:sequence>
+																		<xsd:element name="adjustment" maxOccurs="20">
+																			<xsd:complexType>
+																				<xsd:all>
+																					<xsd:element name="adjustment-code" type="xsd:normalizedString"/>
+																					<xsd:element name="adjustment-name" type="xsd:normalizedString"/>
+																					<xsd:element name="adjustment-cost" type="xsd:decimal"/>
+																					<xsd:element name="qualifier" minOccurs="0">
+																						<xsd:complexType>
+																							<xsd:all>
+																								<xsd:element name="percent" type="xsd:decimal"/>
+																							</xsd:all>
+																						</xsd:complexType>
+																					</xsd:element>
+																				</xsd:all>
+																			</xsd:complexType>
+																		</xsd:element>
+																	</xsd:sequence>
+																</xsd:complexType>
+															</xsd:element>
+														</xsd:all>
+													</xsd:complexType>
+												</xsd:element>
+												<xsd:element name="weight-details">
+													<xsd:complexType>
+														<xsd:all>
+															<xsd:element name="cubed-weight" type="xsd:decimal" minOccurs="0"/>
+														</xsd:all>
+													</xsd:complexType>
+												</xsd:element>
+												<xsd:element name="service-standard">
+													<xsd:complexType>
+														<xsd:all>
+															<xsd:element name="am-delivery" type="xsd:boolean"/>
+															<xsd:element name="guaranteed-delivery" type="xsd:boolean"/>
+															<xsd:element name="expected-transit-time" type="xsd:positiveInteger" minOccurs="0"/>
+															<xsd:element name="expected-delivery-date" type="xsd:date" minOccurs="0"/>
+														</xsd:all>
+													</xsd:complexType>
+												</xsd:element>
+											</xsd:all>
+										</xsd:complexType>
+									</xsd:element>
+								</xsd:sequence>
+							</xsd:complexType>
+						</xsd:element>
+						<xsd:element name="messages" type="tns:messages"/>
+					</xsd:choice>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="get-option-request">
+				<xsd:complexType>
+					<xsd:all>
+						<xsd:element minOccurs="0" name="locale" type="tns:locale"/>
+						<xsd:element name="platform-id" type="tns:PlatformIDType" minOccurs="0"/>
+						<xsd:element name="option-code">
+							<xsd:simpleType>
+								<xsd:restriction base="xsd:normalizedString">
+									<xsd:minLength value="1"/>
+									<xsd:maxLength value="10"/>
+								</xsd:restriction>
+							</xsd:simpleType>
+						</xsd:element>
+					</xsd:all>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="get-option-response">
+				<xsd:complexType>
+					<xsd:choice>
+						<xsd:element name="option">
+							<xsd:complexType>
+								<xsd:all>
+									<xsd:element name="option-code" type="xsd:normalizedString"/>
+									<xsd:element name="option-name" type="xsd:normalizedString"/>
+									<xsd:element name="option-class" type="xsd:normalizedString"/>
+									<xsd:element name="prints-on-label" type="xsd:boolean"/>
+									<xsd:element name="qualifier-required" type="xsd:boolean"/>
+									<xsd:element name="conflicting-options" minOccurs="0">
+										<xsd:complexType>
+											<xsd:sequence>
+												<xsd:element name="option-code" type="xsd:normalizedString" maxOccurs="unbounded"/>
+											</xsd:sequence>
+										</xsd:complexType>
+									</xsd:element>
+									<xsd:element name="prerequisite-options" minOccurs="0">
+										<xsd:complexType>
+											<xsd:sequence>
+												<xsd:element name="option-code" type="xsd:normalizedString" maxOccurs="unbounded"/>
+											</xsd:sequence>
+										</xsd:complexType>
+									</xsd:element>
+								</xsd:all>
+							</xsd:complexType>
+						</xsd:element>
+						<xsd:element name="messages" type="tns:messages"/>
+					</xsd:choice>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="get-service-request">
+				<xsd:complexType>
+					<xsd:all>
+						<xsd:element minOccurs="0" name="locale" type="tns:locale"/>
+						<xsd:element name="platform-id" type="tns:PlatformIDType" minOccurs="0"/>
+						<xsd:element name="service-code" type="tns:ServiceCodeType"/>
+						<xsd:element name="destination-country-code" type="tns:CountryCodeType" minOccurs="0"/>
+					</xsd:all>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="get-service-response">
+				<xsd:complexType>
+					<xsd:choice>
+						<xsd:element name="service">
+							<xsd:complexType>
+								<xsd:all>
+									<xsd:element name="service-code" type="tns:ServiceCodeType"/>
+									<xsd:element name="service-name" type="xsd:normalizedString"/>
+									<xsd:element name="comment" type="xsd:normalizedString" minOccurs="0"/>
+									<xsd:element name="options" minOccurs="0">
+										<xsd:complexType>
+											<xsd:sequence>
+												<xsd:element name="option" maxOccurs="unbounded">
+													<xsd:complexType>
+														<xsd:all>
+															<xsd:element name="option-code" type="xsd:normalizedString"/>
+															<xsd:element name="option-name" type="xsd:normalizedString"/>
+															<xsd:element name="mandatory" type="xsd:boolean"/>
+															<xsd:element name="qualifier-required" type="xsd:boolean"/>
+															<xsd:element name="qualifier-max" type="xsd:decimal" minOccurs="0"/>
+														</xsd:all>
+													</xsd:complexType>
+												</xsd:element>
+											</xsd:sequence>
+										</xsd:complexType>
+									</xsd:element>
+									<xsd:element name="restrictions">
+										<xsd:complexType>
+											<xsd:all>
+												<xsd:element name="weight-restriction" type="tns:NumberRangeType"/>
+												<xsd:element name="dimensional-restrictions">
+													<xsd:complexType>
+														<xsd:all>
+															<xsd:element name="length" type="tns:NumberRangeType"/>
+															<xsd:element name="width" type="tns:NumberRangeType"/>
+															<xsd:element name="height" type="tns:NumberRangeType"/>
+															<xsd:element name="length-plus-girth-max" type="xsd:decimal" minOccurs="0"/>
+															<xsd:element name="length-height-width-sum-max" type="xsd:decimal" minOccurs="0"/>
+															<xsd:element name="oversize-limit" type="xsd:decimal" minOccurs="0"/>
+														</xsd:all>
+													</xsd:complexType>
+												</xsd:element>
+												<xsd:element name="density-factor" type="xsd:decimal" minOccurs="0"/>
+												<xsd:element name="can-ship-in-mailing-tube" type="xsd:boolean"/>
+												<xsd:element name="can-ship-unpackaged" type="xsd:boolean"/>
+												<xsd:element name="allowed-as-return-service" type="xsd:boolean"/>
+											</xsd:all>
+										</xsd:complexType>
+									</xsd:element>
+								</xsd:all>
+							</xsd:complexType>
+						</xsd:element>
+						<xsd:element name="messages" type="tns:messages"/>
+					</xsd:choice>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="discover-services-request">
+				<xsd:complexType>
+					<xsd:all>
+						<xsd:element minOccurs="0" name="locale" type="tns:locale"/>
+						<xsd:element name="platform-id" type="tns:PlatformIDType" minOccurs="0"/>
+						<xsd:element name="destination-country-code" type="tns:CountryCodeType" minOccurs="0"/>
+					</xsd:all>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="discover-services-response">
+				<xsd:complexType>
+					<xsd:choice>
+						<xsd:element name="services">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element name="service" minOccurs="0" maxOccurs="unbounded">
+										<xsd:complexType>
+											<xsd:all>
+												<xsd:element name="service-code" type="tns:ServiceCodeType"/>
+												<xsd:element name="service-name" type="xsd:normalizedString"/>
+											</xsd:all>
+										</xsd:complexType>
+									</xsd:element>
+								</xsd:sequence>
+							</xsd:complexType>
+						</xsd:element>
+						<xsd:element name="messages" type="tns:messages"/>
+					</xsd:choice>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:complexType name="TaxType">
+				<xsd:simpleContent>
+					<xsd:extension base="xsd:decimal">
+						<xsd:attribute name="percent" type="xsd:decimal" use="optional"/>
+					</xsd:extension>
+				</xsd:simpleContent>
+			</xsd:complexType>
+			<xsd:complexType name="NumberRangeType">
+				<xsd:attribute name="min" type="xsd:decimal"/>
+				<xsd:attribute name="max" type="xsd:decimal"/>
+			</xsd:complexType>
+			<xsd:simpleType name="ZipCodeType">
+				<xsd:restriction base="xsd:string">
+					<xsd:pattern value="\d{5}(-\d{4})?"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="PostalCodeType">
+				<xsd:restriction base="xsd:string">
+					<xsd:pattern value="[A-Z]\d[A-Z]\d[A-Z]\d"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="CountryCodeType">
+				<xsd:restriction base="xsd:string">
+					<xsd:pattern value="[a-zA-Z][a-zA-Z]"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="CustomerIDType">
+				<xsd:restriction base="xsd:string">
+					<xsd:pattern value="\d{1,10}"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="ContractIDType">
+				<xsd:restriction base="xsd:string">
+					<xsd:pattern value="\d{1,10}"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+            <xsd:simpleType name="PromoCodeType">
+                <xsd:restriction base="xsd:normalizedString">
+                    <xsd:minLength value="1" />
+                    <xsd:maxLength value="10" />
+                </xsd:restriction>
+            </xsd:simpleType>
+			<xsd:simpleType name="CostTypeNonZero">
+				<xsd:restriction base="xsd:decimal">
+					<xsd:minExclusive value="0"/>
+					<xsd:maxInclusive value="999999.99"/>
+					<xsd:fractionDigits value="2"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="ServiceCodeType">
+				<xsd:restriction base="xsd:normalizedString">
+					<xsd:minLength value="1"/>
+					<xsd:maxLength value="32"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="DimensionMeasurementType">
+				<xsd:restriction base="xsd:decimal">
+					<xsd:minExclusive value="0"/>
+					<xsd:maxInclusive value="999.9"/>
+					<xsd:fractionDigits value="1"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:complexType name="messages">
+				<xsd:sequence>
+					<xsd:element minOccurs="0" maxOccurs="unbounded" name="message">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="code" type="xsd:string"/>
+								<xsd:element name="description" type="xsd:string"/>
+							</xsd:sequence>
+						</xsd:complexType>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:simpleType name="locale">
+				<xsd:restriction base="xsd:string">
+					<xsd:pattern value="([eE][nN]|[fF][rR])"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="PlatformIDType">
+				<xsd:restriction base="xsd:string">
+					<xsd:pattern value="\d{1,10}"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:schema>
+	</wsdl:types>
+	<wsdl:message name="GetRatesRequest">
+		<wsdl:part name="body" element="tns:get-rates-request"/>
+	</wsdl:message>
+	<wsdl:message name="GetRatesResponse">
+		<wsdl:part name="body" element="tns:get-rates-response"/>
+	</wsdl:message>
+	<wsdl:message name="GetOptionRequest">
+		<wsdl:part name="body" element="tns:get-option-request"/>
+	</wsdl:message>
+	<wsdl:message name="GetOptionResponse">
+		<wsdl:part name="body" element="tns:get-option-response"/>
+	</wsdl:message>
+	<wsdl:message name="GetServiceRequest">
+		<wsdl:part name="body" element="tns:get-service-request"/>
+	</wsdl:message>
+	<wsdl:message name="GetServiceResponse">
+		<wsdl:part name="body" element="tns:get-service-response"/>
+	</wsdl:message>
+	<wsdl:message name="DiscoverServicesRequest">
+		<wsdl:part name="body" element="tns:discover-services-request"/>
+	</wsdl:message>
+	<wsdl:message name="DiscoverServicesResponse">
+		<wsdl:part name="body" element="tns:discover-services-response"/>
+	</wsdl:message>
+	<wsdl:portType name="RatingPortType">
+		<wsdl:operation name="GetRates">
+			<wsdl:input message="tns:GetRatesRequest"/>
+			<wsdl:output message="tns:GetRatesResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="GetOption">
+			<wsdl:input message="tns:GetOptionRequest"/>
+			<wsdl:output message="tns:GetOptionResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="GetService">
+			<wsdl:input message="tns:GetServiceRequest"/>
+			<wsdl:output message="tns:GetServiceResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="DiscoverServices">
+			<wsdl:input message="tns:DiscoverServicesRequest"/>
+			<wsdl:output message="tns:DiscoverServicesResponse"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="Rating" type="tns:RatingPortType">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="GetRates">
+			<soap:operation soapAction="http://www.canadapost.ca/ws/soap/ship/rate/GetRates"/>
+			<wsdl:input>
+				<wsp:PolicyReference URI="#policy0" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"/>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetOption">
+			<soap:operation soapAction="http://www.canadapost.ca/ws/soap/ship/rate/GetOption"/>
+			<wsdl:input>
+				<wsp:PolicyReference URI="#policy0" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"/>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetService">
+			<soap:operation soapAction="http://www.canadapost.ca/ws/soap/ship/rate/GetService"/>
+			<wsdl:input>
+				<wsp:PolicyReference URI="#policy0" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"/>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="DiscoverServices">
+			<soap:operation soapAction="http://www.canadapost.ca/ws/soap/ship/rate/DiscoverServices"/>
+			<wsdl:input>
+				<wsp:PolicyReference URI="#policy0" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"/>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="RatingService">
+		<wsdl:port name="RatingPort" binding="tns:Rating">
+			<soap:address location="https://ct.soa-gw.canadapost.ca/rs/soap/rating/v3"/>
+		</wsdl:port>
+	</wsdl:service>
+	<wsp:Policy wsu:Id="policy0" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy">
+		<wsp:ExactlyOne>
+			<wsp:All>
+				<sp:SupportingTokens xmlns:sp="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702">
+					<sp:UsernameToken sp:IncludeToken="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702/IncludeToken/AlwaysToRecipient">
+						<wsp:Policy>
+							<sp:WssUsernameToken10/>
+						</wsp:Policy>
+					</sp:UsernameToken>
+				</sp:SupportingTokens>
+			</wsp:All>
+			<wsp:All>
+				<sp:SupportingTokens xmlns:sp="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702">
+					<sp:UsernameToken sp:IncludeToken="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702/IncludeToken/AlwaysToRecipient">
+						<wsp:Policy>
+							<sp:WssUsernameToken11/>
+						</wsp:Policy>
+					</sp:UsernameToken>
+				</sp:SupportingTokens>
+			</wsp:All>
+		</wsp:ExactlyOne>
+	</wsp:Policy>
+</wsdl:definitions>

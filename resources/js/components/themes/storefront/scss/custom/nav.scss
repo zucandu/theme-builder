@@ -1,0 +1,111 @@
+
+.navbar-nav {
+    > .nav-item {
+        margin-right: 1rem;
+    }
+    .nav-item {
+        &:hover > a {
+            background-color: $gray-200;
+        }
+        &.dropdown.has-sub {
+            .submenu {
+                left: 99%!important;
+                top: 0!important;
+                display: none;
+                &.show {
+                    display: block;
+                }
+            }
+            > .nav-link::after {
+                border:0;
+                vertical-align: unset;
+                content: "\25CF";
+                color: $info;
+                top: 8px;
+                right: 10px;
+                position: absolute;
+            }
+        }
+        &.has-megamenu {
+            position:static!important;
+        }
+        &.dropdown-menu-end {
+            right: 0;
+            left: auto;
+        }
+        &.dropdown:hover > .dropdown-menu {
+            display: block;
+            -webkit-animation: slide-up .3s ease-in-out;
+            animation: slide-up .3s ease-in-out;
+        }
+    }
+    .nav-link {
+        &.has-sub {
+            position: relative;
+            &::after {
+                position: absolute; top: 3px; right: 0; width: 10px; height: 10px; content: "\002B"; font-size: 1.25rem;
+            }
+        }
+        &.active::after {
+            content: "\2212";
+        }
+        &.dropdown-toggle {
+            &::after {
+                border:0;
+                vertical-align: unset;
+                content: "\25CF";
+                color: $info;
+            }
+        }
+    }
+    .megamenu{ 
+        padding: 1rem; 
+        .nav-link {padding: 0;}
+        .link-heading {padding: 10px 0;}
+        .link-heading.link-first {padding-top: 0;}
+    }
+}
+
+#offcanvas-nav {
+    .dropdown-toggle::after {
+        float:right;
+        margin-top: 8px;
+    } 
+    .submenu {
+        display: none;
+    }
+    .submenu.show {
+        display: block;
+    }
+    .nav-link {
+        &.has-sub {
+            position: relative;
+            &::after {
+                position: absolute; top: 3px; right: 0; width: 10px; height: 10px; content: "\25CF"; font-size: 1.25rem; color: $info;
+            }
+        }
+    }
+}
+
+
+/* ============ desktop view ============ */
+@media all and (min-width: 992px) {
+    .navbar .megamenu {left:0; right:0; width:100%; margin-top:0;  }
+}	
+/* ============ desktop view .end// ============ */
+
+/* ============ mobile view ============ */
+@media(max-width: 991px){
+    .navbar.fixed-top .navbar-collapse, .navbar.sticky-top .navbar-collapse {
+        overflow-y: auto;
+        max-height: 90vh;
+        margin-top:10px;
+    }
+}
+/* ============ mobile view .end// ============ */
+
+
+@keyframes slide-up {
+    from {top: 50px;opacity:0}
+    to {top: 100%;opacity:1}
+}

@@ -1,0 +1,14 @@
+{
+  "ranges": "Price Range",
+  "categories": "Category",
+  "manufacturers": "Manufacturer",
+  "ratings": "Rating",
+  "4-Excellent": "Excellent & Up",
+  "3-Good": "Good & Up",
+  "2-Average": "Average & Up",
+  "1-Bad": "Bad & Up",
+  "Details": "Details",
+  "Dashboard": "Dashboard",
+  "There is no any product today": "There are no products today",
+  "Manager Account" : "Manage Your Account"
+}

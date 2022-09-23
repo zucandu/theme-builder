@@ -1,0 +1,16 @@
+// Utilize our source Sass files to take advantage of variables, maps, mixins, and functions to help you build faster and customize your theme.
+// Read more: https://getbootstrap.com/docs/5.1/customize/sass/
+// Main file, keep empty if you don't want to reset variables for Bootstrap
+
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;700&display=swap');
+
+$primary:#532cce;
+$secondary:#f23a63;
+$success:#13a261;
+$danger:#ee2407;
+$info:#2675f1;
+$warning:#e0cb13;
+$light:#c9d9e1;
+$dark:#0c0c0b;
+
+$font-family: 'Nunito Sans', sans-serif;
