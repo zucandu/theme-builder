@@ -272,7 +272,7 @@ b, strong {
 @media (max-width: 767px) {
     #z-minicart {
         position: absolute;
-        top: 20px;
+        top: 17px;
         right: 0;
         margin-right: var(--bs-gutter-x, 0.75rem);
     }
@@ -301,6 +301,10 @@ b, strong {
     .z-subscribe-question {
         width: 100%;
     }
-    
+    .header__main {
+        .navbar-brand img {
+            width: 180px;
+        }
+    }
 }
 
