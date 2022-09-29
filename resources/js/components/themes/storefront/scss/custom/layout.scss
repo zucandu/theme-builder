@@ -67,9 +67,6 @@ body {
 }
 
 @media (max-width: 1199px) {
-    .slideshow__h1 {
-        font-size: 2.5rem;
-    }
     #slideshow {
         height: auto;
         min-height: 300px;
@@ -77,14 +74,17 @@ body {
             height: auto;
             min-height: 300px;
         }
+        .slideshow__h1 {
+            font-size: 2.5rem;
+        }
     }
 }
 
 @media (max-width: 991px) {
     #slideshow {
-        min-height: auto;
+        min-height: 200px;
         .carousel-item {
-            min-height: auto;
+            min-height: 200px;
         }
     }
 }
@@ -93,8 +93,14 @@ body {
     .carousel-item {
         height: auto;
     }
-    .slideshow__h1 {
-        font-size: 1rem;
+    #slideshow {
+        min-height: 100px;
+        .carousel-item {
+            min-height: 100px;
+        }
+        .slideshow__h1 {
+            font-size: 1rem;
+        }
     }
     #offcanvas-menu {
         .navbar-nav {
