@@ -20,7 +20,7 @@ export default {
     },
     methods: {
         closeOffCanvas() {
-            let btnOffcanvas = document.getElementById('closeNavOffcanvas')
+            let btnOffcanvas = document.getElementById('closeOffcanvas')
             if(btnOffcanvas) {
                 btnOffcanvas.click()
             }

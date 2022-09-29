@@ -12,6 +12,7 @@
                     </template>
                 </li>
             </ul>
+            <button id="closeOffcanvas" type="button" class="btn-close d-none" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div v-else class="spinner-grow text-info" role="status">
             <span class="visually-hidden">Loading...</span>
