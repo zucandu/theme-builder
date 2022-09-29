@@ -1,10 +1,5 @@
 <template>
 
-    <!-- Slideshow -->
-    <div class="row">
-        <banner-slideshow></banner-slideshow>
-    </div>
-
     <block-element menu-key="home-top" :block-loading="1"></block-element>
 
     <hr class="my-5 bg-gray-300">
