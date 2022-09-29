@@ -1,6 +1,6 @@
 <template>
-    <nav :class="`navbar-${menuKey} navbar navbar-expand-lg navbar-light`">
-        <div v-if="loaded" class="collapse navbar-collapse">
+    <nav :class="`navbar-${menuKey} navbar navbar-expand-md navbar-light`">
+        <div id="offcanvas-menu" v-if="loaded" class="collapse navbar-collapse offcanvas offcanvas-start">
             <ul v-if="__navigation" class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li :class="`nav-item ${item.blocks && item.blocks.length > 0 ? (item.blocks.length > 1 ? `dropdown has-megamenu` : 'dropdown') : ''}`" v-for="(item, index) in __navigation.items" :key="index">
                     <link-menu :item="item"></link-menu>
@@ -21,6 +21,7 @@
 </template>
 
 <script>
+import Offcanvas from 'bootstrap/js/dist/offcanvas';
 import DropdownMenu from '@theme/storefront/templates/menu/DropdownMenu'
 import MegaMenu from '@theme/storefront/templates/menu/MegaMenu'
 import LinkMenu from '@theme/storefront/templates/menu/LinkMenu'
@@ -35,6 +36,12 @@ export default {
         this.$store.dispatch('menuDetails', this.menuKey).then(() => {
             this.loaded = true
         })
+    },
+    mounted() {
+        const offcanvas = document.getElementById('offcanvas-menu')
+        if(offcanvas) {
+            new Offcanvas(offcanvas)
+        }
     },
     computed: {
         ...mapState({

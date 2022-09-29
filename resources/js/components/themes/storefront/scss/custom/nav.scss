@@ -1,11 +1,10 @@
-
 .navbar-nav {
     > .nav-item {
         margin-right: 1rem;
     }
     .nav-item {
         &:hover > a {
-            background-color: $gray-200;
+            background-color: rgba($secondary, .3)
         }
         &.dropdown.has-sub {
             .submenu {

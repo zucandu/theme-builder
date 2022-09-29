@@ -1,12 +1,12 @@
 <template>
-    <div id="slideshow" :class="`carousel slide px-0 ${loading ? `loading` : `loaded`}`" data-bs-ride="carousel">
+    <div id="slideshow" :class="`carousel slide carousel-fade px-0 ${loading ? `loading` : `loaded`}`" data-bs-ride="carousel">
         <div class="carousel-inner">
-            <div :class="`carousel-item position-relative cursor-pointer ${index === 0 ? 'active' : '__'}`" v-for="(banner, index) in slideshow" :key="index" @click.stop="goto(banner)">
+            <div :class="`carousel-item position-relative cursor-pointer ${index === 0 ? 'active' : '__'}`" v-for="(banner, index) in slideshow" :key="index">
                 <img @load="imgload" :src="`/storage/${banner.image}`" :alt="banner.translations[0].title" class="img-fluid">
-                <div class="position-absolute top-50 start-50 translate-middle text-success text-center col-10 col-lg-8">
-                    <h1 class="slideshow__h1 display-3">{{ translation(banner, 'title', $i18n.locale) }}</h1>
-                    <div class="d-none d-lg-block" v-if="translation(banner, 'summary', $i18n.locale)" v-html="translation(banner, 'summary', $i18n.locale)"></div>
-                    <button class="mt-lg-4 mt-md-2 d-none d-lg-inline-block btn btn-success btn-lg rounded-0 fw-bold px-5 text-white shadow-lg">{{ $t('Get it now') }}</button>
+                <div class="position-absolute top-50 start-50 text-white translate-middle text-center">
+                    <h1 @click="goto(banner)" class="slideshow__h1 display-3 fw-bold">{{ translation(banner, 'title', $i18n.locale) }}</h1>
+                    <div class="d-none d-md-block" v-if="translation(banner, 'summary', $i18n.locale)" v-html="translation(banner, 'summary', $i18n.locale)"></div>
+                    <button @click="goto(banner)" class="mt-lg-4 mt-md-2 d-none d-xl-inline-block btn btn-secondary btn-lg rounded-0 fw-bold px-5 text-white shadow-lg">{{ translation(banner, 'btn_primary', $i18n.locale) }}</button>
                 </div>
             </div>
             <template v-if="banners.length > 1">

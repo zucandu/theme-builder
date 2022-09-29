@@ -3,10 +3,10 @@
         <layout-header></layout-header>
         <div class="main__content my-3">
             <div :class="$route.name === `index` ? `container-fluid` : `container`">
-                <router-view></router-view>
+                <!-- <router-view></router-view> -->
             </div>
         </div>
-        <layout-footer></layout-footer>
+        <!-- <layout-footer></layout-footer> -->
         <display-toast></display-toast>
     </main>
 </template>
