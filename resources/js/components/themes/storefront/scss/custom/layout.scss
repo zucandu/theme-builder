@@ -82,9 +82,9 @@ body {
 
 @media (max-width: 991px) {
     #slideshow {
-        min-height: 200px;
+        min-height: 300px;
         .carousel-item {
-            min-height: 200px;
+            min-height: 300px;
         }
     }
 }
@@ -94,9 +94,9 @@ body {
         height: auto;
     }
     #slideshow {
-        min-height: 100px;
+        min-height: 200px;
         .carousel-item {
-            min-height: 100px;
+            min-height: 200px;
         }
         .slideshow__h1 {
             font-size: 1rem;

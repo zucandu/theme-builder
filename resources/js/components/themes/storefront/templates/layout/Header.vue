@@ -1,6 +1,8 @@
 <template>
     <header>
-        <banner-slideshow></banner-slideshow>
+        <template v-if="$route.name === `index`">
+            <banner-slideshow></banner-slideshow>
+        </template>
         <div class="z-home-nav container-fluid px-md-5">
             <div class="row py-3 align-items-center">
                 <div class="col-xl-2 col-6 order-0">
