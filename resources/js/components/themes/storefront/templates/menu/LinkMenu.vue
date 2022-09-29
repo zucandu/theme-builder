@@ -20,8 +20,8 @@ export default {
     },
     methods: {
         closeOffCanvas() {
-            let btnOffcanvas = document.getElementById('closeOffcanvas')
-            if(btnOffcanvas) {
+            const btnOffcanvas = document.getElementById('closeOffcanvas')
+            if(btnOffcanvas && this.item.submenu !== `megamenu` && this.item.submenu !== `dropdown` && this.translation.url !== ``) {
                 btnOffcanvas.click()
             }
         }

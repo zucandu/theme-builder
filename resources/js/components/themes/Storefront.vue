@@ -6,7 +6,7 @@
                 <!-- <router-view></router-view> -->
             </div>
         </div>
-        <!-- <layout-footer></layout-footer> -->
+        <layout-footer></layout-footer>
         <display-toast></display-toast>
     </main>
 </template>
