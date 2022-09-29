@@ -5,10 +5,9 @@ body {
 #slideshow {
     height: 100vh;
     background-color: $gray-200;
-}
-
-.carousel-item {
-    height: 100vh;
+    .carousel-item {
+        height: 100vh;
+    }
 }
 
 .z-home-nav {
@@ -71,9 +70,23 @@ body {
     .slideshow__h1 {
         font-size: 2.5rem;
     }
+    #slideshow {
+        height: auto;
+        min-height: 300px;
+        .carousel-item {
+            height: auto;
+            min-height: 300px;
+        }
+    }
 }
 
 @media (max-width: 991px) {
+    #slideshow {
+        min-height: auto;
+        .carousel-item {
+            min-height: auto;
+        }
+    }
 }
 
 @media (max-width: 767px) {
