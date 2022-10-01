@@ -1,22 +1,22 @@
 <template>
-    <template v-if="!noProduct">
-        <div class="zuc-listing-container row g-3 justify-content-center">
-            <div class="zuc-listing-sidebar col-lg-2">
-                <section class="zuc-listing-sidebar__filter">
-                    <listing-filters :filters="filters" :reset-filter="resetFilters" @updateContent="updateContent"></listing-filters>
-                </section>
-            </div>
-            <div class="zuc-listing-products col-lg-9 offset-lg-1">
-                <section class="zuc-listing-products__sort d-sm-flex justify-content-between mb-5">
-                    <div class="showing">{{ $t('Showing') }} {{ paginationShowing.from }} {{ $t('to') }} {{ paginationShowing.to }} {{ $t('of') }} {{ paginationShowing.total }} {{ $t('products') }}</div>
-                    <div class="btn-group me-4">
-                        <a href="#" class="dropdown-toggle text-decoration-none" data-bs-toggle="dropdown" aria-expanded="false">{{ $t(sortByItems.find(s => s.field === sortBy).name) }}</a>
-                        <ul class="dropdown-menu cursor-pointer">
-                            <li v-for="(option, index) in sortByItems" :key="index"><a class="dropdown-item" @click="sortBy = option.field">{{ $t(option.name) }}</a></li>
-                        </ul>
-                    </div>
-                </section>
-                <section v-if="!loading" class="zuc-listing-products__row row g-3">
+    <div class="zuc-listing-container row g-3 justify-content-center">
+        <div :class="`zuc-listing-sidebar col-lg-2 ${!noProduct ? `d-lg-block` : `d-none`}`">
+            <section class="zuc-listing-sidebar__f ilter">
+                <listing-filters :filters="filters" :reset-filter="resetFilters" @updateContent="updateContent"></listing-filters>
+            </section>
+        </div>
+        <div :class="`zuc-listing-products ${!noProduct ? `col-lg-9 offset-lg-1` : `col-lg-12`}`">
+            <section v-if="!noProduct" class="zuc-listing-products__sort d-sm-flex justify-content-between mb-5">
+                <div class="showing">{{ $t('Showing') }} {{ paginationShowing.from }} {{ $t('to') }} {{ paginationShowing.to }} {{ $t('of') }} {{ paginationShowing.total }} {{ $t('products') }}</div>
+                <div class="btn-group me-4">
+                    <a href="#" class="dropdown-toggle text-decoration-none" data-bs-toggle="dropdown" aria-expanded="false">{{ $t(sortByItems.find(s => s.field === sortBy).name) }}</a>
+                    <ul class="dropdown-menu cursor-pointer">
+                        <li v-for="(option, index) in sortByItems" :key="index"><a class="dropdown-item" @click="sortBy = option.field">{{ $t(option.name) }}</a></li>
+                    </ul>
+                </div>
+            </section>
+            <section v-if="!loading" class="zuc-listing-products__row row g-3">
+                <template v-if="!noProduct">
                     <div v-for="(item, index) in products" :key="index" class="col-lg-3 col-md-4 col-6">
                         <div class="product-widget__inner mb-3">
                             <div class="inner__img mb-3">
@@ -64,35 +64,37 @@
                             </template>
                         </div>
                     </div>
-                </section>
-                <section class="zuc-listing-products__pagination text-end" v-if="paginationLinks.length > 0">
-                    <router-link :to="{ path: `/category/${$route.params.slug}`, query: Object.assign({}, urlGetAllParams(['page']), { page: urlParamValueFromName(link.url, 'page') })}" v-for="(link, index) in paginationLinks" :key="index" :class="`btn btn-outline-dark mx-1${(!link.url ? ' disabled' : '')}${(link.active === true ? ' btn-primary text-white' : '')}`" v-html="link.label"></router-link>
-                </section>
-                <section v-if="loading" class="row g-3 mt-lg-5 mt-3">
-                    <div v-for="i in itemPerPage" :key="i" class="col-lg-3 col-md-4 col-6">
-                        <div class="card card-body border-0 product-widget">
-                            <div class="inner__img bg-gray-200 mb-3 rounded w-100 py-5"></div>
-                            <div class="inner__title bg-gray-200 mb-1 rounded w-75 py-2"></div>
-                            <div class="inner__rating bg-gray-200 mb-3 rounded w-50 py-2"></div>
-                            <div class="inner__price bg-gray-200 rounded w-25 py-2"></div>
-                        </div>
+                </template>
+                <template v-else>
+                    <div class="col-12 text-center">
+                        {{ $t('There is no product in this manufacturer.') }}
                     </div>
-                </section>
-                <hr class="my-4 bg-info">
-                <section class="zuc-listing-products__category">
-                    <template v-if="manufacturerTranslation">
-                        <h1 class="text-dark fw-bold mb-4">{{ manufacturerTranslation.name }}</h1>
-                        <div v-html="manufacturerTranslation.description"></div>
-                    </template>
-                </section>
-            </div>
+                </template>
+            </section>
+            <section class="zuc-listing-products__pagination text-end" v-if="paginationLinks.length > 0 && !noProduct">
+                <router-link :to="{ path: `/category/${$route.params.slug}`, query: Object.assign({}, urlGetAllParams(['page']), { page: urlParamValueFromName(link.url, 'page') })}" v-for="(link, index) in paginationLinks" :key="index" :class="`btn btn-outline-dark mx-1${(!link.url ? ' disabled' : '')}${(link.active === true ? ' btn-primary text-white' : '')}`" v-html="link.label"></router-link>
+            </section>
+            <section v-if="loading" class="row g-3 mt-lg-5 mt-3">
+                <div v-for="i in itemPerPage" :key="i" class="col-lg-3 col-md-4 col-6">
+                    <div class="card card-body border-0 product-widget">
+                        <div class="inner__img bg-gray-200 mb-3 rounded w-100 py-5"></div>
+                        <div class="inner__title bg-gray-200 mb-1 rounded w-75 py-2"></div>
+                        <div class="inner__rating bg-gray-200 mb-3 rounded w-50 py-2"></div>
+                        <div class="inner__price bg-gray-200 rounded w-25 py-2"></div>
+                    </div>
+                </div>
+            </section>
+            <hr class="my-4 bg-info">
+            <section class="zuc-listing-products__category">
+                <template v-if="manufacturerTranslation">
+                    <h1 class="text-dark fw-bold mb-4">{{ manufacturerTranslation.name }}</h1>
+                    <div v-html="manufacturerTranslation.description"></div>
+                </template>
+            </section>
         </div>
-        <overlay v-if="loading"></overlay>
-        <product-restock-modal :product-id="picked.id" :product-name="picked.name" :show-modal="showModal" @updateModalStatus="updateModalStatus"></product-restock-modal>
-    </template>
-    <template v-else>
-        
-    </template>
+    </div>
+    <overlay v-if="loading"></overlay>
+    <product-restock-modal :product-id="picked.id" :product-name="picked.name" :show-modal="showModal" @updateModalStatus="updateModalStatus"></product-restock-modal>
 </template>
 
 <script>

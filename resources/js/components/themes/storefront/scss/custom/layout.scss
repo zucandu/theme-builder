@@ -222,6 +222,13 @@ b, strong {
     filter: invert(100%);
 }
 
+.zuc-listing-products__category {
+    img {
+        max-width: 100% !important;
+        height: auto !important;
+    }
+}
+
 @media (max-width: 991px) {
     #z-button-hamburger {
         padding: 10px 13px;
@@ -303,7 +310,7 @@ b, strong {
     }
     .header__main {
         .navbar-brand img {
-            width: 180px;
+            width: 180px !important;
         }
     }
 }
