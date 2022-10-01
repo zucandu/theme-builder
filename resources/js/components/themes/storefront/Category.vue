@@ -67,7 +67,7 @@
                 </template>
                 <template v-else>
                     <div class="col-12 text-center">
-                        {{ $t('There is no product in this manufacturer.') }}
+                        {{ $t('There is no product in this category.') }}
                     </div>
                 </template>
             </section>
