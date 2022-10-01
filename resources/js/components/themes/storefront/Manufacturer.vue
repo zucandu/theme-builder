@@ -165,11 +165,6 @@ export default {
 
                 // Redirect to home page if listing is empty
                 if(this.products && this.products.length === 0) {
-                    /* this.$store.commit('setAlert', {
-                        'color': 'danger', 
-                        'message': this.$t(`there are no products in this manufacturer: ${slug}`)
-                    })
-                    this.$router.push(`/`) */
                     this.noProduct = true
                 }
 
