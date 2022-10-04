@@ -2,7 +2,7 @@
     <header>
         <banner-slideshow v-if="$route.name === `index`"></banner-slideshow>
         <div class="z-home-nav container-fluid px-md-5">
-            <div class="row align-items-center">
+            <div class="row align-items-center mx-0">
                 <div class="col-xl-2 col-6 order-0">
                     <router-link to="/">
                         <img :src="`/storage/${storeConfig.fileuploader_store_logo}`" :width="storeConfig.store_logo_width" :height="storeConfig.store_logo_height" :alt="storeConfig.store_name" @load="imgloaded" class="img-loading img-fluid">
