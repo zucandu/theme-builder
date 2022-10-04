@@ -43,6 +43,7 @@
 </template>
 
 <script>
+import Dropdown from 'bootstrap/js/dist/dropdown';
 import BannerSlideshow from '@theme/storefront/templates/banner/Slideshow'
 import DisplayMenu from '@theme/storefront/templates/menu/DisplayMenu'
 import { mapState, mapGetters } from 'vuex'

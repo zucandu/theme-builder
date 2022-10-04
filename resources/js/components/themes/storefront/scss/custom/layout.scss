@@ -5,11 +5,16 @@ body {
 .z-home-nav {
     background-color: $dark;
     padding: .5rem 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9;
 }
 #main-index {
     .z-home-nav {
         background-color: transparent;
         padding: 1rem 0;
+        position: absolute;
     }
 }
 
@@ -22,10 +27,6 @@ body {
 }
 
 .z-home-nav {
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 9;
     .navbar-nav {
         > .nav-item > a {
             color: $white;
