@@ -2,6 +2,13 @@ body {
     font-weight: $font-weight-light;
 }
 
+.main {
+    margin-top: 6rem;
+}
+#main-index {
+    margin-top: 0;
+}
+
 .z-home-nav {
     background-color: $dark;
     padding: .5rem 0;
