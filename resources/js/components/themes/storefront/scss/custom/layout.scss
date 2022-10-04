@@ -2,6 +2,17 @@ body {
     font-weight: $font-weight-light;
 }
 
+.z-home-nav {
+    background-color: $dark;
+    padding: .5rem 0;
+}
+#main-index {
+    .z-home-nav {
+        background-color: transparent;
+        padding: 1rem 0;
+    }
+}
+
 #slideshow {
     height: 100vh;
     background-color: $gray-200;
