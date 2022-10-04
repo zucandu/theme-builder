@@ -3,6 +3,7 @@
         <div class="row">
             <div class="z-index-sidebar col-lg-3">
                 <block-element menu-key="home-top" :block-loading="1"></block-element>
+                <banners-left></banners-left>
             </div>
             <div class="col-lg-9">
                 product here
@@ -16,7 +17,7 @@
 
 <script>
 import BannerSlideshow from '@theme/storefront/templates/banner/Slideshow'
-import BannersTop from '@theme/storefront/templates/banner/Top'
+import BannersLeft from '@theme/storefront/templates/banner/Left'
 import BlockElement from '@theme/storefront/templates/menu/BlockElement'
 import ProductWidget from '@theme/storefront/templates/product/ProductWidget'
 import ProductWidgetLoading from '@theme/storefront/templates/product/ProductWidgetLoading'
@@ -34,7 +35,7 @@ export default {
         },
         showModal: false
     }),
-    components: { BannerSlideshow, BannersTop, BlockElement, ProductWidget, ProductWidgetLoading, ProductRestockModal },
+    components: { BannerSlideshow, BannersLeft, BlockElement, ProductWidget, ProductWidgetLoading, ProductRestockModal },
     created() {
         if(this.posts.length === 0) {
             this.$store.dispatch('latestPosts')
