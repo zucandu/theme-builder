@@ -2,7 +2,7 @@
     <transition name="fade">
         <div class="container">
             <section v-if="banners && banners.length > 0" class="row">
-                <div v-for="banner in bannersLeft" :key="banner.id" class="col-12 px-0 mb-3">
+                <div v-for="banner in bannersLeft" :key="banner.id" class="col-12 mb-3">
                     <router-link :to="`/${translation(banner, 'url_primary', $i18n.locale)}`">
                         <img :src="`/storage/${banner.image}`" :alt="translation(banner, 'title', $i18n.locale)" @load="imgloaded" class="img-fluid img-loading">
                     </router-link>
