@@ -1,14 +1,14 @@
 <template>
     <div class="container">
-        <div class="row">
+        <!-- <div class="row">
             <div class="z-index-sidebar col-lg-3">
-                <block-element menu-key="home-top" :block-loading="1"></block-element>
+                <block-element menu-key="home-top" :block-loading="3"></block-element>
                 <banners-left></banners-left>
             </div>
             <div class="col-lg-9">
                 product here
             </div>
-        </div>
+        </div> -->
     </div>
     <product-restock-modal :product-id="picked.id" :product-name="picked.name" :show-modal="showModal" @updateModalStatus="updateModalStatus"></product-restock-modal>
 
