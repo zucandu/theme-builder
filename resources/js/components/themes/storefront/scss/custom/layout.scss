@@ -96,6 +96,9 @@ body {
             border: 1px dashed $gray-300;
             padding: .5rem;
             margin:0 0 1rem 0!important;
+            .title {
+                font-weight: $font-weight-bold;
+            }
         }
     }
     
@@ -121,6 +124,15 @@ body {
         .carousel-item {
             min-height: 300px;
         }
+    }
+    .z-index-sidebar {
+        .home-top-section {
+            .block-element {
+                width: 50%;
+                border: 0;
+            }
+        }
+        
     }
 }
 
@@ -178,6 +190,10 @@ body {
                 }
             }
         }
+    }
+    .z-banner-block {
+        max-height: 200px;
+        overflow: hidden;
     }
 }
 
