@@ -85,6 +85,22 @@ body {
 
 }
 
+.z-index-sidebar {
+    .home-top-section {
+        margin-top: 0 !important;
+        h3 {
+            display: none;
+        }
+        .block-element {
+            width: 100%;
+            border: 1px dashed $gray-300;
+            padding: .5rem;
+            margin-bottom: .5rem;
+        }
+    }
+    
+}
+
 @media (max-width: 1199px) {
     #slideshow {
         height: auto;

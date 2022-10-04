@@ -1,98 +1,14 @@
 <template>
-
-    <block-element menu-key="home-top" :block-loading="1"></block-element>
-
-    <hr class="my-5 bg-gray-300">
-    
-    <section v-if="loadedWidgets" class="container">
-        <div v-if="productWidget.new.length > 0" class="row mt-lg-5 mt-3">
-            <img @load="initTinySliderNew" src="/storage/pixel.gif" alt="js" class="d-none">
-            <div class="col-12 h3 fw-light pb-5 mb-0"><span class="fw-bold text-dark">{{ $t("New Arrival") }}</span> {{ $t('products') }}</div>
-            <div :class="`col-12 position-relative ${loadingTinySliderNew ? 'd-none' : ''}`">
-                <div class="z-tiny-slider-new-section">
-                    <product-widget :products="productWidget.new" @pickItemRestock="pickItemRestock"></product-widget>
-                </div>
+    <div class="container">
+        <div class="row">
+            <div class="z-index-sidebar col-lg-3">
+                <block-element menu-key="home-top" :block-loading="1"></block-element>
             </div>
-            <template v-if="loadingTinySliderNew">
-                <product-widget-loading></product-widget-loading>
-            </template>
-        </div>
-    </section>
-    <section v-else class="container">
-        <div class="row mt-lg-5 mt-3">
-            <div class="col-12 h3 fw-light pb-5 mb-0">
-                <div class="py-4 rounded col-4 bg-gray-200"></div>
-            </div>
-            <product-widget-loading></product-widget-loading>
-        </div>
-    </section>
-
-    <banners-top></banners-top>
-
-    <section v-if="loadedWidgets" class="container">
-        <div v-if="productWidget.featured.length > 0" class="row mt-lg-5 mt-3">
-            <img @load="initTinySliderFeatured" src="/storage/pixel.gif" alt="js" class="d-none">
-            <div class="col-12 h3 fw-light pb-5 mb-0"><span class="fw-bold text-dark">{{ $t("Best Selling") }}</span> {{ $t('products') }}</div>
-            <div :class="`col-12 position-relative ${loadingTinySliderFeatured ? 'd-none' : ''}`">
-                <div class="z-tiny-slider-featured-section">
-                    <product-widget :products="productWidget.featured" @pickItemRestock="pickItemRestock"></product-widget>
-                </div>
-            </div>
-            <template v-if="loadingTinySliderFeatured">
-                <product-widget-loading></product-widget-loading>
-            </template>
-        </div>
-    </section>
-    <section v-else class="container">
-        <div class="row mt-lg-5 mt-3">
-            <div class="col-12 h3 fw-light pb-5 mb-0">
-                <div class="py-4 rounded col-4 bg-gray-200"></div>
-            </div>
-            <product-widget-loading></product-widget-loading>
-        </div>
-    </section>
-
-    <block-element menu-key="home-bottom" img-type="original" :block-loading="3"></block-element>
-
-    <section v-if="loadedWidgets" class="container sale">
-        <div v-if="productWidget.sale.length > 0" class="row mt-lg-5 mt-3">
-            <img @load="initTinySliderSale" src="/storage/pixel.gif" alt="js" class="d-none">
-            <div class="col-12 h3 fw-light pb-5 mb-0"><span class="fw-bold text-dark">{{ $t("Sale") }}</span> {{ $t('products') }}</div>
-            <div :class="`col-12 position-relative ${loadingTinySliderSale ? 'd-none' : ''}`">
-                <div class="z-tiny-slider-sale-section">
-                    <product-widget :products="productWidget.sale" @pickItemRestock="pickItemRestock"></product-widget>
-                </div>
-            </div>
-            <template v-if="loadingTinySliderSale">
-                <product-widget-loading></product-widget-loading>
-            </template>
-        </div>
-    </section>
-    <section v-else class="container">
-        <div class="row mt-lg-5 mt-3">
-            <div class="col-12 h3 fw-light pb-5 mb-0">
-                <div class="py-4 rounded col-4 bg-gray-200"></div>
-            </div>
-            <product-widget-loading></product-widget-loading>
-        </div>
-    </section>
-
-    <section class="container">
-        <div class="row mt-lg-5 mt-3">
-            <div class="col-12 h3 fw-light pb-5 mb-0"><span class="fw-bold text-dark">{{ $t("Our") }}</span> {{ $t('blog') }}</div>
-        </div>
-        <div class="row g-4">
-            <div v-for="post in latestPosts" :key="post.id" class="post-index col-lg col-lg-4 col-md-6 col-12">
-                <div class="post-index__bg w-100 bg-gray-200" :style="`height:180px; background: #e9ecef url('/storage/${storeConfig.medium_image_size}/${post.image}') center center no-repeat;background-size: cover;`"></div>
-                <h4 class="h6 fw-bold my-3">
-                    <router-link class="text-dark text-decoration-none" :to="`/article/${translation(post, 'slug', $i18n.locale)}`">
-                        {{ translation(post, 'title', $i18n.locale) }}
-                    </router-link>
-                </h4>
-                <div class="post-index__date text-success opacity-75">{{ dateFormat(post.created_at) }}</div>
+            <div class="col-lg-9">
+                product here
             </div>
         </div>
-    </section>
+    </div>
     <product-restock-modal :product-id="picked.id" :product-name="picked.name" :show-modal="showModal" @updateModalStatus="updateModalStatus"></product-restock-modal>
 
 </template>
