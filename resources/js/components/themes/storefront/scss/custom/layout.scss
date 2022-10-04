@@ -194,6 +194,9 @@ body {
     .z-banner-block {
         max-height: 200px;
         overflow: hidden;
+        img {
+            width: 100%;
+        }
     }
 }
 

@@ -17,9 +17,7 @@ export default {
     created() {
         const width = window.innerWidth
         if(window.innerWidth >= 1200) {
-            this.items = 6
-        } else if(window.innerWidth >= 992) {
-            this.items = 4
+            this.items = 5
         } else if(window.innerWidth >= 576) {
             this.items = 3
         } else {

@@ -1,11 +1,11 @@
 <template>
     <div class="container">
         <div class="row">
-            <div class="z-index-sidebar col-lg-3">
+            <div class="z-index-sidebar col-lg-3 order-lg-0 order-1">
                 <block-element menu-key="home-top" :block-loading="3"></block-element>
                 <banners-left></banners-left>
             </div>
-            <div class="col-lg-9">
+            <div class="col-lg-9 order-lg-1 order-0">
                 <section v-if="loadedWidgets" class="container">
                     <div v-if="productWidget.new.length > 0" class="row">
                         <img @load="initTinySliderNew" src="/storage/pixel.gif" alt="js" class="d-none">
@@ -78,9 +78,6 @@ export default {
                 ],
                 responsive: {
                     576: {
-                        items: 3
-                    },
-                    992: {
                         items: 3
                     },
                     1200: {
