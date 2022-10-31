@@ -106,6 +106,7 @@ figure.image img {max-width: 100%; height: auto;}
 .cursor-pointer {cursor: pointer;}
 .pa {
     border: 1px solid var(--bs-gray-300);
+    width: auto;
     &.pa-selected {
         border: 1px solid rgba($primary, .8);
         position: relative;
