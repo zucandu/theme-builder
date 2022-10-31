@@ -42,6 +42,11 @@
                                 <td>
                                     <div class="w300px">{{ item.name }}</div>
                                     <div class="text-gray-500">{{ $t('Qty') }}: {{ item.qty }}</div>
+
+                                    <!-- Hook product title. -->
+                                    <template v-for="(component, index) in $pluginStorefrontHooks['checkout_success_product_title']" :key="index">
+                                        <component :is="component" :product="item"></component>
+                                    </template>
                                 </td>
                                 <td class="text-end">
                                     <display-price-with-currency :price="item.price*item.qty" :currency="order.currency"></display-price-with-currency>
@@ -85,10 +90,10 @@
                         </tfoot>
                     </table>
                     <div class="row">
-                        <div class="col-md-5">
+                        <div class="col-md-4">
                             <router-link class="btn btn-primary" to="/">{{ $t('Continue Shopping') }}</router-link>
                         </div>
-                        <div class="col-md-7 text-end">
+                        <div class="col-md-8 text-end">
                             <router-link to="/account/orders" class="btn btn-primary">{{ $t('My Account') }}</router-link>
                             <router-link to="/logout" class="btn btn-link ms-3">{{ $t('Logout') }}</router-link>
                         </div>

@@ -67,11 +67,29 @@
                     <!-- Product variants -->
                     <div class="row mt-3" v-if="productVariants.length > 0">
                         <div class="col-12">
-                            <div v-for="ao in productVariants" :key="ao.id">
-                                <div :id="`option${ao.id}`">
-                                    <div class="mb-2"><span class="fw-bold">{{ translation(ao, 'name', $i18n.locale) }}:</span><span class="ms-2">{{ translation(ao.values.find(v => v.id === selectedAttributes[ao.id]), 'name', $i18n.locale) }}</span></div>
-                                    <div v-for="aov in ao.values" :value="aov.vid" :key="aov.vid" @click.stop="selectedAttributes[ao.id] = aov.vid" :data-aovid="aov.vid" :id="`attr-${ao.id}-${aov.vid}`" :class="`cursor-pointer py-2 px-3 d-inline-block me-3 mb-3 pa ${selectedAttributes[ao.id] === aov.vid ? 'pa-selected' : ''}`">{{ translation(aov, 'name', $i18n.locale) }}</div>
-                                </div>
+                            <div v-for="ao in productVariants" :key="ao.id" class="mb-3">
+                                <template v-if="ao.values.length > 4">
+                                    <div class="mb-2 fw-bold">{{ translation(ao, 'name', $i18n.locale) }}:</div>
+                                    <div class="dropdown">
+                                        <button class="btn border dropdown-toggle" type="button" data-bs-toggle="dropdown">{{ translation(ao.values.find(v => v.id === selectedAttributes[ao.id]), 'name', $i18n.locale) }}</button>
+                                        <ul :id="`option${ao.id}`" class="dropdown-menu">
+                                            <li v-for="aov in ao.values" :value="aov.vid" :key="aov.vid"><a class="dropdown-item cursor-pointer" @click="selectedAttributes[ao.id] = aov.vid" :data-aovid="aov.vid" :id="`attr-${ao.id}-${aov.vid}`">{{ translation(aov, 'name', $i18n.locale) }}</a></li>
+                                        </ul>
+                                    </div>
+                                </template>
+                                <template v-else>
+                                    <div :id="`option${ao.id}`">
+                                        <div class="mb-2"><span class="fw-bold">{{ translation(ao, 'name', $i18n.locale) }}:</span><span class="ms-2">{{ translation(ao.values.find(v => v.id === selectedAttributes[ao.id]), 'name', $i18n.locale) }}</span></div>
+                                        <div v-for="aov in ao.values" :value="aov.vid" :key="aov.vid" @click.stop="selectedAttributes[ao.id] = aov.vid" :data-aovid="aov.vid" :id="`attr-${ao.id}-${aov.vid}`" :class="`dropdown-item cursor-pointer py-2 px-3 d-inline-block me-3 mb-3 pa ${selectedAttributes[ao.id] === aov.vid ? 'pa-selected' : ''}`">
+                                            <template v-if="aov.image">
+                                                <img :src="`/storage/${storeConfig.small_image_size}/${aov.image}`" :alt="productTranslation.name" :width="storeConfig.small_image_size" :height="storeConfig.small_image_size" class="img-fluid">
+                                            </template>
+                                            <template v-else>
+                                                {{ translation(aov, 'name', $i18n.locale) }}
+                                            </template>
+                                        </div>
+                                    </div>
+                                </template>
                             </div>
                         </div>
                     </div>
@@ -95,7 +113,7 @@
                     <product-article :ids="productDetails.meta && productDetails.meta.articles"></product-article>
 
                     <!-- Product cart form -->
-                    <div class="cd-inline-block mt-3">
+                    <div class="d-inline-block mt-3">
                         <template v-if="actualProductDetails.quantity > 0">
                             <input v-model="formdata.qty" class="form-control me-2 input-qty d-inline-block" type="number">
                             <button class="btn btn-success d-inline-block align-items-center me-2  text-white" type="submit">
@@ -123,6 +141,11 @@
                     </div>
 
                 </form>
+				
+				<!-- Hook after the form -->
+                <template v-for="(component, index) in $pluginStorefrontHooks['product_after_the_form']" :key="index">
+                    <component :is="component" :product="actualProductDetails" :translation="productTranslation" @updateMetaForm="updateMetaForm"></component>
+                </template>
 
                 <product-restock-modal :product-id="actualProductDetails.id" :product-name="productTranslation.name" :show-modal="showModal" @updateModalStatus="updateModalStatus"></product-restock-modal>
             </div> <!-- Product loaded -->
@@ -267,7 +290,7 @@ export default {
     computed: {
         ...mapGetters([
             'translation', 'transObj', 'productVariants', 'productAttributesReadonly', 'productAttributesText', 
-            'childProductByAttributes', 'aggregatedReviews', 'imageSrc', 'productPrice', 'compare'
+            'childProductByAttributes', 'productPrice'
         ]),
         ...mapState({
             productDetails: state => state.product.productDetails,
@@ -284,14 +307,8 @@ export default {
         productTranslation() {
             return this.transObj(this.actualProductDetails, this.$i18n.locale)
         },
-        productAggregatedReviews() {
-            return this.aggregatedReviews(this.productReviews)
-        },
         manufacturerTranslation() {
             return this.transObj(this.productDetails.manufacturer , this.$i18n.locale) || undefined
-        },
-        sortedProductAttributesText() {
-            return Object.values(this.productAttributesText).sort((a, b) => this.compare(+a.sort, +b.sort))
         }
     },
     watch: {
@@ -309,7 +326,7 @@ export default {
             handler: async function(val) {
                 const oids = await Promise.all(Object.keys(val))
                 oids.forEach(oid => {
-                    const attrEls = document.querySelectorAll(`#option${oid} > .pa`)
+                    const attrEls = document.querySelectorAll(`#option${oid} .dropdown-item`)
                     attrEls.forEach(e => document.querySelector(`#attr-${oid}-${e.getAttribute('data-aovid')}`).classList.remove('outofstock'))
                     this.productDetails.attributes.filter(at => +at.attribute_option_id === +oid)
                                                     .map(r => r.attribute_option_value_id)

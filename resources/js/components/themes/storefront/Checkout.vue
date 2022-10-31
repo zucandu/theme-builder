@@ -78,8 +78,8 @@
                                         </table>
                                     </div>
 
-                                    <!-- Hook product title. -->
-                                    <template v-for="(component, index) in $pluginStorefrontHooks['checkout_payment']" :key="index">
+                                    <!-- Hook checkout summary. -->
+                                    <template v-for="(component, index) in $pluginStorefrontHooks['checkout_summary']" :key="index">
                                         <component :is="component" :products="items"></component>
                                     </template>
 

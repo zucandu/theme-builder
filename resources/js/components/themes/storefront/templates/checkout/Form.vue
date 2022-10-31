@@ -112,6 +112,22 @@
                     </div>
                 </div>
             </div>
+            <div class="col-12">
+                <div class="h5 mb-3">{{ $t('Special Instructions or Comments About Your Order') }}</div>
+                <transition name="fade">
+                    <div v-if="initLoaded">
+                        <div class="mb-3 card card-body">
+                            <textarea v-model="formdata.comments.customer_note" class="form-control" rows="3" :placeholder="$t(`Write something...`)"></textarea>
+                        </div>
+                    </div>
+                </transition>
+                <div v-if="!initLoaded" class="card card-body mb-4">
+                    <div class="bg-gray-200 py-3 px-5 mb-2 col-lg-6"></div>
+                    <div class="d-flex justify-content-between">
+                        <div class="bg-gray-200 py-2 px-5 w-100"><br><br><br><br></div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -127,6 +143,7 @@ export default {
             payment: {},
             discount: {},
             promotion: {},
+            comments: {}
         },
         initLoaded: false
     }),
@@ -189,6 +206,12 @@ export default {
                 this.$store.commit('setFormOrderData', { shipping: v } )
                 this.$store.commit('connectPaymentGateway', this.orderParams)
             }
+        },
+        'formdata.comments': {
+            deep: true,
+            handler(v) {
+                this.$store.commit('setFormOrderData', { comments: v } )
+            },
         },
         orderPaymentMethods(v) {
             if(v && Object.keys(this.formdata.payment).length === 0) {
