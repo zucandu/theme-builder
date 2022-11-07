@@ -148,6 +148,7 @@
                 </template>
 
                 <product-restock-modal :product-id="actualProductDetails.id" :product-name="productTranslation.name" :show-modal="showModal" @updateModalStatus="updateModalStatus"></product-restock-modal>
+                
             </div> <!-- Product loaded -->
             <product-details-loading v-else></product-details-loading>
         </div>
