@@ -17,7 +17,7 @@
             </section>
             <section v-if="!loading" class="zuc-listing-products__row row g-3">
                 <template v-if="!noProduct">
-                    <div v-for="(item, index) in products" :key="index" class="col-lg-3 col-md-4 col-6">
+                    <div v-for="item in products" :key="item.id" class="col-lg-3 col-md-4 col-6">
                         <div class="product-widget__inner mb-3">
                             <div class="inner__img mb-3">
                                 <router-link :to="`/${translation(item, 'slug', $i18n.locale)}`" class="text-decoration-none">
