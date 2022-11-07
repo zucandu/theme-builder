@@ -48,19 +48,21 @@ export default {
                 }
             }
             
-            axios.post('/api/v1/storefront/verify-order', this.formdata).then(res => {
-                this.$router.push(`/track-order/${res.data.ref}`)
+            this.$store.dispatch('verifyOrderByGuest', this.formdata).then(() => {
+                this.$router.push(`/track-order/${this.orderRef}`)
             }).catch(error => {
                 this.$store.commit('setAlert', {
                     'color': 'danger', 
                     'message': this.$t(error.response.data.message)
                 })
             })
+            
         }
     },
     computed: {
         ...mapState({
-            storeConfig: state => state.setting.storeConfig
+            storeConfig: state => state.setting.storeConfig,
+            orderRef: state => state.order.orderRef
         })
     }
 }
