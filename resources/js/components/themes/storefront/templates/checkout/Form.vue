@@ -4,12 +4,12 @@
             <div class="col-12">
                 <div class="h5 mb-3">{{ $t('Shipping & Payment Address') }}</div>
                 <div class="row" v-if="orderParams.profile && orderParams.profile.addresses && orderParams.profile.addresses.length > 0">
-                    <div class="col-md-6">
+                    <div class="col-6">
                         <div class="h6">{{ $t('Shipping Address') }}</div>
                         <display-address :address="orderParams.shipping"></display-address>
                         <button v-if="orderParams.profile.addresses.length > 1" class="btn btn-sm btn-link p-0 mb-3 mb-lg-0" @click.stop="editAddress(orderParams.shipping, 'shipping')">{{ $t('Edit Address') }}</button>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-6">
                         <div class="h6">{{ $t('Billing Address') }}</div>
                         <display-address :address="orderParams.billing"></display-address>
                         <button v-if="orderParams.profile.addresses.length > 1" class="btn btn-sm btn-link p-0 mb-3 mb-lg-0" @click.stop="editAddress(orderParams.billing, 'billing')">{{ $t('Edit Address') }}</button>

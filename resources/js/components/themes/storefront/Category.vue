@@ -27,10 +27,10 @@
                             <div class="inner__additional-images d-flex justify-content-center align-items-center">
                                 <template v-if="item.images.length > 1">
                                     <template v-for="(ai, index) in item.images" :key="ai">
-                                        <img v-if="index < 3" @mouseover="changeImgSrc(item.id, ai.src)" :src="`/storage/${storeConfig.small_image_size}/${ai.src}`" width="40" height="40" :alt="translation(item, 'name', $i18n.locale)" class="img-loading img-fluid cursor-pointer mx-1">
+                                        <img v-if="index < 3" @mouseover="changeImgSrc(item.id, ai.src)" :src="`/storage/${storeConfig.small_image_size}/${ai.src}`" width="30" height="30" :alt="translation(item, 'name', $i18n.locale)" class="img-loading img-fluid cursor-pointer mx-1">
                                     </template>
                                 </template>
-                                <router-link v-if="item.images.length > 3" :to="`/${translation(item, 'slug', $i18n.locale)}`" class="square-4x small">+{{ item.images.length-3 }} {{ $t('options') }}</router-link>
+                                <router-link v-if="item.images.length > 3" :to="`/${translation(item, 'slug', $i18n.locale)}`" class="small">+{{ item.images.length-3 }} {{ $t('options') }}</router-link>
                             </div>
                             <h3 class="inner__title h6 fw-light mb-0">
                                 <router-link :to="`/${translation(item, 'slug', $i18n.locale)}`" class="text-decoration-none text-dark">
