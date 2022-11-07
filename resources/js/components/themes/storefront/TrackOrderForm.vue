@@ -23,16 +23,31 @@
 </template>
 
 <script>
-
+import { mapState } from 'vuex';
 export default {
     data: () => ({
         formdata: {
             order_id: undefined,
-            email: undefined
+            email: undefined,
+            grecaptcha_token: undefined,
         }
     }),
     methods: {
-        trackNow() {
+        async trackNow() {
+
+            // Get Google reCAPTCHA token if the site key is set
+            const _ = this
+            if(_.storeConfig && _.storeConfig.recaptcha_site_key) {
+                grecaptcha.ready(function() {
+                    grecaptcha.execute(_.storeConfig.recaptcha_site_key, { action: 'submit' }).then(function(token) {
+                        _.formdata.grecaptcha_token = token
+                    })
+                })
+                while(_.formdata.grecaptcha_token === undefined) {
+                    await new Promise(r => setTimeout(r, 100))
+                }
+            }
+            
             axios.post('/api/v1/storefront/verify-order', this.formdata).then(res => {
                 this.$router.push(`/track-order/${res.data.ref}`)
             }).catch(error => {
@@ -42,6 +57,11 @@ export default {
                 })
             })
         }
+    },
+    computed: {
+        ...mapState({
+            storeConfig: state => state.setting.storeConfig
+        })
     }
 }
 </script>
