@@ -21,8 +21,16 @@
                         <div class="product-widget__inner mb-3">
                             <div class="inner__img mb-3">
                                 <router-link :to="`/${translation(item, 'slug', $i18n.locale)}`" class="text-decoration-none">
-                                    <img :src="`/storage/${storeConfig.medium_image_size}/${item.images[0].src}`" :width="storeConfig.medium_image_size" :height="storeConfig.medium_image_size" :alt="translation(item, 'name', $i18n.locale)" class="img-fluid">
+                                    <img :src="`/storage/${storeConfig.medium_image_size}/${item.images[0].src}`" :width="storeConfig.medium_image_size" :height="storeConfig.medium_image_size" :alt="translation(item, 'name', $i18n.locale)" :id="`img-listing-${item.id}`" class="img-fluid">
                                 </router-link>
+                            </div>
+                            <div class="inner__additional-images d-flex justify-content-center align-items-center">
+                                <template v-if="item.images.length > 1">
+                                    <template v-for="(ai, index) in item.images" :key="ai">
+                                        <img v-if="index < 3" @mouseover="changeImgSrc(item.id, ai.src)" :src="`/storage/${storeConfig.small_image_size}/${ai.src}`" width="30" height="30" :alt="translation(item, 'name', $i18n.locale)" class="img-loading img-fluid cursor-pointer mx-1">
+                                    </template>
+                                </template>
+                                <router-link v-if="item.images.length > 3" :to="`/${translation(item, 'slug', $i18n.locale)}`" class="small">+{{ item.images.length-3 }} {{ $t('options') }}</router-link>
                             </div>
                             <h3 class="inner__title h6 fw-light mb-0">
                                 <router-link :to="`/${translation(item, 'slug', $i18n.locale)}`" class="text-decoration-none text-dark">
@@ -204,6 +212,10 @@ export default {
         },
         updateModalStatus(v) {
             this.showModal = v
+        },
+        changeImgSrc(id, src) {
+            const tmp = document.getElementById(`img-listing-${id}`).src
+            document.getElementById(`img-listing-${id}`).src = tmp.substring(0, tmp.lastIndexOf("/")) + "/" + src
         }
     },
     computed: {
