@@ -22,7 +22,7 @@
     <li>Change <code>.env.example</code> to <code>.env</code></li>    
     <li><code>php artisan storage:link</code></li>
     <li><code>php artisan key:generate</code></li>
-    <li><a href="https://drive.google.com/file/d/1RvnnTmK21nExmFzxuy9jEW7cHdHz6kAX/view?usp=sharing" target="_blank">Download the data.zip</a> and extract it in <code>/storage/app/public</code>. This zip file includes .json data and images for the example theme.</li>
+    <li><a href="https://drive.google.com/file/d/1nLrHTi4IGx7_zQJock1Zgh4riysCE8sy/view?usp=sharing" target="_blank">Download the data.zip</a> and extract it in <code>/storage/app/public</code>. This zip file includes .json data and images for the example theme.</li>
     <li>Open 2 CLI and run: <code>npm run watch</code> and <code>php artisan serve</code></li>
     <li>Open: <a href="http://localhost:8000" target="_blank">http://localhost:8000</a> and enjoy!</li>
 </ol>
