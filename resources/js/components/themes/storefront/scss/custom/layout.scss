@@ -27,9 +27,16 @@ body {
 
 #slideshow {
     height: 100vh;
-    background-color: $gray-200;
+    background-color: $gray-200; // loading...
+    .carousel-inner {
+        background-color: $black; // make the slideshow darker
+    }
     .carousel-item {
         height: 100vh;
+
+        // make the slideshow darker
+        background-color: $black;
+        opacity: .5;
     }
 }
 
