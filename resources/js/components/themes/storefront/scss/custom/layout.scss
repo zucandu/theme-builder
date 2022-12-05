@@ -108,6 +108,10 @@ body {
             margin:0 0 1rem 0!important;
             .title {
                 font-weight: $font-weight-bold;
+                padding: 0 .5rem;
+            }
+            .text {
+                color: $gray-500;
             }
         }
     }
@@ -152,9 +156,6 @@ body {
                 text-decoration: none;
                 font-weight: $font-weight-bold;
             }
-        }
-        .text {
-            color: $gray-500;
         }
     }
 }
