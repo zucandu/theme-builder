@@ -125,6 +125,12 @@
                 </form>
 
                 <product-restock-modal :product-id="actualProductDetails.id" :product-name="productTranslation.name" :show-modal="showModal" @updateModalStatus="updateModalStatus"></product-restock-modal>
+
+                <!-- Hook after the form -->
+                <template v-for="(component, index) in $pluginStorefrontHooks['product_after_the_form']" :key="index">
+                    <component :is="component" :product="actualProductDetails" :translation="productTranslation" @updateMetaForm="updateMetaForm"></component>
+                </template>
+
             </div> <!-- Product loaded -->
             <product-details-loading v-else></product-details-loading>
         </div>
@@ -166,6 +172,13 @@
 
     <product-crosssell :loaded="loadedProduct"></product-crosssell>
     <product-upsell :loaded="loadedProduct"></product-upsell>
+
+    <!-- Hook at the bottom -->
+    <section v-if="loadedProduct">
+        <template v-for="(component, index) in $pluginStorefrontHooks['product_at_the_bottom']" :key="index">
+            <component :is="component" :product="actualProductDetails" :translation="productTranslation" @updateMetaForm="updateMetaForm"></component>
+        </template>
+    </section>
     
 </template>
 
