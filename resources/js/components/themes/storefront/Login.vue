@@ -32,30 +32,16 @@
 </template>
 
 <script>
-import { mapGetters, mapState } from 'vuex'
+import { mapGetters } from 'vuex'
 export default {
     data: () => ({
         formdata: {
             email: undefined,
-            password: undefined,
-            grecaptcha_token: undefined,
+            password: undefined
         }
     }),
     methods: {
-        async login() {
-
-            // Get Google reCAPTCHA token if the site key is set
-            const _ = this
-            if(_.storeConfig && _.storeConfig.recaptcha_site_key) {
-                grecaptcha.ready(function() {
-                    grecaptcha.execute(_.storeConfig.recaptcha_site_key, { action: 'submit' }).then(function(token) {
-                        _.formdata.grecaptcha_token = token
-                    })
-                })
-                while(_.formdata.grecaptcha_token === undefined) {
-                    await new Promise(r => setTimeout(r, 100))
-                }
-            }
+        login() {
 
             this.$store.dispatch('login', this.formdata).then(() => {
                 this.$store.dispatch('account').then(() => {
@@ -74,10 +60,7 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(['customerAccessToken']),
-        ...mapState({
-            storeConfig: state => state.setting.storeConfig
-        })
+        ...mapGetters(['customerAccessToken'])
     }
 }
 </script>
