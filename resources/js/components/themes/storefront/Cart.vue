@@ -5,6 +5,12 @@
                 <p class="text-danger" v-if="foundItemOutOfStock !== false">
                     {{$t('Some items in your shopping cart currently do not have enough stock. Please make adjustments before continuing to checkout.')}}
                 </p>
+
+                <!-- Hook cart top -->
+                <template v-for="(component, index) in $pluginStorefrontHooks['cart_top']" :key="index">
+                    <component :is="component"></component>
+                </template>
+                
                 <div class="tbl-cart">
                     <div class="row fw-bold d-none d-md-flex mb-3">
                         <div class="col-md-2">{{ $t('Image') }}</div>
@@ -139,10 +145,16 @@
                 </section>
             </div>
         </div>
+
+        <!-- Hook cart bottom -->
+        <template v-for="(component, index) in $pluginStorefrontHooks['cart_bottom']" :key="index">
+            <component :is="component"></component>
+        </template>
+
     </section>
+
     <product-crosssell :loaded="loadedWidgets" :items="items"></product-crosssell>
     <product-upsell :loaded="loadedWidgets" :items="items"></product-upsell>
-    
     <product-restock-modal :product-id="picked.id" :product-name="picked.name" :show-modal="showModal" @updateModalStatus="updateModalStatus"></product-restock-modal>
 
 </template>
