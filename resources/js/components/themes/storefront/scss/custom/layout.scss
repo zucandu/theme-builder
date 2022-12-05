@@ -93,6 +93,9 @@ body {
 }
 
 .z-index-sidebar {
+    > .container {
+        padding: 0!important;
+    }
     .home-top-section {
         margin: 0 !important;
         h3 {

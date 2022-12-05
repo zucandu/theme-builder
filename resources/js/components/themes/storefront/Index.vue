@@ -6,10 +6,11 @@
                 <banners-left></banners-left>
             </div>
             <div class="col-lg-9 order-lg-1 order-0">
+
                 <section v-if="loadedWidgets" class="container">
                     <div v-if="productWidget.new.length > 0" class="row">
                         <img @load="initTinySliderNew" src="/storage/pixel.gif" alt="js" class="d-none">
-                        <div class="col-12 h3 fw-light pb-5 mb-0"><span class="fw-bold text-dark">{{ $t("New Arrival") }}</span> {{ $t('products') }}</div>
+                        <div class="col-12 h3 fw-light pb-5 mb-0 text-uppercase"><span class="fw-bold text-dark">{{ $t("New Arrival") }}</span> {{ $t('products') }}</div>
                         <div :class="`col-12 position-relative ${loadingTinySliderNew ? 'd-none' : ''}`">
                             <div class="z-tiny-slider-new-section">
                                 <product-widget :products="productWidget.new" @pickItemRestock="pickItemRestock"></product-widget>
@@ -28,6 +29,32 @@
                         <product-widget-loading></product-widget-loading>
                     </div>
                 </section>
+
+                <banners-top></banners-top>
+
+                <section v-if="loadedWidgets" class="container">
+                    <div v-if="productWidget.featured.length > 0" class="row mt-lg-5 mt-3">
+                        <img @load="initTinySliderFeatured" src="/storage/pixel.gif" alt="js" class="d-none">
+                        <div class="col-12 h3 fw-light pb-5 mb-0 text-uppercase"><span class="fw-bold text-dark">{{ $t("Best Selling") }}</span> {{ $t('products') }}</div>
+                        <div :class="`col-12 position-relative ${loadingTinySliderFeatured ? 'd-none' : ''}`">
+                            <div class="z-tiny-slider-featured-section">
+                                <product-widget :products="productWidget.featured" @pickItemRestock="pickItemRestock"></product-widget>
+                            </div>
+                        </div>
+                        <template v-if="loadingTinySliderFeatured">
+                            <product-widget-loading></product-widget-loading>
+                        </template>
+                    </div>
+                </section>
+                <section v-else class="container">
+                    <div class="row mt-lg-5 mt-3">
+                        <div class="col-12 h3 fw-light pb-5 mb-0">
+                            <div class="py-4 rounded col-4 bg-gray-200"></div>
+                        </div>
+                        <product-widget-loading></product-widget-loading>
+                    </div>
+                </section>
+
             </div>
         </div>
     </div>
@@ -38,6 +65,7 @@
 
 <script>
 import BannerSlideshow from '@theme/storefront/templates/banner/Slideshow'
+import BannersTop from '@theme/storefront/templates/banner/Top'
 import BannersLeft from '@theme/storefront/templates/banner/Left'
 import BlockElement from '@theme/storefront/templates/menu/BlockElement'
 import ProductWidget from '@theme/storefront/templates/product/ProductWidget'
@@ -56,7 +84,7 @@ export default {
         },
         showModal: false
     }),
-    components: { BannerSlideshow, BannersLeft, BlockElement, ProductWidget, ProductWidgetLoading, ProductRestockModal },
+    components: { BannerSlideshow, BannersLeft, BannersTop, BlockElement, ProductWidget, ProductWidgetLoading, ProductRestockModal },
     created() {
         if(this.posts.length === 0) {
             this.$store.dispatch('latestPosts')
@@ -103,11 +131,8 @@ export default {
                     576: {
                         items: 3
                     },
-                    992: {
-                        items: 4
-                    },
                     1200: {
-                        items: 6
+                        items: 5
                     }
                 }
             })
@@ -129,11 +154,8 @@ export default {
                     576: {
                         items: 3
                     },
-                    992: {
-                        items: 4
-                    },
                     1200: {
-                        items: 6
+                        items: 5
                     }
                 }
             })
