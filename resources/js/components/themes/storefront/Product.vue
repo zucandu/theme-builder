@@ -191,6 +191,13 @@
     <product-crosssell :loaded="loadedProduct"></product-crosssell>
     <product-upsell :loaded="loadedProduct"></product-upsell>
     
+    <!-- Hook at the bottom -->
+    <section v-if="loadedProduct">
+        <template v-for="(component, index) in $pluginStorefrontHooks['product_at_the_bottom']" :key="index">
+            <component :is="component" :product="actualProductDetails" :translation="productTranslation" @updateMetaForm="updateMetaForm"></component>
+        </template>
+    </section>
+    
 </template>
 
 <script>
