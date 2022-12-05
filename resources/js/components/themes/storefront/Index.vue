@@ -4,6 +4,16 @@
             <div class="z-index-sidebar col-lg-3 order-lg-0 order-1">
                 <block-element menu-key="home-top" :block-loading="3"></block-element>
                 <banners-left></banners-left>
+                <div v-for="post in latestPosts" :key="post.id" class="post-index mb-5">
+                    <div class="post-index__bg w-100 bg-gray-200" :style="`height:180px; background: #e9ecef url('/storage/${storeConfig.medium_image_size}/${post.image}') center center no-repeat;background-size: cover;`"></div>
+                    <h4 class="h6 fw-bold">
+                        <router-link class="text-dark text-decoration-none" :to="`/article/${translation(post, 'slug', $i18n.locale)}`">
+                            {{ translation(post, 'title', $i18n.locale) }}
+                        </router-link>
+                    </h4>
+                    <div class="post-index__date text-info opacity-75">{{ dateFormat(post.created_at) }}</div>
+                    <div>{{ translation(post, 'summary', $i18n.locale) }}</div>
+                </div>
             </div>
             <div class="col-lg-9 order-lg-1 order-0">
 
@@ -188,8 +198,8 @@ export default {
         },
         dateFormat(date) {
             const d = new Date(date)
-            const monthNames = ["January", "February", "March", "April", "May", "June",
-                "July", "August", "September", "October", "November", "December"
+            const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
             ];
             return monthNames[d.getMonth()] + " " + ("0" + d.getDate()).slice(-2) + " " + d.getFullYear()
         },
