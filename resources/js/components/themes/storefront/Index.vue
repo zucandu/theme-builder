@@ -7,8 +7,8 @@
                 <div class="h5 text-uppercase fw-bold mt-4 mb-3">{{ $t('Our blog') }}</div>
                 <div v-for="post in latestPosts" :key="post.id" class="post-index mb-3 pb-3 border-bottom border-info">
                     <div class="post-index__bg w-100 bg-gray-200" :style="`height:180px; background: #e9ecef url('/storage/${storeConfig.medium_image_size}/${post.image}') center center no-repeat;background-size: cover;`"></div>
-                    <h4 class="h6 fw-bold py-3 mb-0">
-                        <span class="post-index__date text-success text-end small me-2">{{ dateFormat(post.created_at) }}</span>
+                    <h4 class="h6 py-3 mb-0">
+                        <span class="post-index__date text-success text-end fw-bold me-2">{{ dateFormat(post.created_at) }}</span>
                         <router-link class="text-dark text-decoration-none" :to="`/article/${translation(post, 'slug', $i18n.locale)}`">
                             {{ translation(post, 'title', $i18n.locale) }}
                         </router-link>
