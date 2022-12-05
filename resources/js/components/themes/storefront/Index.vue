@@ -4,15 +4,16 @@
             <div class="z-index-sidebar col-lg-3 order-lg-0 order-1">
                 <block-element menu-key="home-top" :block-loading="3"></block-element>
                 <banners-left></banners-left>
-                <div v-for="post in latestPosts" :key="post.id" class="post-index mb-5">
+                <div class="h5 text-uppercase fw-bold mt-4 mb-3">{{ $t('Our blog') }}</div>
+                <div v-for="post in latestPosts" :key="post.id" class="post-index mb-3 pb-3 border-bottom border-info">
                     <div class="post-index__bg w-100 bg-gray-200" :style="`height:180px; background: #e9ecef url('/storage/${storeConfig.medium_image_size}/${post.image}') center center no-repeat;background-size: cover;`"></div>
-                    <h4 class="h6 fw-bold">
+                    <h4 class="h6 fw-bold py-3 mb-0">
+                        <span class="post-index__date text-success text-end small me-2">{{ dateFormat(post.created_at) }}</span>
                         <router-link class="text-dark text-decoration-none" :to="`/article/${translation(post, 'slug', $i18n.locale)}`">
                             {{ translation(post, 'title', $i18n.locale) }}
                         </router-link>
                     </h4>
-                    <div class="post-index__date text-info opacity-75">{{ dateFormat(post.created_at) }}</div>
-                    <div>{{ translation(post, 'summary', $i18n.locale) }}</div>
+                    <div class="text-gray-500" v-html="translation(post, 'summary', $i18n.locale)"></div>
                 </div>
             </div>
             <div class="col-lg-9 order-lg-1 order-0">
@@ -201,7 +202,7 @@ export default {
             const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
                 "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
             ];
-            return monthNames[d.getMonth()] + " " + ("0" + d.getDate()).slice(-2) + " " + d.getFullYear()
+            return monthNames[d.getMonth()] + " " + ("0" + d.getDate()).slice(-2)
         },
         pickItemRestock(v) {
             this.picked = v

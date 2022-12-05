@@ -29,7 +29,9 @@ figure.image img {max-width: 100%; height: auto;}
 .fade-enter-from,.fade-leave-to {
     opacity: 0;
 }
-
+.text-gray-500 {
+    color: $gray-500;
+}
 .bg-gray-200 {
     background-color: $gray-200;
 }
