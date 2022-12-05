@@ -1,5 +1,14 @@
 <template>
     <footer>
+        <div class="container-fluid bg-primary">
+            <div class="container">
+                <div class="row py-5">
+                    <div class="col-12">
+                        div.h4.fw-bold
+                    </div>
+                </div>
+            </div>
+        </div>
         <block-element menu-key="footer-middle" :block-loading="1"></block-element>
         <section class="py-4 border-top mt-5 bg-gray-200">
             <div class="container">
