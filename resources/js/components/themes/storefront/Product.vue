@@ -280,7 +280,7 @@ export default {
     computed: {
         ...mapGetters([
             'translation', 'transObj', 'productVariants', 'productAttributesReadonly', 'productAttributesText', 
-            'childProductByAttributes', 'aggregatedReviews', 'imageSrc', 'productPrice', 'compare'
+            'childProductByAttributes', 'productPrice'
         ]),
         ...mapState({
             productDetails: state => state.product.productDetails,
