@@ -114,6 +114,25 @@ body {
     
 }
 
+.home-bottom-section {
+    h3 {
+        display: none;
+    }
+    .block-element {
+        position: relative;
+    }
+    .block-element__img img {
+        width: 100%;
+    }
+    .block-element__content {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        padding: 0 100px;
+    }
+}
+
 @media (max-width: 1199px) {
     #slideshow {
         height: auto;

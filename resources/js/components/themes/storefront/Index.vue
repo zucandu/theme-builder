@@ -55,6 +55,31 @@
                     </div>
                 </section>
 
+                <block-element menu-key="home-bottom" img-type="original" :block-loading="3"></block-element>
+
+                <section v-if="loadedWidgets" class="container sale">
+                    <div v-if="productWidget.sale.length > 0" class="row mt-lg-5 mt-3">
+                        <img @load="initTinySliderSale" src="/storage/pixel.gif" alt="js" class="d-none">
+                        <div class="col-12 h3 fw-light pb-5 mb-0"><span class="fw-bold text-dark">{{ $t("Sale") }}</span> {{ $t('products') }}</div>
+                        <div :class="`col-12 position-relative ${loadingTinySliderSale ? 'd-none' : ''}`">
+                            <div class="z-tiny-slider-sale-section">
+                                <product-widget :products="productWidget.sale" @pickItemRestock="pickItemRestock"></product-widget>
+                            </div>
+                        </div>
+                        <template v-if="loadingTinySliderSale">
+                            <product-widget-loading></product-widget-loading>
+                        </template>
+                    </div>
+                </section>
+                <section v-else class="container">
+                    <div class="row mt-lg-5 mt-3">
+                        <div class="col-12 h3 fw-light pb-5 mb-0">
+                            <div class="py-4 rounded col-4 bg-gray-200"></div>
+                        </div>
+                        <product-widget-loading></product-widget-loading>
+                    </div>
+                </section>
+
             </div>
         </div>
     </div>
