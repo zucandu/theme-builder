@@ -20,6 +20,7 @@ import DisplayToast from '@theme/storefront/templates/element/DisplayToast'
 
 // Modules
 import storefront from '@/store/storefront'
+import Offcanvas from 'bootstrap/js/dist/offcanvas';
 
 import { mapGetters, mapState } from 'vuex'
 export default {
@@ -62,6 +63,14 @@ export default {
         tinysliderjs.src = `https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.2/min/tiny-slider.js`
         tinysliderjs.id = 'tiny-slider-js'
         document.head.appendChild(tinysliderjs)
+
+        /**
+         * Menu
+         */
+        const offcanvas = document.getElementById('offcanvas-menu')
+        if(offcanvas) {
+            new Offcanvas(offcanvas)
+        }
 
     },
 
