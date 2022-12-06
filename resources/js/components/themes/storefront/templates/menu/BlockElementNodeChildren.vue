@@ -8,8 +8,8 @@
             <img v-else :src="`/storage/${imgSize}/${item.extra_data.image}`" :alt="translation.title" @load="imgloaded" class="img-fluid img-loading">
         </router-link>
         <template v-else>
-            <img v-if="imgType === `original`" :src="`/storage/${item.extra_data.image}`" :alt="translation.title" @load="imgloaded" class="img-fluid img-loading">
-            <img v-else :src="`/storage/${imgSize}/${item.extra_data.image}`" :alt="translation.title" @load="imgloaded" class="img-fluid img-loading">
+            <img v-if="imgType === `original`" :src="`/storage/${item.extra_data.image}`" :alt="translation.title" width="100" height="100" @load="imgloaded" class="img-fluid img-loading">
+            <img v-else :src="`/storage/${imgSize}/${item.extra_data.image}`" :alt="translation.title" width="100" height="100" @load="imgloaded" class="img-fluid img-loading">
         </template>
     </div>
     <div :class="`block-element__content index-${index}`">
