@@ -1,11 +1,11 @@
 <template>
     <div class="zuc-listing-container row g-3 justify-content-center">
-        <div class="zuc-listing-sidebar col-lg-2">
+        <div class="zuc-listing-sidebar col-lg-3">
             <section class="zuc-listing-sidebar__filter">
                 <listing-filters :filters="filters" :reset-filter="resetFilters" @updateContent="updateContent"></listing-filters>
             </section>
         </div>
-        <div class="zuc-listing-products col-lg-9 offset-lg-1">
+        <div class="zuc-listing-products col-lg-9">
             <section class="zuc-listing-products__sort d-sm-flex justify-content-between mb-5">
                 <div class="showing">{{ $t('Showing') }} {{ paginationShowing.from }} {{ $t('to') }} {{ paginationShowing.to }} {{ $t('of') }} {{ paginationShowing.total }} {{ $t('products') }}</div>
                 <div class="btn-group me-4">
