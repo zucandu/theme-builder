@@ -84,11 +84,9 @@ export default {
     props: ['menuKey', 'blockLoading', 'imgType'],
     created() {
         if(this.menuDetails[this.menuKey] === undefined) {
-            this.$store.dispatch('menuDetails', this.menuKey).then(() => {
-                this.loaded = false
-            })
+            this.$store.dispatch('menuDetails', this.menuKey).then(() => this.loaded = true)
         } else {
-            this.loaded = false
+            this.loaded = true
         }
     },
     computed: {
