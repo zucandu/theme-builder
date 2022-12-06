@@ -22,6 +22,7 @@
 </template>
 
 <script>
+import Offcanvas from 'bootstrap/js/dist/offcanvas';
 import DropdownMenu from '@theme/storefront/templates/menu/DropdownMenu'
 import MegaMenu from '@theme/storefront/templates/menu/MegaMenu'
 import LinkMenu from '@theme/storefront/templates/menu/LinkMenu'
@@ -36,6 +37,12 @@ export default {
         this.$store.dispatch('menuDetails', this.menuKey).then(() => {
             this.loaded = true
         })
+    },
+    mounted() {
+        const offcanvas = document.getElementById('offcanvas-menu')
+        if(offcanvas) {
+            new Offcanvas(offcanvas)
+        }
     },
     computed: {
         ...mapState({
