@@ -174,7 +174,16 @@ body {
     height: 350px;
 }
 
+.listing-filter-inner {
+    display: block;
+    opacity: 1;
+    position: relative;
+}
+
 @media (max-width: 1199px) {
+    .main {
+        margin-top: 10rem;
+    }
     #slideshow {
         height: auto;
         min-height: 300px;
