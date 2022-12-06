@@ -4,12 +4,12 @@
     </div>
     <div v-if="item.extra_data.image" class="block-element__img">
         <router-link v-if="item.extra_data.no_link !== 1" :to="url">
-            <img v-if="imgType === `original`" :src="`/storage/${item.extra_data.image}`" :alt="translation.title" class="img-fluid">
-            <img v-else :src="`/storage/${imgSize}/${item.extra_data.image}`" :alt="translation.title" class="img-fluid">
+            <img v-if="imgType === `original`" :src="`/storage/${item.extra_data.image}`" :alt="translation.title" @load="imgloaded" class="img-fluid img-loading">
+            <img v-else :src="`/storage/${imgSize}/${item.extra_data.image}`" :alt="translation.title" @load="imgloaded" class="img-fluid img-loading">
         </router-link>
         <template v-else>
-            <img v-if="imgType === `original`" :src="`/storage/${item.extra_data.image}`" :alt="translation.title" class="img-fluid">
-            <img v-else :src="`/storage/${imgSize}/${item.extra_data.image}`" :alt="translation.title" class="img-fluid">
+            <img v-if="imgType === `original`" :src="`/storage/${item.extra_data.image}`" :alt="translation.title" @load="imgloaded" class="img-fluid img-loading">
+            <img v-else :src="`/storage/${imgSize}/${item.extra_data.image}`" :alt="translation.title" @load="imgloaded" class="img-fluid img-loading">
         </template>
     </div>
     <div :class="`block-element__content index-${index}`">
@@ -25,6 +25,11 @@
 import { mapGetters } from 'vuex'
 export default {
     props: ['item', 'index', 'imgSize', 'imgType'],
+    methods: {
+        imgloaded(e) {
+            return e.target.classList.remove('img-loading')
+        }
+    },
     computed: {
         ...mapGetters(['transObj']),
         translation() {
