@@ -2,14 +2,14 @@
     <div v-if="item.icon" class="block-element__icon">
         <img :src="`/storage/${item.icon}`" width="40" height="40" :alt="translation.title">
     </div>
-    <div v-if="item.extra_data.image" class="block-element__img">
+    <div v-if="item.extra_data.image" class="block-element__img img-loading">
         <router-link v-if="item.extra_data.no_link !== 1" :to="url">
-            <img v-if="imgType === `original`" :src="`/storage/${item.extra_data.image}`" :alt="translation.title" @load="imgloaded" class="img-fluid img-loading">
-            <img v-else :src="`/storage/${imgSize}/${item.extra_data.image}`" :alt="translation.title" @load="imgloaded" class="img-fluid img-loading">
+            <img v-if="imgType === `original`" :src="`/storage/${item.extra_data.image}`" :alt="translation.title" @load="imgloaded" class="img-fluid">
+            <img v-else :src="`/storage/${imgSize}/${item.extra_data.image}`" :alt="translation.title" @load="imgloaded" class="img-fluid">
         </router-link>
         <template v-else>
-            <img v-if="imgType === `original`" :src="`/storage/${item.extra_data.image}`" :alt="translation.title" width="100" height="100" @load="imgloaded" class="img-fluid img-loading">
-            <img v-else :src="`/storage/${imgSize}/${item.extra_data.image}`" :alt="translation.title" width="100" height="100" @load="imgloaded" class="img-fluid img-loading">
+            <img v-if="imgType === `original`" :src="`/storage/${item.extra_data.image}`" :alt="translation.title" width="100" height="100" @load="imgloaded" class="img-fluid">
+            <img v-else :src="`/storage/${imgSize}/${item.extra_data.image}`" :alt="translation.title" width="100" height="100" @load="imgloaded" class="img-fluid">
         </template>
     </div>
     <div :class="`block-element__content index-${index}`">
@@ -27,7 +27,7 @@ export default {
     props: ['item', 'index', 'imgSize', 'imgType'],
     methods: {
         imgloaded(e) {
-            return e.target.classList.remove('img-loading')
+            return e.target.parentNode.parentNode.classList.remove('img-loading')
         }
     },
     computed: {

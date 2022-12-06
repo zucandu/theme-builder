@@ -130,6 +130,13 @@ body {
     }
     .block-element__img {
         position: relative;
+        &.img-loading {
+            width: 100%;
+            min-height: 100px;
+            background-color: $gray-200;
+            padding: 1rem;
+            opacity: .5;
+        }
         img {
             width: 100%;
         }
