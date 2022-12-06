@@ -219,8 +219,10 @@ export default {
                 console.log(item)
             }) */
             const els = document.querySelectorAll('.inner__title')
-            const a = [...els].map(e => this.heightProductName = e.offsetHeight > this.heightProductName ? e.offsetHeight : this.heightProductName)
-            console.log(this.heightProductName, a)
+            var maxHeight = Math.max.apply(null, [...els].map(e => console.log(+e.offsetHeight)));
+            console.log(maxHeight)
+            /* const a = [...els].map(e => this.heightProductName = e.offsetHeight > this.heightProductName ? e.offsetHeight : this.heightProductName)
+            console.log(this.heightProductName, a) */
         }
     },
     computed: {
