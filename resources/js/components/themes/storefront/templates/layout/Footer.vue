@@ -1,6 +1,6 @@
 <template>
     <footer>
-        <div class="container-fluid bg-primary">
+        <div class="container-fluid bg-secondary">
             <div class="container newsletter-container">
                 <div class="row h-100">
                     <div class="col-6 h-100 d-flex align-items-center">
@@ -18,7 +18,11 @@
                 </div>
             </div>
         </div>
-        <block-element menu-key="footer-middle" :block-loading="1"></block-element>
+        
+        <div class="container-fluid bg-gray-200">
+            <block-element menu-key="footer-middle" :block-loading="1"></block-element>
+        </div>
+
         <section class="py-4 border-top mt-5 bg-gray-200">
             <div class="container">
                 <div class="row align-items-center">
