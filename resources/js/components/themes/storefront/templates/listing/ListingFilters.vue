@@ -103,7 +103,6 @@
 </template>
 
 <script>
-import Offcanvas from 'bootstrap/js/dist/offcanvas';
 import Collapse from 'bootstrap/js/dist/collapse';
 import DisplayPriceRange from '@theme/storefront/templates/currency/DisplayPriceRange'
 import ListingFilterLoading from '@theme/storefront/templates/listing/ListingFilterLoading'
@@ -128,11 +127,6 @@ export default {
     },
     mounted() {
         [...document.querySelectorAll('.collapse')].map(collapseEl => new Collapse(collapseEl))
-        const offcanvas = document.getElementById('offcanvas-filter')
-        if(offcanvas) {
-            new Offcanvas(offcanvas)
-        }
-
     },
     computed: {
         ...mapGetters(['translation', 'displayPriceRange', 'urlParamValueFromName'])
