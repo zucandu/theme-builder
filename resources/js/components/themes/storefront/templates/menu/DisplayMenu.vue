@@ -41,7 +41,7 @@ export default {
     mounted() {
         const offcanvas = document.getElementById('offcanvas-menu')
         if(offcanvas) {
-            new Offcanvas(offcanvas).hide()
+            new Offcanvas(offcanvas)
         }
     },
     computed: {

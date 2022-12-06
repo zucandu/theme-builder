@@ -127,6 +127,10 @@ export default {
     },
     mounted() {
         [...document.querySelectorAll('.collapse')].map(collapseEl => new Collapse(collapseEl))
+        const offcanvas = document.getElementById('offcanvas-filter')
+        if(offcanvas) {
+            new Offcanvas(offcanvas)
+        }
     },
     computed: {
         ...mapGetters(['translation', 'displayPriceRange', 'urlParamValueFromName'])
