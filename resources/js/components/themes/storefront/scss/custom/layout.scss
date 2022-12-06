@@ -82,6 +82,7 @@ body {
         }
     }
     .block-element {
+        padding: 3rem!important;
         a {
             color: $dark;
         }
@@ -120,6 +121,7 @@ body {
 }
 
 .home-bottom-section {
+    min-height: 150px;
     h3 {
         display: none;
     }

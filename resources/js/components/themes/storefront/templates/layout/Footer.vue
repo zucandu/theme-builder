@@ -23,7 +23,7 @@
             <block-element menu-key="footer-middle" :block-loading="1"></block-element>
         </div>
 
-        <section class="py-4 border-top mt-5 bg-gray-200">
+        <section class="py-4 border-top]">
             <div class="container">
                 <div class="row align-items-center">
                     <div class="col-lg-8 col-6 order-md-0 order-1">

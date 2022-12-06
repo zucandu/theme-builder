@@ -57,14 +57,16 @@
                 </div>
             </div>
         </div>
-        <div v-else class="row">
-            <div class="col-12">
-                <div class="py-3 bg-gray-200 opacity-50 w-50 rounded mb-3"></div>
-                <div class="py-2 bg-gray-200 opacity-50 w-100 rounded mb-1"></div>
-                <div class="py-2 bg-gray-200 opacity-50 w-100 rounded mb-1"></div>
-                <div class="py-2 bg-gray-200 opacity-50 w-75 rounded mb-1"></div>
-                <div class="py-2 bg-gray-200 opacity-50 w-50 rounded mb-1"></div>
-                <div class="py-2 bg-gray-200 opacity-50 w-25 rounded mb-1"></div>
+        <div v-else class="container mt-lg-5 mt-3">
+            <div class="row">
+                <div class="col-12">
+                    <div class="py-3 bg-gray-200 opacity-50 w-50 rounded mb-3"></div>
+                    <div class="py-2 bg-gray-200 opacity-50 w-100 rounded mb-1"></div>
+                    <div class="py-2 bg-gray-200 opacity-50 w-100 rounded mb-1"></div>
+                    <div class="py-2 bg-gray-200 opacity-50 w-75 rounded mb-1"></div>
+                    <div class="py-2 bg-gray-200 opacity-50 w-50 rounded mb-1"></div>
+                    <div class="py-2 bg-gray-200 opacity-50 w-25 rounded mb-1"></div>
+                </div>
             </div>
         </div>
     </div>
@@ -83,10 +85,10 @@ export default {
     created() {
         if(this.menuDetails[this.menuKey] === undefined) {
             this.$store.dispatch('menuDetails', this.menuKey).then(() => {
-                this.loaded = true
+                this.loaded = false
             })
         } else {
-            this.loaded = true
+            this.loaded = false
         }
     },
     computed: {

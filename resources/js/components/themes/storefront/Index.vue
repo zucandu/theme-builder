@@ -66,7 +66,7 @@
                     </div>
                 </section>
 
-                <block-element menu-key="home-bottom" img-type="original" :block-loading="3"></block-element>
+                <block-element menu-key="home-bottom" img-type="original"></block-element>
 
                 <section v-if="loadedWidgets" class="container sale">
                     <div v-if="productWidget.sale.length > 0" class="row mt-lg-5 mt-3">
