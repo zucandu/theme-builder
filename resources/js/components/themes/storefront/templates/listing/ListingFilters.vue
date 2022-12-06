@@ -2,9 +2,7 @@
     <div class="listing-filter-container">
 
         <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary d-block d-lg-none" data-bs-toggle="modal" data-bs-target="#listing-filter-modal">
-            Launch demo modal
-        </button>
+        <button type="button" class="btn btn-primary d-block d-lg-none" data-bs-toggle="modal" data-bs-target="#listing-filter-modal">{{ $t('All filters') }}</button>
 
         <!-- Modal -->
         <div class="modal fade" :id="`${this.windowWidth > 991 ? `listing-filter-inner` : `listing-filter-modal`}`" tabindex="-1" aria-labelledby="listing-filter-modal-label" aria-hidden="true">
@@ -15,7 +13,88 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        ...
+                        
+                        <!-- BASE FIELDS -->
+                        <div v-if="Object.keys(filters).length > 0" class="d-block">
+                            <div v-for="(filterOptions, filterName) in filters.base" :key="filterName" class="mb-4">
+                                <div class="h6 mb-3">
+                                    <a class="text-decoration-none text-dark d-flex align-items-center justify-content-between" role="button" data-bs-toggle="collapse" :data-bs-target="`#filter-${filterName}`" :aria-controls="`#filter-${filterName}`" aria-expanded="true">
+                                        <span>{{ $t(filterName) }}</span>
+                                        <span class="arrow">&#8250;</span>
+                                    </a>
+                                </div>
+                                <ul :id="`filter-${filterName}`" :class="`collapse show list-unstyled filter-options count-${filterOptions.length}`">
+                                    <li v-for="(option, index) in filterOptions" :key="index" class="py-2">
+                                        <input v-model="selected" :value="option.id" class="form-check-input" type="checkbox" :id="`cb-option${option.id}`" :disabled="option.count === 0">
+                                        <label class="form-check-label ms-2" :for="`cb-option${option.id}`">{{ translation(option, 'name', $i18n.locale) }} ({{option.count}})</label>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <listing-filter-loading v-else></listing-filter-loading>
+
+                        <!-- ATTRIBUTE -->
+                        <div v-if="Object.keys(filters).length > 0" class="d-block">
+                            <div v-for="(attOption, aoid) in filters.attribute" :key="aoid" class="my-4">
+                                <div class="h5 mb-3">
+                                    <a class="text-decoration-none text-dark d-flex align-items-center justify-content-between collapsed" role="button" data-bs-toggle="collapse" :data-bs-target="`#filter-${aoid}`" :aria-controls="`#filter-${aoid}`" aria-expanded="true">
+                                        <span>{{ translation(attOption, 'name', $i18n.locale) }}</span>
+                                        <span class="arrow">&#8250;</span>
+                                    </a>
+                                </div>
+                                <ul :id="`filter-${aoid}`" :class="`collapse list-unstyled filter-options count-${Object.keys(attOption.values).length}`">
+                                    <li v-for="(attOptionValue, aovid) in attOption.values" :key="aovid" class="py-2">
+                                        <input v-model="selected" :value="attOptionValue.id" class="form-check-input" type="checkbox" :id="`cb-option-value${attOptionValue.id}`" :disabled="attOptionValue.count === 0">
+                                        <label class="form-check-label ms-2" :for="`cb-option-value${attOptionValue.id}`">{{translation(attOptionValue, 'name', $i18n.locale)}} ({{attOptionValue.count}})</label>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <listing-filter-loading v-else></listing-filter-loading>
+
+                        <!-- CUSTOMIZE -->
+                        <div v-if="Object.keys(filters).length > 0" class="d-block">
+                            <div v-for="(filterOptions, filterName) in filters.customize" :key="filterName" class="my-4">
+                                <div class="h5 mb-3">
+                                    <a class="text-decoration-none text-dark d-flex align-items-center justify-content-between collapsed" role="button" data-bs-toggle="collapse" :data-bs-target="`#filter-${filterName}`" :aria-controls="`#filter-${filterName}`" aria-expanded="true">
+                                        <span>{{ $t(filterName) }}</span>
+                                        <span class="arrow">&#8250;</span>
+                                    </a>
+                                </div>
+                                <ul :id="`filter-${filterName}`" :class="`collapse list-unstyled filter-options count-${filterOptions.length}`">
+                                    <li v-for="(option, index) in filterOptions" :key="index" class="py-2">
+                                        <input v-model="selected" :value="option.id" class="form-check-input" type="checkbox" :id="`cb-option${option.id}`" :disabled="option.count === 0">
+                                        <label class="form-check-label ms-2" :for="`cb-option${option.id}`" v-html="$t(option.name) + ' (' + option.count + ')'"></label>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <listing-filter-loading v-else></listing-filter-loading>
+
+                        <!-- PRICE -->
+                        <div v-if="Object.keys(filters).length > 0" class="d-block">
+                            <div v-for="(filterOptions, filterName) in filters.price" :key="filterName" class="my-4">
+                                <div class="h5 mb-3">
+                                    <a class="text-decoration-none text-dark d-flex align-items-center justify-content-between" role="button" data-bs-toggle="collapse" :data-bs-target="`#filter-${filterName}`" :aria-controls="`#filter-${filterName}`" aria-expanded="true">
+                                        <span>{{ $t(filterName) }}</span>
+                                        <span class="arrow">&#8250;</span>
+                                    </a>
+                                </div>
+                                <ul :id="`filter-${filterName}`" :class="`collapse show list-unstyled filter-options count-${filterOptions.length}`">
+                                    <li v-for="(option, index) in filterOptions" :key="index" class="py-2">
+                                        <input v-model="selected" :value="option.id" class="form-check-input" type="checkbox" :id="`cb-option${option.id}`" :disabled="option.count === 0">
+                                        <label class="form-check-label ms-2" :for="`cb-option${option.id}`">
+                                            <display-price-range :price-range="displayPriceRange(option.name)"></display-price-range> ({{option.count}})
+                                        </label>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <listing-filter-loading v-else></listing-filter-loading>
+
+                        <div v-if="selected.length > 0" class="d-block">
+                            <button class="btn btn-sm mt-3 mt-lg-0 btn-outline-danger" @click="selected = []">{{$t('Reset All')}}</button>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
