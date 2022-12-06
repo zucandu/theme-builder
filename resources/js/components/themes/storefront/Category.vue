@@ -5,7 +5,7 @@
                 <listing-filters :filters="filters" :reset-filter="resetFilters" @updateContent="updateContent"></listing-filters>
             </section>
         </div>
-        <div class="zuc-listing-products col-lg-9">
+        <div class="zuc-listing-products col-lg-8 offset-lg-1">
             <section class="zuc-listing-products__sort d-sm-flex justify-content-between mb-5">
                 <div class="showing">{{ $t('Showing') }} {{ paginationShowing.from }} {{ $t('to') }} {{ paginationShowing.to }} {{ $t('of') }} {{ paginationShowing.total }} {{ $t('products') }}</div>
                 <div class="btn-group me-4">
@@ -16,7 +16,7 @@
                 </div>
             </section>
             <section v-if="!loading" class="zuc-listing-products__row row g-3">
-                <div v-for="(item, index) in products" :key="index" class="col-lg-3 col-md-4 col-6">
+                <div v-for="(item, index) in products" :key="index" class="col-lg-4 col-6">
                     <div class="product-widget__inner mb-3">
                         <div class="inner__img mb-3">
                             <router-link :to="`/${translation(item, 'slug', $i18n.locale)}`" class="text-decoration-none">
@@ -46,13 +46,13 @@
                         </div>
                         <template v-if="item.quantity > 0">
                             <div v-if="+item.has_attributes === 0" class="inner__cart d-flex w-100 bottom-0 mt-3">
-                                <input type="number" v-model="cartQty[item.id]" class="form-control form-control-sm border-end-0">
-                                <button class="btn btn-sm btn-success rounded-0 border-start-0 text-white px-3" @click.stop="addToCart(item, cartQty[item.id])" data-bs-toggle="modal" data-bs-target="#z-cart-modal">
+                                dfdf
+                                <!-- <button class="btn btn-sm btn-success rounded-0 border-start-0 text-white px-3" @click.stop="addToCart(item, cartQty[item.id])" data-bs-toggle="modal" data-bs-target="#z-cart-modal">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart-plus" viewBox="0 0 16 16">
                                         <path d="M9 5.5a.5.5 0 0 0-1 0V7H6.5a.5.5 0 0 0 0 1H8v1.5a.5.5 0 0 0 1 0V8h1.5a.5.5 0 0 0 0-1H9V5.5z"/>
                                         <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1H.5zm3.915 10L3.102 4h10.796l-1.313 7h-8.17zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
                                     </svg>
-                                </button>
+                                </button> -->
                             </div>
                             <div v-else class="inner__cart d-flex w-100 bottom-0 mt-3">
                                 <router-link class="btn btn-sm btn-success text-white w-100 d-block" :to="`/${translation(item, 'slug', $i18n.locale)}`">{{ $t('Choose options') }}</router-link>
@@ -76,7 +76,7 @@
                 <router-link :to="{ path: `/category/${$route.params.slug}`, query: Object.assign({}, urlGetAllParams(['page']), { page: urlParamValueFromName(link.url, 'page') })}" v-for="(link, index) in paginationLinks" :key="index" :class="`btn btn-outline-dark mx-1${(!link.url ? ' disabled' : '')}${(link.active === true ? ' btn-primary text-white' : '')}`" v-html="link.label"></router-link>
             </section>
             <section v-if="loading" class="row g-3 mt-lg-5 mt-3">
-                <div v-for="i in itemPerPage" :key="i" class="col-lg-3 col-md-4 col-6">
+                <div v-for="i in itemPerPage" :key="i" class="col-lg-4 col-6">
                     <div class="card card-body border-0 product-widget">
                         <div class="inner__img bg-gray-200 mb-3 rounded w-100 py-5"></div>
                         <div class="inner__title bg-gray-200 mb-1 rounded w-75 py-2"></div>

@@ -13,11 +13,11 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        
+
                         <!-- BASE FIELDS -->
                         <div v-if="Object.keys(filters).length > 0" class="d-block">
                             <div v-for="(filterOptions, filterName) in filters.base" :key="filterName" class="mb-4">
-                                <div class="h6 mb-3">
+                                <div class="h5 mb-3">
                                     <a class="text-decoration-none text-dark d-flex align-items-center justify-content-between" role="button" data-bs-toggle="collapse" :data-bs-target="`#filter-${filterName}`" :aria-controls="`#filter-${filterName}`" aria-expanded="true">
                                         <span>{{ $t(filterName) }}</span>
                                         <span class="arrow">&#8250;</span>
