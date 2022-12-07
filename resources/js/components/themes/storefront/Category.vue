@@ -1,5 +1,19 @@
 <template>
     <div class="zuc-listing-container row g-3 justify-content-center">
+        <div v-if="categoryTranslation" class="col-12 text-center my-4">
+            <div class="small text-gray-500 pb-3">
+                <router-link to="/">{{ $t('Home') }}</router-link>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right-short mx-2" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z"/>
+                </svg>
+                <template>{{ categoryTranslation.name }}</template>
+            </div>
+            <h1>{{ categoryTranslation.name }}</h1>
+            <div class="col-lg-8 col-12 text-gray-500">{{ categoryTranslation.description }}</div>
+        </div>
+        <div v-else class="col-12 text-center my-4">
+
+        </div>
         <div class="zuc-listing-sidebar col-lg-3">
             <section class="zuc-listing-sidebar__filter">
                 <listing-filters :filters="filters" :reset-filter="resetFilters" @updateContent="updateContent"></listing-filters>
@@ -26,10 +40,10 @@
                             <div class="inner__additional-images d-flex justify-content-center align-items-center py-2">
                                 <template v-if="item.images.length > 1">
                                     <template v-for="(ai, index) in item.images" :key="ai">
-                                        <img v-if="index < 3" @mouseover="changeImgSrc(item.id, ai.src)" :src="`/storage/${storeConfig.small_image_size}/${ai.src}`" width="40" height="40" :alt="translation(item, 'name', $i18n.locale)" class="img-loading img-fluid cursor-pointer mx-1">
+                                        <img v-if="index < 3" @mouseover="changeImgSrc(item.id, ai.src)" :src="`/storage/${storeConfig.small_image_size}/${ai.src}`" width="30" height="30" :alt="translation(item, 'name', $i18n.locale)" class="img-loading img-fluid cursor-pointer mx-1">
                                     </template>
                                 </template>
-                                <router-link v-if="item.images.length > 3" :to="`/${translation(item, 'slug', $i18n.locale)}`" class="square-4x small">+{{ item.images.length-3 }} {{ $t('options') }}</router-link>
+                                <router-link v-if="item.images.length > 3" :to="`/${translation(item, 'slug', $i18n.locale)}`" class="square-4x small text-gray-500 text-decoration-none">+{{ item.images.length-3 }} {{ $t('options') }}</router-link>
                             </div>
                         </div>
                         <h3 class="inner__title h6 fw-light mb-0">
@@ -47,7 +61,7 @@
                         </div>
                         <template v-if="item.quantity > 0">
                             <div v-if="+item.has_attributes === 0" class="inner__cart d-flex w-100 bottom-0 mt-3">
-                                <button class="btn btn-link d-flex align-items-center text-dark p-0 text-decoration-none" @click.stop="addToCart(item, cartQty[item.id])" data-bs-toggle="modal" data-bs-target="#z-cart-modal">
+                                <button class="btn btn-sm btn-link d-flex align-items-center text-dark p-0 text-decoration-none" @click.stop="addToCart(item, cartQty[item.id])" data-bs-toggle="modal" data-bs-target="#z-cart-modal">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart-plus me-2" viewBox="0 0 16 16">
                                         <path d="M9 5.5a.5.5 0 0 0-1 0V7H6.5a.5.5 0 0 0 0 1H8v1.5a.5.5 0 0 0 1 0V8h1.5a.5.5 0 0 0 0-1H9V5.5z"/>
                                         <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1H.5zm3.915 10L3.102 4h10.796l-1.313 7h-8.17zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
@@ -56,7 +70,13 @@
                                 </button>
                             </div>
                             <div v-else class="inner__cart d-flex w-100 bottom-0 mt-3">
-                                <router-link class="btn btn-sm btn-success text-white w-100 d-block" :to="`/${translation(item, 'slug', $i18n.locale)}`">{{ $t('Choose options') }}</router-link>
+                                <router-link class="btn btn-sm btn-link d-flex align-items-center text-dark p-0 text-decoration-none" :to="`/${translation(item, 'slug', $i18n.locale)}`">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-right me-2 opacity-50" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0v-2z"/>
+                                        <path fill-rule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
+                                    </svg>
+                                    {{ $t('Choose options') }}
+                                </router-link>
                             </div>
                         </template>
                         <template v-else>
@@ -85,13 +105,6 @@
                         <div class="inner__price bg-gray-200 rounded w-25 py-2"></div>
                     </div>
                 </div>
-            </section>
-            <hr class="my-4 bg-info">
-            <section class="zuc-listing-products__category">
-                <template v-if="categoryTranslation">
-                    <h1 class="text-dark fw-bold mb-4">{{ categoryTranslation.name }}</h1>
-                    <div v-html="categoryTranslation.description"></div>
-                </template>
             </section>
         </div>
     </div>
