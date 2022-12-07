@@ -46,7 +46,7 @@
 <script>
 import Dropdown from 'bootstrap/js/dist/dropdown';
 import BannerSlideshow from '@theme/storefront/templates/banner/Slideshow'
-import DisplayMenu from '@theme/storefront/templates/menu/DisplayMenu'
+import DisplayMenu from '@theme/storefront/templates/menu/DisplayMenu1'
 import { mapState, mapGetters } from 'vuex'
 export default {
     data: () => ({
