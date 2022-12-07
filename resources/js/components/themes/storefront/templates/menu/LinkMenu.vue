@@ -1,5 +1,5 @@
 <template>
-    <router-link v-if="item.link !== `webaddress`" @click="closeOffCanvas" :to="url" :class="`nav-link ${item.heading === 1 ? `heading` : ``} ${ extraClass !== undefined ? extraClass : '' } ${item.blocks && item.blocks.length > 0 ? 'dropdown-toggle' : '__'}`">
+    <router-link v-if="item.link !== `webaddress`" @click="closeMainMenu" :to="url" :class="`nav-link ${item.heading === 1 ? `heading` : ``} ${ extraClass !== undefined ? extraClass : '' } ${item.blocks && item.blocks.length > 0 ? 'dropdown-toggle' : '__'}`">
         {{ translation.title }}
     </router-link>
     <a v-else :href="translation.url" target="_blank" :class="`nav-link ${item.heading === 1 ? `heading` : ``} ${ extraClass !== undefined ? extraClass : '' } ${item.blocks && item.blocks.length > 0 ? 'dropdown-toggle' : '__'}`">{{ translation.title }}</a>
@@ -19,11 +19,12 @@ export default {
         }
     },
     methods: {
-        closeOffCanvas() {
-            const btnOffcanvas = document.getElementById('closeOffcanvas')
+        closeMainMenu() {
+            const btnOffcanvas = document.getElementById('closeNavOffcanvas')
             if(btnOffcanvas && this.item.submenu !== `megamenu` && this.item.submenu !== `dropdown` && this.translation.url !== ``) {
                 btnOffcanvas.click()
             }
+            document.querySelector('.navbar-primary').classList.remove("showing");
         }
     }
 }

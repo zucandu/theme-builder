@@ -1,11 +1,9 @@
+
 .navbar-nav {
     > .nav-item {
         margin-right: 1rem;
     }
     .nav-item {
-        &:hover > a {
-            background-color: rgba($secondary, .3)
-        }
         &.dropdown.has-sub {
             .submenu {
                 left: 99%!important;
@@ -32,11 +30,6 @@
             right: 0;
             left: auto;
         }
-        &.dropdown:hover > .dropdown-menu {
-            display: block;
-            -webkit-animation: slide-up .3s ease-in-out;
-            animation: slide-up .3s ease-in-out;
-        }
     }
     .nav-link {
         &.has-sub {
@@ -62,6 +55,19 @@
         .nav-link {padding: 0;}
         .link-heading {padding: 10px 0;}
         .link-heading.link-first {padding-top: 0;}
+    }
+}
+
+.navbar-primary.showing {
+    .nav-item {
+        &:hover > a {
+            background-color: $gray-200;
+        }
+        &.dropdown:hover > .dropdown-menu {
+            display: block;
+            -webkit-animation: slide-up .3s ease-in-out;
+            animation: slide-up .3s ease-in-out;
+        }
     }
 }
 

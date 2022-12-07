@@ -1,5 +1,5 @@
 <template>
-    <nav :class="`navbar-${menuKey} navbar navbar-expand-lg navbar-light py-0 showing`" v-if="windowWidth >= 992">
+    <nav :class="`navbar-${menuKey} navbar navbar-expand-lg navbar-light py-0`" v-if="windowWidth >= 992">
         <div class="container-fluid px-0">
             <div v-if="loaded" class="collapse navbar-collapse">
                 <ul v-if="__navigation" class="navbar-nav me-auto mb-2 mb-lg-0">
@@ -19,10 +19,12 @@
             </div>
         </div>
     </nav>
-    <nav v-if="responsive" :class="`navbar-${menuKey} navbar navbar-expand-lg navbar-light py-0`">
+    <nav v-if="responsive" :class="`navbar-${menuKey} navbar navbar-expand-lg navbar-light py-0 showing`">
         <div class="container-fluid px-0 position-relative">
-            <button class="btn navbar-toggler border-0 p-0 position-absolute" type="button" @click.stop="offcanvas.show()">
-                <img src="/storage/menu.svg" alt="menu" width="40" height="40" @load="imgloaded" class="img-loading">
+            <button class="btn navbar-toggler text-white border position-absolute" type="button" @click.stop="offcanvas.show()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-sliders" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M11.5 2a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM9.05 3a2.5 2.5 0 0 1 4.9 0H16v1h-2.05a2.5 2.5 0 0 1-4.9 0H0V3h9.05zM4.5 7a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM2.05 8a2.5 2.5 0 0 1 4.9 0H16v1H6.95a2.5 2.5 0 0 1-4.9 0H0V8h2.05zm9.45 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm-2.45 1a2.5 2.5 0 0 1 4.9 0H16v1h-2.05a2.5 2.5 0 0 1-4.9 0H0v-1h9.05z"/>
+                </svg>
             </button>
             <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvas-nav">
                 <template v-if="windowWidth < 992">
@@ -81,9 +83,6 @@ export default {
     methods: {
         resizeHandler() {
             this.windowWidth = window.innerWidth
-        },
-        imgloaded(e) {
-            return e.target.classList.remove('img-loading')
         }
     },
     computed: {
