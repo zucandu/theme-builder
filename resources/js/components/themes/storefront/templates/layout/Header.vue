@@ -9,12 +9,11 @@
                     </router-link>
                 </div>
                 <div class="col-xl-8 col-12 order-xl-2 order-3">
-                    <display-menu menu-key="primary" :offcanvas-status="offcanvasMenuStatus"></display-menu>
+                    <display-menu menu-key="primary"></display-menu>
                 </div>
                 <div class="col-xl-2 col-6 order-xl-3 order-2 navbar-cart-account text-end">
-
                     <!-- Display offcanvas menu in the display-menu -->
-                    <button @click="offcanvasMenuStatus = !offcanvasMenuStatus" class="btn d-md-none d-inline-block text-white me-3 border" type="button">
+                    <button class="btn d-md-none d-inline-block text-white me-3 border" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvas-menu" aria-controls="offcanvas-menu">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-sliders" viewBox="0 0 16 16">
                             <path fill-rule="evenodd" d="M11.5 2a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM9.05 3a2.5 2.5 0 0 1 4.9 0H16v1h-2.05a2.5 2.5 0 0 1-4.9 0H0V3h9.05zM4.5 7a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM2.05 8a2.5 2.5 0 0 1 4.9 0H16v1H6.95a2.5 2.5 0 0 1-4.9 0H0V8h2.05zm9.45 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm-2.45 1a2.5 2.5 0 0 1 4.9 0H16v1h-2.05a2.5 2.5 0 0 1-4.9 0H0v-1h9.05z"/>
                         </svg>
@@ -46,13 +45,12 @@
 <script>
 import Dropdown from 'bootstrap/js/dist/dropdown';
 import BannerSlideshow from '@theme/storefront/templates/banner/Slideshow'
-import DisplayMenu from '@theme/storefront/templates/menu/DisplayMenu1'
+import DisplayMenu from '@theme/storefront/templates/menu/DisplayMenu'
 import { mapState, mapGetters } from 'vuex'
 export default {
     data: () => ({
         selectLanguage: undefined,
-        selectCurrency: undefined,
-        offcanvasMenuStatus: false
+        selectCurrency: undefined
     }),
     components: { BannerSlideshow, DisplayMenu },
     mounted() {
@@ -64,7 +62,7 @@ export default {
     methods: {
         imgloaded(e) {
             return e.target.classList.remove('img-loading')
-        },
+        }
     },
     computed: {
         ...mapGetters(['selectedLanguage', 'selectedCurrency', 'isCustomerLogged', 'cartNumberOfItems']),

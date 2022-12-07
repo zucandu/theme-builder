@@ -1,3 +1,58 @@
 <template>
-    <div>dfd</div>
+    <nav :class="`navbar-${menuKey} navbar navbar-expand-md navbar-light`">
+        <div id="offcanvas-menu" v-if="loaded" class="collapse navbar-collapse offcanvas offcanvas-start">
+            <ul v-if="__navigation" class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li :class="`nav-item ${item.blocks && item.blocks.length > 0 ? (item.blocks.length > 1 ? `dropdown has-megamenu` : 'dropdown') : ''}`" v-for="(item, index) in __navigation.items" :key="index">
+                    <link-menu :item="item"></link-menu>
+                    <template v-if="item.blocks && item.blocks.length > 0 && item.submenu === 'dropdown'">
+                        <dropdown-menu :items="item.blocks[0].elements"></dropdown-menu>
+                    </template>
+                    <template v-if="item.blocks && item.blocks.length > 0 && item.submenu === 'megamenu'">
+                        <mega-menu :items="item.blocks"></mega-menu>
+                    </template>
+                </li>
+            </ul>
+            <button id="closeOffcanvas" type="button" class="btn-close d-none" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div v-else class="spinner-grow text-info" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </nav>
+    
 </template>
+
+<script>
+import Offcanvas from 'bootstrap/js/dist/offcanvas';
+import DropdownMenu from '@theme/storefront/templates/menu/DropdownMenu'
+import MegaMenu from '@theme/storefront/templates/menu/MegaMenu'
+import LinkMenu from '@theme/storefront/templates/menu/LinkMenu'
+import { mapGetters, mapState } from 'vuex'
+export default {
+    data: () => ({
+        loaded: false,
+    }),
+    components: { DropdownMenu, MegaMenu, LinkMenu },
+    props: ['menuKey'],
+    created() {
+        this.$store.dispatch('menuDetails', this.menuKey).then(() => {
+            this.loaded = true
+        })
+    },
+    mounted() {
+        const offcanvas = document.getElementById('offcanvas-menu')
+        if(offcanvas) {
+            new Offcanvas(offcanvas)
+        }
+    },
+    computed: {
+        ...mapState({
+            menuDetails: state => state.menu.menuDetails,
+            storeConfig: state => state.setting.storeConfig,
+        }),
+        ...mapGetters(['translation']),
+        __navigation() {
+            return this.menuDetails[this.menuKey] || undefined
+        }
+    }
+}
+</script>
