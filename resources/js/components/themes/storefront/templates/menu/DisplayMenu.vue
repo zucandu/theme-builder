@@ -1,6 +1,6 @@
 <template>
     <nav :class="`navbar-${menuKey} navbar navbar-expand-md navbar-light`">
-        <div v-if="loaded" :id="`offcanvas-menu-${menuKey}`" :class="`collapse navbar-collapse ${menuKey === `primary` ? `offcanvas offcanvas-start` : ``}}`">
+        <div id="offcanvas-menu" v-if="loaded" class="collapse navbar-collapse offcanvas offcanvas-start">
             <ul v-if="__navigation" class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li :class="`nav-item ${item.blocks && item.blocks.length > 0 ? (item.blocks.length > 1 ? `dropdown has-megamenu` : 'dropdown') : ''}`" v-for="(item, index) in __navigation.items" :key="index">
                     <link-menu :item="item"></link-menu>
@@ -39,7 +39,7 @@ export default {
         })
     },
     mounted() {
-        const offcanvas = document.getElementById('offcanvas-menu-primary')
+        const offcanvas = document.getElementById('offcanvas-menu')
         if(offcanvas) {
             new Offcanvas(offcanvas)
         }
