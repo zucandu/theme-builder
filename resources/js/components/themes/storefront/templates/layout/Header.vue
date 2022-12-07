@@ -12,15 +12,11 @@
                     <display-menu menu-key="primary" :responsive="true"></display-menu>
                 </div>
                 <div class="col-xl-2 col-6 order-xl-3 order-2 navbar-cart-account text-end">
-                    <button @click="searchFormStatus = !searchFormStatus" class="btn btn-sm text-white">
+                    <button class="btn btn-sm text-white" data-bs-toggle="modal" data-bs-target="#search-modal">
                         <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
                             <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
                         </svg>
                     </button>
-                    <!-- Button trigger modal -->
-<button @click="searchModal.show()" type="button" class="btn btn-primary">
-  Launch demo modal
-</button>
                     <router-link v-if="isCustomerLogged" to="/account" class="text-white text-decoration-none ms-3">
                         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
                             <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
@@ -42,31 +38,27 @@
                 </div>
             </div>
         </div>
-    </header>
 
-<!-- Modal -->
-<div class="modal fade" id="search-modal" tabindex="-1" aria-labelledby="search-modal-label" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="search-modal-label">Modal title</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        ...
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>
+        <!-- Modal -->
+        <div class="modal fade" id="search-modal" tabindex="-1" aria-labelledby="search-modal-label" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <!-- <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="search-modal-label">Modal title</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div> -->
+                    <div class="modal-body">
+                        sdf
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </header>
 </template>
 
 <script>
 import Dropdown from 'bootstrap/js/dist/dropdown';
-import Modal from 'bootstrap/js/dist/modal';
 import BannerSlideshow from '@theme/storefront/templates/banner/Slideshow'
 import DisplayMenu from '@theme/storefront/templates/menu/DisplayMenu'
 import SearchForm from '@theme/storefront/templates/header/SearchForm'
@@ -75,8 +67,7 @@ export default {
     data: () => ({
         selectLanguage: undefined,
         selectCurrency: undefined,
-        searchFormStatus: false,
-        searchModal: undefined
+        searchFormStatus: false
     }),
     components: { BannerSlideshow, DisplayMenu, SearchForm },
     mounted() {
@@ -84,9 +75,6 @@ export default {
         dropdownElementList.map(function (dropdownToggleEl) {
             new Dropdown(dropdownToggleEl)
         })
-
-        this.searchModal = new Modal('#search-modal')
-
     },
     methods: {
         imgloaded(e) {
