@@ -37,7 +37,8 @@
                 </div>
             </section>
             <section v-if="!loading" class="zuc-listing-products__row row g-3">
-                <div v-for="(item, index) in products" :key="index" class="col-lg-3 col-md-4 col-6">
+                <img @load="getMaxHeightFromProductName" src="/storage/pixel.gif" alt="js" class="d-none">
+                <div v-for="(item, index) in products" :key="index" class="col-lg-4 col-6">
                     <div class="product-widget__inner mb-3">
                         <div class="inner__img mb-3">
                             <router-link :to="`/${translation(item, 'slug', $i18n.locale)}`" class="text-decoration-none">
@@ -102,7 +103,7 @@
                 <router-link :to="{ path: `/category/${$route.params.slug}`, query: Object.assign({}, urlGetAllParams(['page']), { page: urlParamValueFromName(link.url, 'page') })}" v-for="(link, index) in paginationLinks" :key="index" :class="`btn btn-outline-dark mx-1${(!link.url ? ' disabled' : '')}${(link.active === true ? ' btn-primary text-white' : '')}`" v-html="link.label"></router-link>
             </section>
             <section v-if="loading" class="row g-3 mt-lg-5 mt-3">
-                <div v-for="i in itemPerPage" :key="i" class="col-lg-3 col-md-4 col-6">
+                <div v-for="i in itemPerPage" :key="i" class="col-lg-4 col-6">
                     <div class="card card-body border-0 product-widget">
                         <div class="inner__img bg-gray-200 mb-3 rounded w-100 py-5"></div>
                         <div class="inner__title bg-gray-200 mb-1 rounded w-75 py-2"></div>
@@ -110,13 +111,6 @@
                         <div class="inner__price bg-gray-200 rounded w-25 py-2"></div>
                     </div>
                 </div>
-            </section>
-            <hr class="my-4 bg-info">
-            <section class="zuc-listing-products__category">
-                <template v-if="manufacturerTranslation">
-                    <h1 class="text-dark fw-bold mb-4">{{ manufacturerTranslation.name }}</h1>
-                    <div v-html="manufacturerTranslation.description"></div>
-                </template>
             </section>
         </div>
     </div>
@@ -235,6 +229,15 @@ export default {
         changeImgSrc(id, src) {
             const tmp = document.getElementById(`img-listing-${id}`).src
             document.getElementById(`img-listing-${id}`).src = tmp.substring(0, tmp.lastIndexOf("/")) + "/" + src
+        },
+        getMaxHeightFromProductName() {
+            const elImgs = document.querySelectorAll('.inner__img')
+            const elImgMaxHeight = Math.max.apply(null, [...elImgs].map(e => +e.offsetHeight))
+            elImgs.forEach(e => e.style.minHeight = `${elImgMaxHeight}px`)
+
+            const els = document.querySelectorAll('.inner__title')
+            const maxHeight = Math.max.apply(null, [...els].map(e => +e.offsetHeight))
+            els.forEach(e => e.style.minHeight = `${maxHeight}px`)
         }
     },
     computed: {
