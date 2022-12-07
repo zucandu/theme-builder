@@ -1,5 +1,5 @@
 <template>
-    <nav :class="`navbar-${menuKey} navbar navbar-expand-md navbar-light`">
+    <nav :class="`navbar-${menuKey} navbar navbar-expand-md navbar-light`"> 
         <div id="offcanvas-menu" v-if="loaded" class="collapse navbar-collapse offcanvas offcanvas-start">
             <ul v-if="__navigation" class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li :class="`nav-item ${item.blocks && item.blocks.length > 0 ? (item.blocks.length > 1 ? `dropdown has-megamenu` : 'dropdown') : ''}`" v-for="(item, index) in __navigation.items" :key="index">
@@ -30,18 +30,19 @@ import { mapGetters, mapState } from 'vuex'
 export default {
     data: () => ({
         loaded: false,
+        offcanvas: false
     }),
     components: { DropdownMenu, MegaMenu, LinkMenu },
-    props: ['menuKey'],
+    props: ['menuKey', 'offcanvasStatus'],
     created() {
         this.$store.dispatch('menuDetails', this.menuKey).then(() => {
             this.loaded = true
         })
     },
     mounted() {
-        const offcanvas = document.getElementById('offcanvas-menu')
-        if(offcanvas) {
-            new Offcanvas(offcanvas)
+        const offcanvasEl = document.getElementById('offcanvas-menu')
+        if(offcanvasEl) {
+            this.offcanvas = new Offcanvas(offcanvasEl)
         }
     },
     computed: {
@@ -52,6 +53,13 @@ export default {
         ...mapGetters(['translation']),
         __navigation() {
             return this.menuDetails[this.menuKey] || undefined
+        }
+    },
+    watch: {
+        offcanvasStatus(v) {
+            if(v) {
+                this.offcanvas.show()
+            }
         }
     }
 }
