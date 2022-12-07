@@ -1,9 +1,11 @@
-
 .navbar-nav {
     > .nav-item {
         margin-right: 1rem;
     }
     .nav-item {
+        &:hover > a {
+            background-color: rgba($secondary, .3)
+        }
         &.dropdown.has-sub {
             .submenu {
                 left: 99%!important;
@@ -29,6 +31,11 @@
         &.dropdown-menu-end {
             right: 0;
             left: auto;
+        }
+        &.dropdown:hover > .dropdown-menu {
+            display: block;
+            -webkit-animation: slide-up .3s ease-in-out;
+            animation: slide-up .3s ease-in-out;
         }
     }
     .nav-link {
