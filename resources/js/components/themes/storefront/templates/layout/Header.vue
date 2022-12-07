@@ -43,13 +43,18 @@
         <div class="modal fade" id="search-modal" tabindex="-1" aria-labelledby="search-modal-label" aria-hidden="true">
             <div class="modal-dialog m-0">
                 <div class="modal-content rounded-0 border-0">
-                    <!-- <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="search-modal-label">Modal title</h1>
+                    <div class="modal-header border-0 text-end">
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div> -->
+                    </div>
                     <div class="modal-body text-center py-5">
-                        <div class="h4 fw-bold">{{ $t('Search for Products') }}</div>
-                        <search-form></search-form>
+                        <div class="container">
+                            <div class="h4 fw-bold mb-4">{{ $t('Search for Products') }}</div>
+                            <div class="row justify-content-center">
+                                <div class="col-lg-8 col-12">
+                                    <search-form></search-form>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
