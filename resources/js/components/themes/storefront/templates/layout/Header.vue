@@ -8,7 +8,7 @@
                         <img :src="`/storage/${storeConfig.fileuploader_store_logo}`" :width="storeConfig.store_logo_width" :height="storeConfig.store_logo_height" :alt="storeConfig.store_name" @load="imgloaded" class="img-loading img-fluid">
                     </router-link>
                 </div>
-                <div class="col-xl-8 col-12 order-xl-2 order-3 d-md-block d-none">
+                <div class="col-xl-8 col-12 order-xl-2 order-3">
                     <display-menu menu-key="primary"></display-menu>
                 </div>
                 <div class="col-xl-2 col-6 order-xl-3 order-2 navbar-cart-account text-end">

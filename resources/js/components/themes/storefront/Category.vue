@@ -23,14 +23,14 @@
                             <router-link :to="`/${translation(item, 'slug', $i18n.locale)}`" class="text-decoration-none">
                                 <img :src="`/storage/${storeConfig.medium_image_size}/${item.images[0].src}`" :width="storeConfig.medium_image_size" :height="storeConfig.medium_image_size" :alt="translation(item, 'name', $i18n.locale)" :id="`img-listing-${item.id}`" class="img-fluid">
                             </router-link>
-                        </div>
-                        <div class="inner__additional-images d-flex justify-content-center align-items-center">
-                            <template v-if="item.images.length > 1">
-                                <template v-for="(ai, index) in item.images" :key="ai">
-                                    <img v-if="index < 3" @mouseover="changeImgSrc(item.id, ai.src)" :src="`/storage/${storeConfig.small_image_size}/${ai.src}`" width="40" height="40" :alt="translation(item, 'name', $i18n.locale)" class="img-loading img-fluid cursor-pointer mx-1">
+                            <div class="inner__additional-images d-flex justify-content-center align-items-center py-2">
+                                <template v-if="item.images.length > 1">
+                                    <template v-for="(ai, index) in item.images" :key="ai">
+                                        <img v-if="index < 3" @mouseover="changeImgSrc(item.id, ai.src)" :src="`/storage/${storeConfig.small_image_size}/${ai.src}`" width="40" height="40" :alt="translation(item, 'name', $i18n.locale)" class="img-loading img-fluid cursor-pointer mx-1">
+                                    </template>
                                 </template>
-                            </template>
-                            <router-link v-if="item.images.length > 3" :to="`/${translation(item, 'slug', $i18n.locale)}`" class="square-4x small">+{{ item.images.length-3 }} {{ $t('options') }}</router-link>
+                                <router-link v-if="item.images.length > 3" :to="`/${translation(item, 'slug', $i18n.locale)}`" class="square-4x small">+{{ item.images.length-3 }} {{ $t('options') }}</router-link>
+                            </div>
                         </div>
                         <h3 class="inner__title h6 fw-light mb-0">
                             <router-link :to="`/${translation(item, 'slug', $i18n.locale)}`" class="text-decoration-none text-dark">
@@ -213,16 +213,13 @@ export default {
             document.getElementById(`img-listing-${id}`).src = tmp.substring(0, tmp.lastIndexOf("/")) + "/" + src
         },
         getMaxHeightFromProductName() {
-            /* const els = document.getElementsByClassName('inner__title')
-            console.log(els)
-            document.querySelectorAll('.inner__title').map(item => {
-                console.log(item)
-            }) */
+            const elImgs = document.querySelectorAll('.inner__img')
+            const elImgMaxHeight = Math.max.apply(null, [...elImgs].map(e => +e.offsetHeight))
+            elImgs.forEach(e => e.style.minHeight = `${elImgMaxHeight}px`)
+
             const els = document.querySelectorAll('.inner__title')
-            var maxHeight = Math.max.apply(null, [...els].map(e => console.log(+e.offsetHeight)));
-            console.log(maxHeight)
-            /* const a = [...els].map(e => this.heightProductName = e.offsetHeight > this.heightProductName ? e.offsetHeight : this.heightProductName)
-            console.log(this.heightProductName, a) */
+            const maxHeight = Math.max.apply(null, [...els].map(e => +e.offsetHeight))
+            els.forEach(e => e.style.minHeight = `${maxHeight}px`)
         }
     },
     computed: {
