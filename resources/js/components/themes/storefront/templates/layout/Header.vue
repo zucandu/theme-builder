@@ -41,14 +41,15 @@
 
         <!-- Modal -->
         <div class="modal fade" id="search-modal" tabindex="-1" aria-labelledby="search-modal-label" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
+            <div class="modal-dialog m-0">
+                <div class="modal-content rounded-0 border-0">
                     <!-- <div class="modal-header">
                         <h1 class="modal-title fs-5" id="search-modal-label">Modal title</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div> -->
-                    <div class="modal-body">
-                        sdf
+                    <div class="modal-body text-center py-5">
+                        <div class="h4 fw-bold">{{ $t('Search for Products') }}</div>
+                        <search-form></search-form>
                     </div>
                 </div>
             </div>

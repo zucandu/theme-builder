@@ -2,6 +2,12 @@ body {
     font-weight: $font-weight-light;
 }
 
+#search-modal {
+    .modal-dialog {
+        max-width: 100%!important;
+    }
+}
+
 .main {
     margin-top: 6rem;
 }
