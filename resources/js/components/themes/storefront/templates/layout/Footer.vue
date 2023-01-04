@@ -32,6 +32,12 @@
                 </div>
             </div>
         </section>
+
+        <!-- Used to hook into the account order list. -->
+        <template v-for="(component, index) in $pluginStorefrontHooks['footer']" :key="index">
+            <component :is="component"></component>
+        </template>
+        
     </footer>
 </template>
 
