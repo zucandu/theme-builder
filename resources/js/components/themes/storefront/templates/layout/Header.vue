@@ -39,7 +39,7 @@
                                     <li v-for="(lang, index) in languages" :key="index"><a class="z-nav-link dropdown-item" @click="selectLanguage = lang.iso_code">{{ lang.name }}</a></li>
                                 </ul>
                             </div>
-                            <div v-if="currencies.length > 1" class="btn-group d-md-inline-flex d-none">
+                            <div v-if="currencies.length > 1 && $route.name !== `checkout`" class="btn-group d-md-inline-flex d-none">
                                 <a href="#" class="z-nav-link dropdown-toggle text-decoration-none ms-3" data-bs-toggle="dropdown" aria-expanded="false">{{ currencies.find(c => c.code === selectCurrency).name }}</a>
                                 <ul class="dropdown-menu">
                                     <li v-for="(currency, index) in currencies" :key="index"><a class="z-nav-link dropdown-item" @click="selectCurrency = currency.code">{{ currency.name }}</a></li>
@@ -83,10 +83,6 @@ import OffcanvasMenu from '@theme/storefront/templates/menu/OffcanvasMenu'
 import BlockElement from '@theme/storefront/templates/menu/BlockElement'
 import { mapState, mapGetters } from 'vuex'
 export default {
-    data: () => ({
-        selectLanguage: undefined,
-        selectCurrency: undefined
-    }),
     components: { HeaderSearchForm, DisplayMenu, CartModal, OffcanvasMenu, BlockElement },
     mounted() {
         const dropdownElementList = [].slice.call(document.querySelectorAll('.dropdown-toggle'))
@@ -97,37 +93,24 @@ export default {
     methods: {
         imgloaded(e) {
             return e.target.classList.remove('img-loading')
-        }
+        },
+		changeLanguage(isoCode) {
+			this.$store.dispatch('selectLanguage', isoCode).then(() => this.$i18n.locale = this.language)
+		},
+		changeCurrency(code) {
+			this.$store.commit('setCurrency', { currency: code })
+		}
     },
     computed: {
-        ...mapGetters(['selectedLanguage', 'selectedCurrency', 'isCustomerLogged', 'cartNumberOfItems']),
+        ...mapGetters(['isCustomerLogged']),
         ...mapState({
             storeConfig: state => state.setting.storeConfig,
             languages: state => state.setting.languages,
             language: state => state.setting.language,
             currencies: state => state.setting.currencies,
+			currency: state => state.setting.currency,
             profile: state => state.customer.profile,
         })
-    },
-    watch: {
-        selectedLanguage(v) {
-            if(Object.keys(v).length > 0) {
-                this.selectLanguage = v.iso_code
-            }
-        },
-        selectLanguage(v) {
-            if(v !== undefined) {
-                this.$store.dispatch('selectLanguage', v).then(() => this.$i18n.locale = this.language)
-            }
-        },
-        selectedCurrency(v) {
-            this.selectCurrency = v.code
-        },
-        selectCurrency(v) {
-            if(v !== undefined) {
-                this.$store.commit('setCurrency', { currency: v })
-            }
-        }
     }
 }
 </script>
