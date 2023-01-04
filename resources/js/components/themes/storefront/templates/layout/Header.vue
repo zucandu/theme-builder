@@ -34,15 +34,15 @@
                         </div>
                         <template v-if="(languages && languages.length > 0) && (currencies && currencies.length > 0)">
                             <div v-if="languages.length > 1" class="btn-group d-md-inline-flex d-none">
-                                <a href="#" class="z-nav-link dropdown-toggle text-decoration-none ms-3" data-bs-toggle="dropdown" aria-expanded="false">{{ languages.find(l => l.iso_code === selectLanguage).name }}</a>
+                                <a href="#" class="z-nav-link dropdown-toggle text-decoration-none ms-3" data-bs-toggle="dropdown" aria-expanded="false">{{ languages.find(l => l.iso_code === language).name }}</a>
                                 <ul class="dropdown-menu">
-                                    <li v-for="(lang, index) in languages" :key="index"><a class="z-nav-link dropdown-item" @click="selectLanguage = lang.iso_code">{{ lang.name }}</a></li>
+                                    <li v-for="(lang, index) in languages" :key="index"><a @click="changeLanguage(lang.iso_code)" href="#" class="z-nav-link dropdown-item">{{ lang.name }}</a></li>
                                 </ul>
                             </div>
                             <div v-if="currencies.length > 1 && $route.name !== `checkout`" class="btn-group d-md-inline-flex d-none">
-                                <a href="#" class="z-nav-link dropdown-toggle text-decoration-none ms-3" data-bs-toggle="dropdown" aria-expanded="false">{{ currencies.find(c => c.code === selectCurrency).name }}</a>
+                                <a href="#" class="z-nav-link dropdown-toggle text-decoration-none ms-3" data-bs-toggle="dropdown" aria-expanded="false">{{ currencies.find(c => c.code === currency).name }}</a>
                                 <ul class="dropdown-menu">
-                                    <li v-for="(currency, index) in currencies" :key="index"><a class="z-nav-link dropdown-item" @click="selectCurrency = currency.code">{{ currency.name }}</a></li>
+                                    <li v-for="(curr, index) in currencies" :key="index"><a @click="changeCurrency(curr.code)" href="#" class="z-nav-link dropdown-item">{{ curr.name }}</a></li>
                                 </ul>
                             </div>
                         </template>
@@ -102,7 +102,7 @@ export default {
 		}
     },
     computed: {
-        ...mapGetters(['isCustomerLogged']),
+        ...mapGetters(['isCustomerLogged', 'cartNumberOfItems']),
         ...mapState({
             storeConfig: state => state.setting.storeConfig,
             languages: state => state.setting.languages,
