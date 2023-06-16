@@ -1,5 +1,13 @@
 <template>
     <div class="zuc-listing-container row g-3 justify-content-center">
+
+        <div class="col-12">
+            <!-- Hook: cateogry top -->
+            <template v-for="(component, index) in $pluginStorefrontHooks['category_top']" :key="index">
+                <component :is="component"></component>
+            </template>
+        </div>
+
         <div :class="`zuc-listing-sidebar col-lg-2 ${!noProduct ? `d-lg-block` : `d-none`}`">
             <section class="zuc-listing-sidebar__filter">
                 <listing-filters :filters="filters" :reset-filter="resetFilters" @updateContent="updateContent"></listing-filters>
@@ -93,20 +101,25 @@
                 </div>
             </section>
             <hr class="my-4 bg-info">
-            <section class="zuc-listing-products__category">
-                <template v-if="categoryTranslation">
-                    <h1 class="text-dark fw-bold mb-4">{{ categoryTranslation.name }}</h1>
-                    <div v-html="categoryTranslation.description"></div>
-                </template>
-            </section>
+
+            <!-- Display category info -->
+            <listing-object-info :object="categoryTranslation"></listing-object-info>
+            
         </div>
     </div>
+
+    <!-- Hook: cateogry bottom -->
+    <template v-for="(component, index) in $pluginStorefrontHooks['category_bottom']" :key="index">
+        <component :is="component"></component>
+    </template>
+
     <overlay v-if="loading"></overlay>
     <product-restock-modal :product-id="picked.id" :product-name="picked.name" :show-modal="showModal" @updateModalStatus="updateModalStatus"></product-restock-modal>
 </template>
 
 <script>
 import Overlay from '@theme/storefront/templates/element/Overlay'
+import ListingObjectInfo from '@theme/storefront/templates/listing/ListingObjectInfo'
 import ListingFilters from '@theme/storefront/templates/listing/ListingFilters'
 import DisplayRating from '@theme/storefront/templates/product/DisplayRating'
 import ProductDisplayPrice from '@theme/storefront/templates/product/DisplayPrice'
@@ -132,7 +145,7 @@ export default {
         picked: { id: undefined, name: undefined },
         noProduct: false
     }),
-    components: { ProductDisplayPrice, DisplayRating, ListingFilters, Overlay, ProductRestockModal },
+    components: { ProductDisplayPrice, DisplayRating, ListingFilters, Overlay, ProductRestockModal, ListingObjectInfo },
     created() {
 
         // Set the selected filter
