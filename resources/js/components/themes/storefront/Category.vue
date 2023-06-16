@@ -149,10 +149,7 @@ export default {
     created() {
 
         // Set the selected filter
-        const sortByParam = this.urlParamValueFromName(window.location.href, 'sort')
-        if(sortByParam && sortByParam !== this.sortBy) {
-            this.sortBy = sortByParam
-        }
+        this.sortBy = this.urlParamValueFromName(window.location.href, 'sort') || this.sortBy
 
         // First load
         this.queryProductListing(this.$route.params.slug, this.urlGetAllParams())

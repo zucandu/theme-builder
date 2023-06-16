@@ -1,5 +1,13 @@
 <template>
     <div class="zuc-listing-container row g-3 justify-content-center">
+
+        <div class="col-12">
+            <!-- Hook: search result top -->
+            <template v-for="(component, index) in $pluginStorefrontHooks['search_result_top']" :key="index">
+                <component :is="component" :product="item"></component>
+            </template>
+        </div>
+
         <div :class="`zuc-listing-sidebar col-lg-2 ${!noProduct ? `d-lg-block` : `d-none`}`">
             <section class="zuc-listing-sidebar__filter">
                 <listing-filters :filters="filters" :reset-filter="resetFilters" @updateContent="updateContent"></listing-filters>
@@ -83,7 +91,7 @@
                 <router-link :to="{ path: `/category/${$route.params.slug}`, query: Object.assign({}, urlGetAllParams(['page']), { page: urlParamValueFromName(link.url, 'page') })}" v-for="(link, index) in paginationLinks" :key="index" :class="`btn btn-outline-dark mx-1${(!link.url ? ' disabled' : '')}${(link.active === true ? ' btn-primary text-white' : '')}`"><span v-html="link.label"></span></router-link>
             </section>
             <section v-if="loading" class="row g-3 mt-lg-5 mt-3">
-                <div v-for="i in itemPerPage" :key="i" class="col-lg-3 col-md-4 col-6">
+                <div v-for="i in 20" :key="i" class="col-lg-3 col-md-4 col-6">
                     <div class="card card-body border-0 product-widget">
                         <div class="inner__img bg-gray-200 mb-3 rounded w-100 py-5"></div>
                         <div class="inner__title bg-gray-200 mb-1 rounded w-75 py-2"></div>
@@ -93,11 +101,18 @@
                 </div>
             </section>
             <hr class="my-4 bg-info">
-            <section class="zuc-listing-products__category">
-                <h1 class="text-dark fw-bold mb-4">{{ $route.params.keyword }}</h1>
-            </section>
+
+            <!-- Display search info -->
+            <listing-object-info :object="{name: $route.params.keyword}"></listing-object-info>
+
         </div>
     </div>
+
+    <!-- Hook: search result bottom -->
+    <template v-for="(component, index) in $pluginStorefrontHooks['search_result_bottom']" :key="index">
+        <component :is="component"></component>
+    </template>
+
     <overlay v-if="loading"></overlay>
     <product-restock-modal :product-id="picked.id" :product-name="picked.name" :show-modal="showModal" @updateModalStatus="updateModalStatus"></product-restock-modal>
 </template>
@@ -134,10 +149,7 @@ export default {
     created() {
 
         // Set the selected filter
-        const sortByParam = this.urlParamValueFromName(window.location.href, 'sort')
-        if(sortByParam && sortByParam !== this.sortBy) {
-            this.sortBy = sortByParam
-        }
+        this.sortBy = this.urlParamValueFromName(window.location.href, 'sort') || this.sortBy
 
         // First load
         this.queryProductListing(this.$route.params.keyword, this.urlGetAllParams())
@@ -173,22 +185,14 @@ export default {
                     'message': this.$t(error.response.data.message)
                 })
             }).finally(() => {
-
-                // Redirect to home page if listing is empty
-                if(this.products && this.products.length === 0) {
-                    this.noProduct = true
-                }
-
+                
                 // Set cartQty
                 this.products.map(p => this.cartQty[p.id] = 1)
-
-                // Reset filter when keyword changed
-                if(this.resetFilters === true) {
-                    this.selectedFilters = []
-                    this.resetFilters = false
-                }
-
+                this.noProduct = this.products && this.products.length === 0 ? true : false
                 this.loading = false
+
+                // Reset filter when slug changed
+                if(this.resetFilters)   this.selectedFilters = [], this.resetFilters = false
 
             })
 
@@ -219,18 +223,14 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(['translation', 'transObj', 'urlParamValueFromName', 'productPrice', 'urlGetAllParams',
-                        'displayPriceRange']),
+        ...mapGetters(['translation', 'transObj', 'urlParamValueFromName', 'productPrice', 'urlGetAllParams']),
         ...mapState({
             products: state => state.listing.products,
             paginationLinks: state => state.listing.paginationLinks,
             paginationShowing: state => state.listing.paginationShowing,
             filters: state => state.listing.filters,
             storeConfig: state => state.setting.storeConfig
-        }),
-        itemPerPage() {
-            return +this.storeConfig.number_of_query_limit > 0 ? +this.storeConfig.number_of_query_limit : 20
-        },
+        })
     },
     watch: {
         sortBy(newval, oldval) {
