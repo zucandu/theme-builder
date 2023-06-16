@@ -80,7 +80,7 @@
                 </template>
             </section>
             <section class="zuc-listing-products__pagination text-end" v-if="paginationLinks.length > 0 && !noProduct">
-                <router-link :to="{ path: `/category/${$route.params.slug}`, query: Object.assign({}, urlGetAllParams(['page']), { page: urlParamValueFromName(link.url, 'page') })}" v-for="(link, index) in paginationLinks" :key="index" :class="`btn btn-outline-dark mx-1${(!link.url ? ' disabled' : '')}${(link.active === true ? ' btn-primary text-white' : '')}`" v-html="link.label"></router-link>
+                <router-link :to="{ path: `/category/${$route.params.slug}`, query: Object.assign({}, urlGetAllParams(['page']), { page: urlParamValueFromName(link.url, 'page') })}" v-for="(link, index) in paginationLinks" :key="index" :class="`btn btn-outline-dark mx-1${(!link.url ? ' disabled' : '')}${(link.active === true ? ' btn-primary text-white' : '')}`"><span v-html="link.label"></span></router-link>
             </section>
             <section v-if="loading" class="row g-3 mt-lg-5 mt-3">
                 <div v-for="i in itemPerPage" :key="i" class="col-lg-3 col-md-4 col-6">

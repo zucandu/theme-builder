@@ -17,7 +17,7 @@
                     <post-loading v-else></post-loading>
                     <div v-if="!noItem" class="row mt-5 justify-content-center">
                         <div class="col-12 text-end">
-                            <router-link :to="{ path: `/blog/posts`, query: { ...urlGetAllParams(['page']), page: urlParamValueFromName(link.url, 'page') }}" v-for="(link, index) in paginationLinks" :key="index" :class="`btn btn-outline-dark mx-1${(!link.url ? ' disabled' : '')}${(link.active === true ? ' btn-primary text-white' : '')}`" v-html="link.label"></router-link>
+                            <router-link :to="{ path: `/blog/posts`, query: { ...urlGetAllParams(['page']), page: urlParamValueFromName(link.url, 'page') }}" v-for="(link, index) in paginationLinks" :key="index" :class="`btn btn-outline-dark mx-1${(!link.url ? ' disabled' : '')}${(link.active === true ? ' btn-primary text-white' : '')}`"><span v-html="link.label"></span></router-link>
                         </div>
                     </div>
                 </div>
