@@ -200,6 +200,26 @@ b, strong {
     .filter-options {
         overflow-y: auto;
         max-height: 400px;
+
+        /* width */
+        &::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        /* Track */
+        &::-webkit-scrollbar-track {
+            background: #f1f1f1; 
+        }
+
+        /* Handle */
+        &::-webkit-scrollbar-thumb {
+            background: #ccc; 
+        }
+
+        /* Handle on hover */
+        &::-webkit-scrollbar-thumb:hover {
+            background: #ddd; 
+        }
     }
     .arrow {
         transform: rotate(90deg);
@@ -212,25 +232,7 @@ b, strong {
         }
     }
     
-    /* width */
-    &::-webkit-scrollbar {
-        width: 5px;
-    }
-
-    /* Track */
-    &::-webkit-scrollbar-track {
-        background: #f1f1f1; 
-    }
-
-    /* Handle */
-    ::-webkit-scrollbar-thumb {
-        background: #888; 
-    }
-
-    /* Handle on hover */
-    &::-webkit-scrollbar-thumb:hover {
-        background: #777; 
-    }
+    
 }
 
 .carousel-control-next-icon, .carousel-control-prev-icon {
