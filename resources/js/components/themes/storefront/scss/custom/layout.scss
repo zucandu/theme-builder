@@ -224,7 +224,7 @@ b, strong {
     .arrow {
         transform: rotate(90deg);
         transition: transform .5s ease;
-        padding-right: 0.5rem;
+        padding-right: 0.5rem 0;
     }
     .collapsed {
         .arrow {
