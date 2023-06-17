@@ -211,6 +211,26 @@ b, strong {
             transform: rotate(0);
         }
     }
+    
+    /* width */
+    &::-webkit-scrollbar {
+        width: 5px;
+    }
+
+    /* Track */
+    &::-webkit-scrollbar-track {
+        background: #f1f1f1; 
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+        background: #888; 
+    }
+
+    /* Handle on hover */
+    &::-webkit-scrollbar-thumb:hover {
+        background: #777; 
+    }
 }
 
 .carousel-control-next-icon, .carousel-control-prev-icon {
@@ -254,25 +274,7 @@ b, strong {
         .offcanvas-body {
             padding: 1rem 1rem;
             overflow-y: auto;
-            /* width */
-            &::-webkit-scrollbar {
-                width: 5px;
-            }
-
-            /* Track */
-            &::-webkit-scrollbar-track {
-                background: #f1f1f1; 
-            }
-
-            /* Handle */
-            ::-webkit-scrollbar-thumb {
-                background: #888; 
-            }
-
-            /* Handle on hover */
-            &::-webkit-scrollbar-thumb:hover {
-                background: #777; 
-            }
+            
         }
         .filter-options {
             max-height: 100%;
