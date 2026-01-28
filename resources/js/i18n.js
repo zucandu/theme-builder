@@ -38,6 +38,8 @@ function initialLocale() {
 }
 
 export default createI18n({
+    legacy: false,
+    globalInjection: true,
     locale: initialLocale(),
     fallbackLocale: zucConfig.default_language,
     silentTranslationWarn: true,
