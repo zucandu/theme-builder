@@ -115,7 +115,7 @@ export const useSettingsStore = defineStore('settings', {
         transObj: () => (item, locale) => item?.translations?.find(trans => trans.locale === locale),
 
         /* Retrieves meta tag object based on the route name */
-        getMetatagsByName: () => "Zucandu",
+        getMetatagsByName: () => (routerName) => settingsData.metaTags.find(meta => meta.pagename === routerName),
 
     },
 

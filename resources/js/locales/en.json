@@ -1,7 +1,7 @@
 {
   "Dashboard": "Dashboard",
   "There is no any product today": "There are no products today",
-  "Manager Account" : "Manage Your Account",
+  "Manager Account": "Manage Your Account",
   "ranges": "Price Range",
   "categories": "Category",
   "manufacturers": "Manufacturer",
@@ -28,5 +28,10 @@
   "listing": {
     "paginationProduct": "Showing {from} to {to} of {total} products",
     "paginationArticle": "Showing {from} to {to} of {total} articles"
-  }
+  },
+  "Click to submit your search": "Search",
+  "Go to My Account": "My Account",
+  "Search...": "Search...",
+  "New": "New",
+  "arrivals": "Arrivals"
 }

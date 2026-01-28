@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia';
+import bannersData from '../../../../data/banners.json';
 
 export const useBannerStore = defineStore('banner', {
     state: () => ({
@@ -21,15 +22,9 @@ export const useBannerStore = defineStore('banner', {
          * Fetches banners
          */
         async fetchBanners() {
-            try {
-                const response = await axios.get('/api/v3/storefront/banner-all')
-                this.setBanners(response.data.banners);
-            } catch (error) {
-                console.error('fetchBanners failed:', error); // Log error if fetch fails
-                throw error; // Optionally throw error to handle it in the component
-            }
+            this.setBanners(bannersData.banners);
         }
-        
+
     }
 
 });
