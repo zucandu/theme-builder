@@ -1,0 +1,32 @@
+{
+  "Dashboard": "Dashboard",
+  "There is no any product today": "There are no products today",
+  "Manager Account" : "Manage Your Account",
+  "ranges": "Price Range",
+  "categories": "Category",
+  "manufacturers": "Manufacturer",
+  "ratings": "Rating",
+  "4-Excellent": "Excellent & Up",
+  "3-Good": "Good & Up",
+  "2-Average": "Average & Up",
+  "1-Bad": "Bad & Up",
+  "Flat Rate": "Flat rate shipping (Tracking available)",
+  "gc_email_to": "Email to",
+  "gc_message": "Message",
+  "gc_receiver_name": "Recipient name",
+  "Special Instructions or Comments About Your Order": "Order Notes",
+  "Write something...": "Tell us something good!",
+  "Search for products": "Search for drum candy",
+  "Subscribe to Newsletter?": " Subscribe to newsletter for deals and promos",
+  "Buy More Save More": "Buy More, Pay Less",
+  "Buy More, Save More!": "Bulk buy discounts:",
+  "I would like to receive order updates and promotional SMS messages.": "Receive order & tracking updates by SMS messages",
+  "Newsletter Email address": "Enter email to be in the know!",
+  "cart": {
+    "itemAdded": "{name} has been added to your cart."
+  },
+  "listing": {
+    "paginationProduct": "Showing {from} to {to} of {total} products",
+    "paginationArticle": "Showing {from} to {to} of {total} articles"
+  }
+}
