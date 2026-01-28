@@ -5,7 +5,7 @@ import { createApp, reactive } from 'vue';
 import { createPinia } from 'pinia';
 const pinia = createPinia();
 
-import App from './components/themes/App.vue';
+import App from './components/themes/ZucanduThemeBuilder.vue';
 const app = createApp(App)
 
 // Assign the global variable before mounting

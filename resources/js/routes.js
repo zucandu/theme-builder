@@ -45,7 +45,6 @@ const BlogSearch = () => import(`./components/themes/default/storefront/BlogSear
 const BlogCategory = () => import(`./components/themes/default/storefront/BlogCategory.vue`);
 const BlogAuthor = () => import(`./components/themes/default/storefront/BlogAuthor.vue`);
 
-const Addon = () => import('./components/themes/default/storefront/Addon.vue');
 const PaymentRequest = () => import('./components/themes/default/storefront/PaymentRequest.vue');
 
 
@@ -76,7 +75,7 @@ const storefrontChildRoutes = [
         name: 'account',
         redirect: { name: 'account_order_list' },
         component: Account,
-        children: [...[
+        children: [
             {
                 path: 'profile',
                 name: 'account_profile',
@@ -112,7 +111,7 @@ const storefrontChildRoutes = [
                 name: 'account_address_book_edit',
                 component: AccountAddressBookEdit
             },
-        ], ...pluginAccountRoutes]
+        ]
     },
     {
         path: 'category/:slug',
@@ -261,12 +260,6 @@ const storefrontChildRoutes = [
         path: 'page-not-found',
         name: 'page_not_found',
         component: PageNotFound
-    },
-    {
-        path: 'addon',
-        name: 'addon',
-        component: Addon,
-        children: [...addonRoutes]
     },
     {
         path: ':pathMatch(.*)*',
