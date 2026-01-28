@@ -1,0 +1,5 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import '../js/components/themes/default/storefront/css/style.css';

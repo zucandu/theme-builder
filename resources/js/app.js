@@ -1,4 +1,5 @@
 import './bootstrap';
+import '../css/style.css';
 
 import { createApp, reactive } from 'vue';
 
