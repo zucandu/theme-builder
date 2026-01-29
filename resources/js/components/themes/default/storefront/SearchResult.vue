@@ -20,7 +20,6 @@ const { translateItemField, translateItemObj, getUrlParams, getUrlParam, getGrid
 const loaded = ref(false);
 const resetFilter = ref(false);
 const sortBy = ref(getUrlParam(window.location.href, 'sort') || `sorting`);
-const suppressQuerySync = ref(false);
 
 const parseFlt = (v) => {
     if (!v) return [];
@@ -47,34 +46,14 @@ const sortByItems = ref([
 ]);
 const selectedFilters = ref([]);
 
-const showFilterBar = ref(window.innerWidth > 992);
-
-const toggleFilterSidebar = () => {
-	showFilterBar.value = !showFilterBar.value;
-	localStorage.setItem("enabled_filter_sidebar", showFilterBar.value ? 1 : 0);
-}
-
-const filterSideBarStatus = () => {
-	if(window.innerWidth > 992) {
-		if(localStorage.getItem("enabled_filter_sidebar")) {
-			showFilterBar.value = +localStorage.getItem("enabled_filter_sidebar") === 1 ? true : false;
-		}
-	} else {
-		showFilterBar.value = false;
-	}
-}
 
 onMounted(async () => {
 	
-	suppressQuerySync.value = true;
     hydrateFromRoute(route);
 	
     await listingStore.fetchProductsByKeyword(route.query.keyword, getUrlParams());
 	
-	suppressQuerySync.value = false;
-	
     loaded.value = true;
-	filterSideBarStatus();
 });
 
 const listingComputed = computed(() => {
@@ -86,24 +65,18 @@ const listingComputed = computed(() => {
 // Perform actions when the route changes
 onBeforeRouteUpdate(async (to, from, next) => {
 
-    suppressQuerySync.value = true;
     // hydrateFromRoute(to);
 
     await listingStore.fetchProductsByKeyword(to.query.keyword, {  ...to.query, sort: sortBy.value });
 
     next();
-    requestAnimationFrame(() => {
-        suppressQuerySync.value = false;
-    });
 });
 
 watch(
     () => route.query.flt,
     (n, o) => {
         if (n === o) return;
-        suppressQuerySync.value = true;
         selectedFilters.value = parseFlt(n);
-        requestAnimationFrame(() => { suppressQuerySync.value = false; });
     }
 );
 
@@ -111,7 +84,6 @@ watch(
 watch(
     () => selectedFilters.value,
     (newFilters, oldFilters) => {
-        if (suppressQuerySync.value) return;
 
         const toStr = (arr) => Array.isArray(arr) ? arr.join('|') : '';
         const newStr = toStr(newFilters);
@@ -138,7 +110,6 @@ watch(
 watch(
     () => sortBy.value,
     (newSort, oldSort) => {
-        if (suppressQuerySync.value) return;
         if (newSort === oldSort) return;
         if (newSort === route.query.sort) return;
 
@@ -165,36 +136,18 @@ watch(
 			<component :is="component"></component>
 		</template>
 		
-		<div class="mt-4">
-			<button
-				@click.stop="toggleFilterSidebar"
-				id="filter-button"
-				type="button"
-				:class="[
-					'px-6 py-2 rounded bg-gray-800 hover:bg-gray-700 text-white font-semibold shadow-sm uppercase flex items-center transition cursor-pointer',
-					showFilterBar ? 'hidden' : 'flex'
-				]"
-			>
-				<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5 mr-2">
-					<path stroke-linecap="round" stroke-linejoin="round" d="M6 13.5V3.75m0 9.75a1.5 1.5 0 0 1 0 3m0-3a1.5 1.5 0 0 0 0 3m0 3.75V16.5m12-3V3.75m0 9.75a1.5 1.5 0 0 1 0 3m0-3a1.5 1.5 0 0 0 0 3m0 3.75V16.5m-6-9V3.75m0 3.75a1.5 1.5 0 0 1 0 3m0-3a1.5 1.5 0 0 0 0 3m0 9.75V10.5" />
-				</svg>
-				<span v-if="showFilterBar">{{ $t('Hide Filter') }}</span>
-				<span v-else>{{ $t('Filter') }}</span>
-			</button>
-		</div>
-		
 		<section v-if="loaded" class="grid grid-cols-12 gap-4">
 		
 			<!-- Sidebar Filter -->
 			<div
 				id="col-filter"
-				:class="`block col-span-12 lg:col-span-2 filter-${showFilterBar ? 'show' : 'hide'}`"
+				class="block col-span-12 lg:col-span-2"
 			>
 				<FilterSidebar v-model:selected="selectedFilters" :filters="listingStore.filters" :reset-filter="resetFilter" />
 			</div>
 
 			<!-- Main Product List -->
-			<div :class="showFilterBar ? 'col-span-12 lg:col-span-10' : 'col-span-12'">
+			<div class="col-span-12 lg:col-span-10">
 				<template v-if="+listingStore.paginationInfo.total > 0">
 				
 					<!-- Display items text and sort -->

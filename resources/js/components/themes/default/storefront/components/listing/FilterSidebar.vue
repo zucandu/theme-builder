@@ -295,7 +295,7 @@ const resetPriceRange = () => {
 					</Disclosure>
                 </div>
             </div>
-			<div v-if="selected.length > 0" class="mr-4">
+			<div v-if="selected.length > 0" class="mr-4 hidden">
 				<button
 					id="clear-all-btn"
 					@click="selected = []"

@@ -17,12 +17,11 @@ const router = useRouter();
 const { t, locale } = useI18n();
 const listingStore = useListingStore();
 
-const { translateItemField, translateItemObj, getUrlParams, getUrlParam, getGridClasses } = useHelpers();
+const { translateItemObj, getUrlParams, getUrlParam, getGridClasses } = useHelpers();
 
 const loaded = ref(false);
 const resetFilter = ref(false);
 const sortBy = ref(getUrlParam(window.location.href, 'sort') || `sorting`);
-const suppressQuerySync = ref(false);
 
 const parseFlt = (v) => {
     if (!v) return [];
@@ -51,12 +50,9 @@ const selectedFilters = ref([]);
 
 onMounted(async () => {
 	
-	suppressQuerySync.value = true;
     hydrateFromRoute(route);
 	
     await listingStore.fetchProductsByCategory(route.params.slug, getUrlParams());
-	
-	suppressQuerySync.value = false;
 	
 	if(route.name === `category`) sessionStorage.setItem('fromCategoryId', listingStore.object.id);
     
@@ -74,7 +70,6 @@ const listingComputed = computed(() => {
 
 // Perform actions when the route changes
 onBeforeRouteUpdate(async (to, from, next) => {
-    suppressQuerySync.value = true;
     // hydrateFromRoute(to);
 
     await listingStore.fetchProductsByCategory(
@@ -83,18 +78,13 @@ onBeforeRouteUpdate(async (to, from, next) => {
     );
 
     next();
-    requestAnimationFrame(() => {
-        suppressQuerySync.value = false;
-    });
 });
 
 watch(
     () => route.query.flt,
     (n, o) => {
         if (n === o) return;
-        suppressQuerySync.value = true;
         selectedFilters.value = parseFlt(n);
-        requestAnimationFrame(() => { suppressQuerySync.value = false; });
     }
 );
 
@@ -102,7 +92,6 @@ watch(
 watch(
     () => selectedFilters.value,
     (newFilters, oldFilters) => {
-        if (suppressQuerySync.value) return;
 
         const toStr = (arr) => Array.isArray(arr) ? arr.join('|') : '';
         const newStr = toStr(newFilters);
@@ -129,7 +118,6 @@ watch(
 watch(
     () => sortBy.value,
     (newSort, oldSort) => {
-        if (suppressQuerySync.value) return;
         if (newSort === oldSort) return;
         if (newSort === route.query.sort) return;
 
