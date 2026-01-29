@@ -10,8 +10,7 @@ import ProductCardPlaceholder from '@theme/storefront/components/product/Product
 import { useProductStore } from '@/stores/catalog/product';
 import { useAuthCustomerStore } from '@/stores/auth/customer';
 
-import { useHelpers } from '@/composables/useHelpers';
-const { getGridClasses } = useHelpers();
+
 
 const toast = useToast();
 const { t, locale } = useI18n();
@@ -149,7 +148,7 @@ const calculatePercentageDiscount = (discount) => {
 </script>
 
 <template>
-	<div :class="getGridClasses()">
+	<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
 			
 		<!-- Loading state -->
 		<template v-if="!props.items || props.items.length === 0">
