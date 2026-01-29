@@ -24,13 +24,13 @@
                 "categories": [],
                 "date_added": "January 10, 2026",
                 "images": [
-                    "shipping_guide_2026.jpg"
+                    "shipping_guide_2026.svg"
                 ]
             },
             {
                 "id": 8,
                 "author": "Admin",
-                "image": "secure_payment_methods.jpg",
+                "image": "secure_payment_methods.svg",
                 "block": 0,
                 "status": 1,
                 "sort": 2,
@@ -49,13 +49,13 @@
                 "categories": [],
                 "date_added": "January 12, 2026",
                 "images": [
-                    "secure_payment_methods.jpg"
+                    "secure_payment_methods.svg"
                 ]
             },
             {
                 "id": 9,
                 "author": "Admin",
-                "image": "return_policy_update.jpg",
+                "image": "return_policy_update.svg",
                 "block": 0,
                 "status": 1,
                 "sort": 3,
@@ -74,13 +74,13 @@
                 "categories": [],
                 "date_added": "January 15, 2026",
                 "images": [
-                    "return_policy_update.jpg"
+                    "return_policy_update.svg"
                 ]
             },
             {
                 "id": 10,
                 "author": "Admin",
-                "image": "summer_collection_2026.jpg",
+                "image": "summer_collection_2026.svg",
                 "block": 0,
                 "status": 1,
                 "sort": 4,
@@ -99,13 +99,13 @@
                 "categories": [],
                 "date_added": "January 20, 2026",
                 "images": [
-                    "summer_collection_2026.jpg"
+                    "summer_collection_2026.svg"
                 ]
             },
             {
                 "id": 11,
                 "author": "Admin",
-                "image": "eco_friendly_products.jpg",
+                "image": "eco_friendly_products.svg",
                 "block": 0,
                 "status": 1,
                 "sort": 5,
@@ -124,13 +124,13 @@
                 "categories": [],
                 "date_added": "January 22, 2026",
                 "images": [
-                    "eco_friendly_products.jpg"
+                    "eco_friendly_products.svg"
                 ]
             },
             {
                 "id": 12,
                 "author": "Admin",
-                "image": "loyalty_program.jpg",
+                "image": "loyalty_program.svg",
                 "block": 0,
                 "status": 1,
                 "sort": 6,
@@ -149,13 +149,13 @@
                 "categories": [],
                 "date_added": "January 25, 2026",
                 "images": [
-                    "loyalty_program.jpg"
+                    "loyalty_program.svg"
                 ]
             },
             {
                 "id": 13,
                 "author": "Admin",
-                "image": "tech_review_2026.jpg",
+                "image": "tech_review_2026.svg",
                 "block": 0,
                 "status": 1,
                 "sort": 7,
@@ -174,13 +174,13 @@
                 "categories": [],
                 "date_added": "January 26, 2026",
                 "images": [
-                    "tech_review_2026.jpg"
+                    "tech_review_2026.svg"
                 ]
             },
             {
                 "id": 14,
                 "author": "Admin",
-                "image": "office_setup.jpg",
+                "image": "office_setup.svg",
                 "block": 0,
                 "status": 1,
                 "sort": 8,
@@ -199,13 +199,13 @@
                 "categories": [],
                 "date_added": "January 27, 2026",
                 "images": [
-                    "office_setup.jpg"
+                    "office_setup.svg"
                 ]
             },
             {
                 "id": 15,
                 "author": "Admin",
-                "image": "gift_guide_2026.jpg",
+                "image": "gift_guide_2026.svg",
                 "block": 0,
                 "status": 1,
                 "sort": 9,
@@ -224,13 +224,13 @@
                 "categories": [],
                 "date_added": "January 28, 2026",
                 "images": [
-                    "gift_guide_2026.jpg"
+                    "gift_guide_2026.svg"
                 ]
             },
             {
                 "id": 16,
                 "author": "Admin",
-                "image": "customer_feedback.jpg",
+                "image": "customer_feedback.svg",
                 "block": 0,
                 "status": 1,
                 "sort": 10,
@@ -249,7 +249,7 @@
                 "categories": [],
                 "date_added": "January 29, 2026",
                 "images": [
-                    "customer_feedback.jpg"
+                    "customer_feedback.svg"
                 ]
             }
         ],

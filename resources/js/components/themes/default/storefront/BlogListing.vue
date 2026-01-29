@@ -61,7 +61,7 @@ const getPaginatedArticles = async (obj) => {
                             </div>
                             <!-- Articles Loop -->
                             <div v-for="article in articles" :key="article.id" class="flex items-start p-4 border rounded-lg shadow-xs hover:shadow-md">
-                                
+                                <ArticleCard :article="article" />
                             </div>
                         </div>
 

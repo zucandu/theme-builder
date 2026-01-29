@@ -57,7 +57,7 @@ const handleSubscription = async () => {
             <div class="grid grid-cols-12">
                 <div class="col-span-8">
                     <div class="container">
-                        <div v-if="footerMenu.items?.length > 0" class="grid grid-cols-12">
+                        <div v-if="footerMenu && footerMenu.items && footerMenu.items.length > 0" class="grid grid-cols-12">
                             <div v-for="block in footerMenu.items[0].blocks" :key="block.id" :class="`col-span-${block.block_width}`">
                                 <div v-for="el in block.elements" :key="el.id">
                                     <h3 v-if="+el.heading === 1" class="text-lg font-semibold mb-4">{{ translateItemField(el, 'title', $i18n.locale) }}</h3>

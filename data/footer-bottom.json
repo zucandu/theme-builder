@@ -1,0 +1,134 @@
+{
+    "menu": {
+        "items": [
+            {
+                "id": 1,
+                "blocks": [
+                    {
+                        "id": 101,
+                        "block_width": 4,
+                        "elements": [
+                            {
+                                "id": 1001,
+                                "heading": 1,
+                                "block_type": "text",
+                                "translations": [
+                                    {
+                                        "locale": "en",
+                                        "title": "About Us"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": 1002,
+                                "heading": 0,
+                                "block_type": "link",
+                                "url": "about-us",
+                                "translations": [
+                                    {
+                                        "locale": "en",
+                                        "title": "Our Story"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": 1003,
+                                "heading": 0,
+                                "block_type": "link",
+                                "url": "careers",
+                                "translations": [
+                                    {
+                                        "locale": "en",
+                                        "title": "Careers"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": 102,
+                        "block_width": 4,
+                        "elements": [
+                            {
+                                "id": 2001,
+                                "heading": 1,
+                                "block_type": "text",
+                                "translations": [
+                                    {
+                                        "locale": "en",
+                                        "title": "Customer Service"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": 2002,
+                                "heading": 0,
+                                "block_type": "link",
+                                "url": "contact-us",
+                                "translations": [
+                                    {
+                                        "locale": "en",
+                                        "title": "Contact Us"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": 2003,
+                                "heading": 0,
+                                "block_type": "link",
+                                "url": "shipping-returns",
+                                "translations": [
+                                    {
+                                        "locale": "en",
+                                        "title": "Shipping & Returns"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": 103,
+                        "block_width": 4,
+                        "elements": [
+                            {
+                                "id": 3001,
+                                "heading": 1,
+                                "block_type": "text",
+                                "translations": [
+                                    {
+                                        "locale": "en",
+                                        "title": "Legal"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": 3002,
+                                "heading": 0,
+                                "block_type": "link",
+                                "url": "privacy-policy",
+                                "translations": [
+                                    {
+                                        "locale": "en",
+                                        "title": "Privacy Policy"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": 3003,
+                                "heading": 0,
+                                "block_type": "link",
+                                "url": "terms-conditions",
+                                "translations": [
+                                    {
+                                        "locale": "en",
+                                        "title": "Terms & Conditions"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}
