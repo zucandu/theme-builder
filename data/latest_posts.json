@@ -1,0 +1,44 @@
+{
+    "posts": [
+        {
+            "id": 5,
+            "author": "Admin",
+            "image": "security_bg.jpg",
+            "block": 0,
+            "status": 1,
+            "sort": 0,
+            "meta": null,
+            "created_at": "2023-02-09 02:10:25",
+            "updated_at": "2023-02-09 15:18:02",
+            "author_id": 0,
+            "translations": [
+                {
+                    "title": "Privacy Notice",
+                    "slug": "privacy-notice",
+                    "locale": "en",
+                    "summary": null
+                }
+            ]
+        },
+        {
+            "id": 6,
+            "author": "Admin",
+            "image": "GVDN Background_0.jpg",
+            "block": 0,
+            "status": 1,
+            "sort": 0,
+            "meta": null,
+            "created_at": "2023-02-09 02:10:25",
+            "updated_at": "2023-02-09 15:13:24",
+            "author_id": 0,
+            "translations": [
+                {
+                    "title": "Conditions of Use",
+                    "slug": "conditions-of-use",
+                    "locale": "en",
+                    "summary": null
+                }
+            ]
+        }
+    ]
+}

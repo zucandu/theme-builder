@@ -52,7 +52,6 @@ const emit = defineEmits(['open-restock-modal', 'open-review-modal', 'open-disco
 <template>
 	<div class="flex flex-col h-full">
 		<div :class="`relative ${index % 2 == 0 ? `product-even` : `product-odd`}`">
-		
 			<div class="aspect-[4/3] relative w-full overflow-hidden mb-4">
 				<!-- Placeholder loading -->
 				<div v-if="!loadedImg[`product${product.id}`]" class="absolute inset-0 flex items-center justify-center bg-gray-200 z-10"></div>
@@ -60,7 +59,7 @@ const emit = defineEmits(['open-restock-modal', 'open-review-modal', 'open-disco
 				<!-- Image -->
 				<LocalizedLink :to="`/product/${translation.slug}`" class="hover:underline block mb-4">
 					<img 
-						:src="`/storage/${zucConfig.medium_image_size}/${product.images[0]?.src}`" 
+						:src="`/storage/${product.images[0]?.src}`" 
 						class="absolute inset-0 w-full h-full object-contain transition-opacity duration-500" 
 						:class="{ 'opacity-0': !loadedImg[`product${product.id}`], 'opacity-100': loadedImg[`product${product.id}`] }"
 						:width="zucConfig.medium_image_size"

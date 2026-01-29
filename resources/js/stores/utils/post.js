@@ -15,10 +15,18 @@ export const usePostStore = defineStore('post', {
         }, */
 
         async fetchPosts(params) {
-            const queryString = new URLSearchParams(params).toString();
-            const response = await axios.get(`/api/v3/storefront/article/listing?${queryString}`);
-            return response.data;
-            // this.setLatestPosts(response.data.paginator.data);
+            try {
+                const response = await import('../../../../data/latest_posts.json');
+                const posts = response.default.posts || response.posts;
+                return {
+                    paginator: {
+                        data: posts
+                    }
+                };
+            } catch (error) {
+                console.error('fetchPosts failed:', error);
+                throw error;
+            }
         },
 
         async retrieveArticleDetails(slug) {
@@ -29,7 +37,7 @@ export const usePostStore = defineStore('post', {
                 console.error('retrieveArticleDetails failed:', error); // Log error if fetch fails
                 throw error; // Optionally throw error to handle it in the component
             }
-            
+
         }
     }
 

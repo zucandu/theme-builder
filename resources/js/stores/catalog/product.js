@@ -32,21 +32,21 @@ export const useProductStore = defineStore('product', {
         // finalizeProductPrice: Calculates the retail, sale, and final product price, including tax if applicable, based on product data.
         finalizeProductPrice() {
             return (product) => {
-                
+
                 /* let finalPrice = product.price
 
                 // If product has special price
                 if(product.sale_price > 0) {
                     finalPrice = product.sale_price
                 } */
-                
+
                 let finalPrice = +product.sale_price > 0 ? +product.sale_price : +product.price;
 
                 let finalTaxRateAmount = 0
-                if(+product.tax_class_id === 1) {
+                if (+product.tax_class_id === 1) {
                     finalTaxRateAmount = +this.taxRate > 0 ? this.calculateTaxAmount(finalPrice, this.taxRate) : 0
                 }
-                
+
                 return {
                     retail: this.basePriceWithTax(product.price, finalTaxRateAmount),
                     sale: +product.sale_price > 0 ? this.basePriceWithTax(product.sale_price, finalTaxRateAmount) : 0,
@@ -61,10 +61,10 @@ export const useProductStore = defineStore('product', {
         priceFormat() {
             return (price) => {
                 const currencyObj = useSettingsStore().selectedCurrencyObject;
-                if(currencyObj) {
+                if (currencyObj) {
                     const digits = currencyObj.decimal_digits ?? 2;
                     const multiplier = Math.pow(10, digits);
-                    return Math.round((currencyObj.rate*price) * multiplier + Number.EPSILON) / multiplier || 0;
+                    return Math.round((currencyObj.rate * price) * multiplier + Number.EPSILON) / multiplier || 0;
                 }
                 return 0;
             }
@@ -90,9 +90,9 @@ export const useProductStore = defineStore('product', {
                     const valueIds = filteredAttributes.map(att => +att.attribute_option_value_id);
 
                     // Compare the arrays for selected keys and values
-                    const isMatch = 
-                    attributeIds.length === selectedKeys.length && attributeIds.every((val, index) => val === selectedKeys[index]) &&
-                    valueIds.length === selectedValues.length && valueIds.every((val, index) => val === selectedValues[index]);
+                    const isMatch =
+                        attributeIds.length === selectedKeys.length && attributeIds.every((val, index) => val === selectedKeys[index]) &&
+                        valueIds.length === selectedValues.length && valueIds.every((val, index) => val === selectedValues[index]);
 
                     return isMatch;
                 }) || { ...product, quantity: 0, status: 0 };
@@ -105,20 +105,22 @@ export const useProductStore = defineStore('product', {
 
                 if (Object.keys(product).length !== 0) {
                     const tmp = product.attributes.filter(att => att.attribute_option.type === type)
-                    attributes = tmp.map(ao => ({[ao.attribute_option_id]: {
-                        id: ao.attribute_option_id,
-                        display_ov_image: ao.attribute_option.display_ov_image,
-                        filter_only: ao.attribute_option.filter_only,
-                        translations: ao.attribute_option.translations,
-                        values: tmp.filter(ao2 => ao2.attribute_option_id === ao.attribute_option_id).map(aov => ({ ...aov.attribute_option_value, vid: aov.attribute_option_value.id })),
-                        sort: ao.attribute_option.sort
-                    }}))
-                    .reduce((prev, curr) => ({ ...prev, ...curr }), {} )
+                    attributes = tmp.map(ao => ({
+                        [ao.attribute_option_id]: {
+                            id: ao.attribute_option_id,
+                            display_ov_image: ao.attribute_option.display_ov_image,
+                            filter_only: ao.attribute_option.filter_only,
+                            translations: ao.attribute_option.translations,
+                            values: tmp.filter(ao2 => ao2.attribute_option_id === ao.attribute_option_id).map(aov => ({ ...aov.attribute_option_value, vid: aov.attribute_option_value.id })),
+                            sort: ao.attribute_option.sort
+                        }
+                    }))
+                        .reduce((prev, curr) => ({ ...prev, ...curr }), {})
                 }
-        
+
                 // Sort values
                 Object.values(attributes).map(item => item.values.sort((a, b) => basicCompare(+a.sort, +b.sort)))
-        
+
                 return attributes
             }
         },
@@ -143,8 +145,8 @@ export const useProductStore = defineStore('product', {
          */
         async fetchSpotlightProducts() {
             try {
-                const response = await axios.get('/api/v3/storefront/product/spotlight');
-                return response.data;
+                const response = await import('../../../../data/spotlight.json');
+                return response.default || response;
             } catch (error) {
                 console.error('fetchSpotlightProducts failed:', error); // Log error if fetch fails
                 throw error; // Optionally throw error to handle it in the component
@@ -159,10 +161,10 @@ export const useProductStore = defineStore('product', {
         async retrieveProductDetails(slug, params) {
             try {
                 const queryString = new URLSearchParams(params).toString();
-                const url = queryString 
-                    ? `/api/v3/storefront/product/${slug}?${queryString}` 
+                const url = queryString
+                    ? `/api/v3/storefront/product/${slug}?${queryString}`
                     : `/api/v3/storefront/product/${slug}`;
-                    
+
                 const response = await axios.get(url);
                 this.setProductDetails(response.data.product);
             } catch (error) {
@@ -173,7 +175,7 @@ export const useProductStore = defineStore('product', {
 
         async addReview(formdata) {
             try {
-                const response = await axios.post('/api/v3/storefront/product/add-review',  formdata, {
+                const response = await axios.post('/api/v3/storefront/product/add-review', formdata, {
                     headers: {
                         'Authorization': 'Bearer ' + localStorage.getItem('jwt_customer')
                     }
@@ -245,6 +247,6 @@ export const useProductStore = defineStore('product', {
                 throw error
             }
         },
-        
+
     }
 });
