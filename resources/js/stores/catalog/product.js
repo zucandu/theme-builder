@@ -144,13 +144,8 @@ export const useProductStore = defineStore('product', {
          * Throws an error if the request fails.
          */
         async fetchSpotlightProducts() {
-            try {
-                const response = await import('../../../../data/spotlight.json');
-                return response.default || response;
-            } catch (error) {
-                console.error('fetchSpotlightProducts failed:', error); // Log error if fetch fails
-                throw error; // Optionally throw error to handle it in the component
-            }
+            const response = await import('../../../../data/spotlight.json');
+            return response.default || response;
         },
 
         /**
@@ -159,60 +154,21 @@ export const useProductStore = defineStore('product', {
          * Throws an error if the request fails.
          */
         async retrieveProductDetails(slug, params) {
-            try {
-                const queryString = new URLSearchParams(params).toString();
-                const url = queryString
-                    ? `/api/v3/storefront/product/${slug}?${queryString}`
-                    : `/api/v3/storefront/product/${slug}`;
-
-                const response = await axios.get(url);
-                this.setProductDetails(response.data.product);
-            } catch (error) {
-                console.error('retrieveProductDetails failed:', error); // Log error if fetch fails
-                throw error; // Optionally throw error to handle it in the component
-            }
+            const response = await import('../../../../data/product-details.json');
+            const product = response.default?.product || response.product;
+            this.setProductDetails(product);
         },
 
-        async addReview(formdata) {
-            try {
-                const response = await axios.post('/api/v3/storefront/product/add-review', formdata, {
-                    headers: {
-                        'Authorization': 'Bearer ' + localStorage.getItem('jwt_customer')
-                    }
-                });
-            } catch (error) {
-                console.error('addReview failed:', error); // Log error if fetch fails
-                throw error; // Optionally throw error to handle it in the component
-            }
+        async addReview() {
+
         },
 
-        async fetchLatestReviews(productId) {
-            try {
-                const response = await axios.get(`/api/v3/storefront/product/${productId}/reviews`, {
-                    headers: {
-                        'Authorization': 'Bearer ' + localStorage.getItem('jwt_customer')
-                    }
-                });
-                return response.data.reviews;
-            } catch (error) {
-                console.error('fetchLatestReviews failed:', error); // Log error if fetch fails
-                throw error; // Optionally throw error to handle it in the component
-            }
+        async fetchLatestReviews() {
+
         },
 
-        /**
-         * Fetch product data from backend by an array of product IDs.
-         * @param {Array<number>} ids - Array of product IDs
-         * @returns {Promise<Array<Object>>} - List of product objects
-         */
-        async fetchProductsByIds(ids) {
-            try {
-                const response = await axios.post(`/api/v3/storefront/product/by-ids`, { ids })
-                return response.data.products
-            } catch (error) {
-                console.error('Failed to fetch products by IDs:', error)
-                throw error
-            }
+        async fetchProductsByIds() {
+
         },
 
         /**
@@ -220,32 +176,7 @@ export const useProductStore = defineStore('product', {
          * @returns {Promise<Object>} - Confirmation of subscription
          */
         async subscribeRestockNotification(formdata) {
-            try {
-                return await axios.post('/api/v3/storefront/product/restock-notify-signup', formdata);
-            } catch (error) {
-                console.error('Failed to subscribe to restock notification:', error)
-                throw error
-            }
-        },
-
-        /**
-         * Fetch product search suggestions for a given keyword.
-         *
-         * Sends a GET request to `/api/v3/storefront/product/suggestion/:keyword`
-         * and returns the `suggestions` array from the API response.
-         *
-         * @param {string} keyword - The query string to get suggestions for.
-         * @returns {Promise<Array>} Resolves to a list of suggestion items.
-         * @throws {Error} If the network request fails or the API returns an error.
-         */
-        async getSuggestions(keyword) {
-            try {
-                const response = await axios.get(`/api/v3/storefront/product/suggestion/${keyword}`);
-                return response.data.suggestions;
-            } catch (error) {
-                console.error('Failed to subscribe to restock notification:', error)
-                throw error
-            }
+            alert('Subscribed restock notification')
         },
 
     }
