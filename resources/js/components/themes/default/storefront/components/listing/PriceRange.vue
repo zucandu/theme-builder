@@ -1,5 +1,5 @@
 <script setup>
-import { defineProps, computed } from 'vue';
+import { computed } from 'vue';
 import { useSettingsStore } from '@/stores/settings';
 import { useHelpers } from '@/composables/useHelpers';
 

@@ -1,5 +1,5 @@
 <script setup>
-import { defineProps } from 'vue';
+
 import { useSettingsStore } from '@/stores/settings';
 
 const settingsStore = useSettingsStore();
