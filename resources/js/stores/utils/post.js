@@ -16,7 +16,7 @@ export const usePostStore = defineStore('post', {
 
         async retrieveArticleDetails() {
             const response = await import('../../../../data/post_details.json');
-            return response.default || response;
+            return response.default?.post || response.post;
         }
     }
 
