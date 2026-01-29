@@ -2,57 +2,121 @@
     "banners": [
         {
             "id": 1,
+            "image": "sli1.jpg",
             "group": "slideshow",
-            "image": "slider-1.jpg",
+            "width": null,
+            "height": null,
+            "measure": "px",
+            "status": 1,
+            "sort": 0,
+            "created_at": "2023-02-09 14:13:00",
+            "updated_at": "2023-02-10 08:30:42",
+            "meta": [],
             "translations": [
                 {
-                    "title": "Welcome to Zucandu",
-                    "subtitle": "Best products for you",
-                    "summary": "Shop now for the best deals",
-                    "url_primary": "shop",
-                    "locale": "en"
+                    "id": 1,
+                    "banner_id": 1,
+                    "locale": "en",
+                    "title": "Sheet Steel Metal Aluminum Hand Cutting Tin Snips Scissors Tools Cutters Snipper",
+                    "subtitle": null,
+                    "summary": null,
+                    "content": "<p>Great for cutting aluminum tin steel and more. Die cast aluminum handle is lightweight, yet extremely strong..<\/p>",
+                    "btn_primary": "Buy now",
+                    "btn_secondary": null,
+                    "url_primary": "coffee-machine-bugatti-diva",
+                    "url_secondary": "\/",
+                    "created_at": null,
+                    "updated_at": null
                 }
             ]
         },
         {
             "id": 2,
-            "group": "slideshow",
-            "image": "slider-2.jpg",
+            "image": "b-r.jpg",
+            "group": "right",
+            "width": null,
+            "height": null,
+            "measure": "px",
+            "status": 1,
+            "sort": 0,
+            "created_at": "2023-02-09 14:15:35",
+            "updated_at": "2023-02-09 14:36:39",
+            "meta": [],
             "translations": [
                 {
-                    "title": "New Arrivals",
-                    "subtitle": "Check out the latest trends",
-                    "summary": "Don't miss out on these",
-                    "url_primary": "new-arrivals",
-                    "locale": "en"
+                    "id": 2,
+                    "banner_id": 2,
+                    "locale": "en",
+                    "title": "American Mutt Tools Professional 10 Inch Compound Action Aviation Straight Cut Tin Snip",
+                    "subtitle": null,
+                    "summary": null,
+                    "content": null,
+                    "btn_primary": null,
+                    "btn_secondary": null,
+                    "url_primary": "\/",
+                    "url_secondary": "\/",
+                    "created_at": null,
+                    "updated_at": null
                 }
             ]
         },
         {
             "id": 3,
+            "image": "b-1.jpg",
             "group": "top",
-            "image": "banner-top.jpg",
+            "width": null,
+            "height": null,
+            "measure": "px",
+            "status": 1,
+            "sort": 0,
+            "created_at": "2023-02-09 14:17:05",
+            "updated_at": "2023-02-09 14:32:08",
+            "meta": [],
             "translations": [
                 {
-                    "title": "Special Offer",
-                    "subtitle": "Limited time only",
-                    "summary": "Get 50% off",
-                    "url_primary": "sale",
-                    "locale": "en"
+                    "id": 3,
+                    "banner_id": 3,
+                    "locale": "en",
+                    "title": "Milwaukee-48-22-4522 Right Cutting Offset Aviation Snips",
+                    "subtitle": null,
+                    "summary": null,
+                    "content": "<p>Milwaukee Aviation snips are built for long life and durability. Forged blades deliver up to 10X more cuts than cast blades.<\/p>",
+                    "btn_primary": "Buy now",
+                    "btn_secondary": null,
+                    "url_primary": "\/",
+                    "url_secondary": "\/",
+                    "created_at": null,
+                    "updated_at": null
                 }
             ]
         },
         {
             "id": 4,
-            "group": "bottom",
-            "image": "banner-bottom.jpg",
+            "image": "b-2.jpg",
+            "group": "top",
+            "width": null,
+            "height": null,
+            "measure": "px",
+            "status": 1,
+            "sort": 0,
+            "created_at": "2023-02-09 14:18:23",
+            "updated_at": "2023-02-09 14:39:01",
+            "meta": [],
             "translations": [
                 {
-                    "title": "Join our Newsletter",
-                    "subtitle": "Stay updated",
-                    "summary": "Subscribe now",
-                    "url_primary": "subscribe",
-                    "locale": "en"
+                    "id": 4,
+                    "banner_id": 4,
+                    "locale": "en",
+                    "title": "American Mutt Tools Professional 10 Inch Compound Action Aviation Tin Snips",
+                    "subtitle": null,
+                    "summary": null,
+                    "content": "<p>Heavy Duty Chrome Molybdenum Snips with Limited Lifetime Manufacturer lifetime<\/p>",
+                    "btn_primary": "Learn more",
+                    "btn_secondary": null,
+                    "url_primary": "\/",
+                    "url_secondary": "\/",
+                    "created_at": null,
+                    "updated_at": null
                 }
             ]
         }

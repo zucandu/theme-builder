@@ -14,21 +14,16 @@ const bannerStore = useBannerStore();
 const postStore = usePostStore();
 const productStore = useProductStore();
 
-const topMenu = ref({});
 const spotlight = ref([]);
 const loadedBanners = ref({});
 const slideshow = ref([]);
-const topBanners = ref([]);
-const bottomBanners = ref([]);
+const rightBanners = ref([]);
 const latestPosts = ref([]);
 onMounted(async () => {
-
-    topMenu.value = await menuStore.fetchMenuByType('tertiary');
 	
     await bannerStore.fetchBanners();
     slideshow.value = bannerStore.banners.filter(b => b.group === `slideshow`);
-	topBanners.value = bannerStore.banners.filter(b => b.group === `top`);
-	bottomBanners.value = bannerStore.banners.filter(b => b.group === `bottom`);
+	rightBanners.value = bannerStore.banners.filter(b => b.group === `right`);
 
     // Get spotlight products (new, specials, featured)
     spotlight.value = await productStore.fetchSpotlightProducts();
@@ -118,9 +113,9 @@ onMounted(async () => {
 			</div>
 			
 			<div class="col-span-12 md:col-span-4">
-				<div v-if="!topBanners || topBanners.length === 0" class="w-full h-32 md:h-96 bg-gray-200 rounded-lg flex items-center justify-center"></div>
+				<div v-if="!rightBanners || rightBanners.length === 0" class="w-full h-32 md:h-96 bg-gray-200 rounded-lg flex items-center justify-center"></div>
 				<LocalizedLink 
-					v-for="banner in topBanners" 
+					v-for="banner in rightBanners" 
 					:key="banner.id" 
 					:to="banner.translations?.[0]?.url_primary ? `/${banner.translations[0].url_primary}` : `/`"
 					class="relative block w-full h-32 md:h-96 rounded-lg overflow-hidden"
@@ -171,26 +166,6 @@ onMounted(async () => {
 					</div>
 				</LocalizedLink>
 
-			</div>
-			
-			<div class="col-span-12">
-			<!--	<div v-if="!bottomBanners || bottomBanners.length === 0" class="w-full h-12 bg-gray-200 rounded-lg flex items-center justify-center"></div> -->
-				<div v-for="banner in bottomBanners" :key="banner.id" class="relative w-full h-12 rounded-lg overflow-hidden">
-				
-					<!-- Placeholder loading -->
-					<div v-if="!loadedBanners[`banner${banner.id}`]" class="absolute inset-0 flex items-center justify-center bg-gray-200 z-10">
-						<span class="text-gray-500 text-sm">{{ $t(`Loading...`) }}</span>
-					</div>
-					
-					<img 
-						:src="`/storage/${banner.image}`" 
-						alt="Image 2"
-						class="absolute inset-0 w-full h-full object-cover object-center"
-						:class="{ 'opacity-0': !loadedBanners[`banner${banner.id}`], 'opacity-100': loadedBanners[`banner${banner.id}`] }"
-						@load="loadedBanners[`banner${banner.id}`] = true"
-					>
-				</div>
-				
 			</div>
 		</div>
 		<section class="mt-6">
