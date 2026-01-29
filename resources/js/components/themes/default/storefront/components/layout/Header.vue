@@ -9,11 +9,8 @@ import { useI18n } from 'vue-i18n';
 import { useRouter, useRoute } from 'vue-router';
 import { useSettingsStore } from '@/stores/settings'
 import { useCartStore } from '@/stores/cart'
-import { useAuthCustomerStore } from '@/stores/auth/customer';
 import { useMenuStore } from '@/stores/utils/menu';
 import { useHelpers } from '@/composables/useHelpers';
-import { useRedirect } from '@/composables/useRedirect';
-import { useLoader } from '@/composables/useLoader'
 
 const { locale } = useI18n();
 const router = useRouter();
@@ -22,11 +19,8 @@ const route = useRoute();
 const settingsStore = useSettingsStore();
 const menuStore = useMenuStore();
 const cartStore = useCartStore();
-const authCustomerStore = useAuthCustomerStore();
 
-const { translateItemField, parseMenuLink } = useHelpers();
-const { redirectTo } = useRedirect();
-const { loadScript } = useLoader()
+const { translateItemField } = useHelpers();
 
 // Display & change currency
 const selectedCurrency = ref(settingsStore.selectedCurrency);
@@ -46,23 +40,6 @@ const primaryMenu = ref({});
 const HIDE_DELAY = 300; // 0.3s
 let cleanups = [];
 onMounted(async () => {
-	
-	/*
-	await loadScript('https://cdnjs.cloudflare.com/ajax/libs/headroom/0.12.0/headroom.min.js');
-	const header = document.querySelector('header');
-	const headroom = new Headroom(header, {
-		offset: 10, 
-		tolerance: 10,
-		classes: {
-			initial: 'headroom',
-			pinned: 'headroom--pinned',
-			unpinned: 'headroom--unpinned',
-			top: 'headroom--top',
-			notTop: 'headroom--not-top'
-		}
-	});
-	headroom.init();
-	*/
 	
     primaryMenu.value = await menuStore.fetchMenuByType('primary').catch(error => {
 		console.error('Error fetching menu data:', error)
@@ -447,56 +424,4 @@ const removeProduct = (id) => {
     }
 }
 
-.navbar-primary .nav-item.dropdown .dropdown-menu {
-	display: block;
-    opacity: 0;
-    transform: translateY(10px);
-    transition: all 0.3s ease;
-    visibility: hidden;
-    pointer-events: none;
-    position: absolute;
-    z-index: 50;
-}
-
-/* .navbar-primary .nav-item.dropdown {
-	position: relative;
-} */
-
-.navbar-primary .nav-item.dropdown:hover > .dropdown-menu {
-    opacity: 1;
-    transform: translateY(0);
-    visibility: visible;
-    pointer-events: auto;
-}
-
-.navbar-primary.keepalive .nav-item.is-active > .dropdown-menu {
-    opacity: 1;
-    transform: translateY(0);
-    visibility: visible;
-    pointer-events: auto;
-}
-
-.navbar-primary:not(.click-to-hide) .nav-item.is-active > .dropdown-menu {
-    opacity: 0;
-    transform: translateY(-8px);
-    visibility: hidden;
-    pointer-events: none;
-}
-
-.navbar-primary .nav-item:hover > .base-link {
-    background-color: #e9ecef;
-}
-
-.navbar-primary .nav-item.dropdown.has-sub > .base-link:after {
-    content: "";
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    width: 6px;
-    height: 6px;
-    border-right: 2px solid #ccc;
-    border-bottom: 2px solid #ccc;
-    transform: translateY(-50%) rotate(-45deg);
-    pointer-events: none;
-}
 </style>

@@ -6,7 +6,7 @@ export const useMenuStore = defineStore('menu', {
     }),
 
     getters: {
-        
+
     },
 
     actions: {
@@ -15,8 +15,10 @@ export const useMenuStore = defineStore('menu', {
          */
         async fetchMenuByType(type) {
             try {
-                const response = await axios.get(`/api/v3/storefront/menu/${type}`);
-                return response.data.menu;
+                // Load mock data from local JSON files
+                // Note: The path is relative to this file
+                const response = await import(`../../../../data/${type}.json`);
+                return response.default.menu || response.menu;
             } catch (error) {
                 console.error('fetchMenuByType failed:', error); // Log error if fetch fails
                 throw error; // Optionally throw error to handle it in the component
