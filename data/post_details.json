@@ -1,0 +1,41 @@
+{
+    "post": {
+        "id": 10,
+        "author": "Admin",
+        "image": "shipping_policy_banner.jpg",
+        "block": 0,
+        "status": 1,
+        "sort": 0,
+        "meta": [],
+        "created_at": "2026-01-29 09:00:00",
+        "updated_at": "2026-01-29 14:30:00",
+        "author_id": 0,
+        "date_added": "January 29, 2026",
+        "translations": [
+            {
+                "id": 10,
+                "post_id": 10,
+                "locale": "en",
+                "title": "Shipping & Delivery Policy",
+                "slug": "shipping-delivery-policy",
+                "summary": "Everything you need to know about our shipping rates, delivery times, and tracking your order.",
+                "content": "<h3><strong>Fast and Reliable Shipping</strong></h3><p>At Zucandu, we strive to deliver your musical instruments and accessories as quickly as possible. We partner with top-tier logistics providers to ensure your gear arrives safe and sound.</p><h4><u><strong>1. Shipping Destinations</strong></u></h4><p>We currently ship to over 50 countries worldwide. Whether you are looking for drum parts or professional recording gear, we can get it to your doorstep.</p><h4><u><strong>2. Processing Time</strong></u></h4><p>Orders are typically processed within 1-2 business days. Please note that custom drum orders or out-of-stock items may take longer to prepare. You will receive a notification once your order is ready for dispatch.</p><h4><u><strong>3. Shipping Rates & Delivery Estimates</strong></u></h4><ul><li><strong>Standard Shipping:</strong> 5-7 business days ($10.00)</li><li><strong>Express Shipping:</strong> 2-3 business days ($25.00)</li><li><strong>International Shipping:</strong> Varies by location (calculated at checkout)</li></ul><p><em>*Note: Delivery times are estimates and may be affected by customs clearance or local carrier delays.</em></p><h4><u><strong>4. Order Tracking</strong></u></h4><p>Once your order has shipped, we will send you an email with a tracking number and a link to the carrier's website so you can monitor your shipment's progress in real-time.</p><h4><u><strong>5. Damaged or Lost Shipments</strong></u></h4><p>Your satisfaction is our priority. If your package arrives damaged, please contact our support team at <strong>support@zucandu.com</strong> within 48 hours of delivery with photos of the package and items. We will resolve the issue immediately.</p>",
+                "meta_title": "Shipping & Delivery Policy | Zucandu Store",
+                "meta_description": "Read about Zucandu's shipping methods, international delivery times, and how to track your musical instrument orders.",
+                "created_at": "2026-01-29 09:00:00",
+                "updated_at": "2026-01-29 14:30:00"
+            }
+        ],
+        "images": [
+            "shipping_policy_banner.jpg",
+            "delivery_process_01.jpg"
+        ],
+        "categories": [
+            {
+                "id": 1,
+                "name": "Customer Service",
+                "slug": "customer-service"
+            }
+        ]
+    }
+}
