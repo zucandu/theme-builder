@@ -123,3 +123,37 @@ const setupFooterAccordion = () => {
         </template>
 	</footer>
 </template>
+
+<style scoped>
+@media (max-width: 767.98px) {
+    :deep(.footer-middle-section .block-item .element-item) {
+        display: none;
+    }
+    :deep(.footer-middle-section .block-item.active .element-item) {
+        display: block;
+    }
+    :deep(.footer-middle-section .block-item .heading) {
+        position: relative;
+        padding-right: 24px;
+        cursor: pointer;
+        user-select: none;
+    }
+    :deep(.footer-middle-section .block-item .heading::after) {
+        content: "+";
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 20px;
+        line-height: 1;
+        transition: 0.2s ease;
+    }
+    :deep(.footer-middle-section .block-item.active .heading::after) {
+        content: "-";
+    }
+}
+.footer-middle-section .h3, .count-1 {
+	display: none;
+}
+
+</style>

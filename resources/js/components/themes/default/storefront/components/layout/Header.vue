@@ -437,3 +437,66 @@ const removeProduct = (id) => {
 		</div>
 	</header>
 </template>
+
+<style scoped>
+@media (min-width: 1024px) {
+    .nav-shadow {
+        border-bottom: 1px solid #ced4da;
+		border-top: 1px solid #ced4da;
+		box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .08);
+    }
+}
+
+.navbar-primary .nav-item.dropdown .dropdown-menu {
+	display: block;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+    visibility: hidden;
+    pointer-events: none;
+    position: absolute;
+    z-index: 50;
+}
+
+/* .navbar-primary .nav-item.dropdown {
+	position: relative;
+} */
+
+.navbar-primary .nav-item.dropdown:hover > .dropdown-menu {
+    opacity: 1;
+    transform: translateY(0);
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.navbar-primary.keepalive .nav-item.is-active > .dropdown-menu {
+    opacity: 1;
+    transform: translateY(0);
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.navbar-primary:not(.click-to-hide) .nav-item.is-active > .dropdown-menu {
+    opacity: 0;
+    transform: translateY(-8px);
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.navbar-primary .nav-item:hover > .base-link {
+    background-color: #e9ecef;
+}
+
+.navbar-primary .nav-item.dropdown.has-sub > .base-link:after {
+    content: "";
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    width: 6px;
+    height: 6px;
+    border-right: 2px solid #ccc;
+    border-bottom: 2px solid #ccc;
+    transform: translateY(-50%) rotate(-45deg);
+    pointer-events: none;
+}
+</style>
