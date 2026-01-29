@@ -1,0 +1,284 @@
+{
+    "paginator": {
+        "current_page": 1,
+        "data": [
+            {
+                "id": 7,
+                "author": "Admin",
+                "image": "shipping_guide_2026.jpg",
+                "block": 0,
+                "status": 1,
+                "sort": 1,
+                "meta": null,
+                "created_at": "2026-01-10 08:30:00",
+                "updated_at": "2026-01-10 08:30:00",
+                "author_id": 0,
+                "translations": [
+                    {
+                        "title": "International Shipping Guide",
+                        "slug": "international-shipping-guide",
+                        "locale": "en",
+                        "summary": "Everything you need to know about how we deliver products globally."
+                    }
+                ],
+                "categories": [],
+                "date_added": "January 10, 2026",
+                "images": [
+                    "shipping_guide_2026.jpg"
+                ]
+            },
+            {
+                "id": 8,
+                "author": "Admin",
+                "image": "secure_payment_methods.jpg",
+                "block": 0,
+                "status": 1,
+                "sort": 2,
+                "meta": null,
+                "created_at": "2026-01-12 10:15:00",
+                "updated_at": "2026-01-12 10:15:00",
+                "author_id": 0,
+                "translations": [
+                    {
+                        "title": "Secure Payment Methods",
+                        "slug": "secure-payment-methods",
+                        "locale": "en",
+                        "summary": "Learn about the encrypted payment gateways we support for your safety."
+                    }
+                ],
+                "categories": [],
+                "date_added": "January 12, 2026",
+                "images": [
+                    "secure_payment_methods.jpg"
+                ]
+            },
+            {
+                "id": 9,
+                "author": "Admin",
+                "image": "return_policy_update.jpg",
+                "block": 0,
+                "status": 1,
+                "sort": 3,
+                "meta": null,
+                "created_at": "2026-01-15 14:20:00",
+                "updated_at": "2026-01-15 14:20:00",
+                "author_id": 0,
+                "translations": [
+                    {
+                        "title": "Updated Return Policy",
+                        "slug": "updated-return-policy",
+                        "locale": "en",
+                        "summary": "We have simplified our return process. Read the latest updates here."
+                    }
+                ],
+                "categories": [],
+                "date_added": "January 15, 2026",
+                "images": [
+                    "return_policy_update.jpg"
+                ]
+            },
+            {
+                "id": 10,
+                "author": "Admin",
+                "image": "summer_collection_2026.jpg",
+                "block": 0,
+                "status": 1,
+                "sort": 4,
+                "meta": null,
+                "created_at": "2026-01-20 09:00:00",
+                "updated_at": "2026-01-20 09:00:00",
+                "author_id": 0,
+                "translations": [
+                    {
+                        "title": "Summer Collection Trends",
+                        "slug": "summer-collection-trends",
+                        "locale": "en",
+                        "summary": "Discover the hottest fashion trends for this summer season."
+                    }
+                ],
+                "categories": [],
+                "date_added": "January 20, 2026",
+                "images": [
+                    "summer_collection_2026.jpg"
+                ]
+            },
+            {
+                "id": 11,
+                "author": "Admin",
+                "image": "eco_friendly_products.jpg",
+                "block": 0,
+                "status": 1,
+                "sort": 5,
+                "meta": null,
+                "created_at": "2026-01-22 11:45:00",
+                "updated_at": "2026-01-22 11:45:00",
+                "author_id": 0,
+                "translations": [
+                    {
+                        "title": "Sustainable Living Essentials",
+                        "slug": "sustainable-living-essentials",
+                        "locale": "en",
+                        "summary": "Switching to eco-friendly products made easy with our top picks."
+                    }
+                ],
+                "categories": [],
+                "date_added": "January 22, 2026",
+                "images": [
+                    "eco_friendly_products.jpg"
+                ]
+            },
+            {
+                "id": 12,
+                "author": "Admin",
+                "image": "loyalty_program.jpg",
+                "block": 0,
+                "status": 1,
+                "sort": 6,
+                "meta": null,
+                "created_at": "2026-01-25 16:00:00",
+                "updated_at": "2026-01-25 16:00:00",
+                "author_id": 0,
+                "translations": [
+                    {
+                        "title": "Join Our Loyalty Rewards",
+                        "slug": "join-our-loyalty-rewards",
+                        "locale": "en",
+                        "summary": "Earn points for every purchase and redeem them for exclusive discounts."
+                    }
+                ],
+                "categories": [],
+                "date_added": "January 25, 2026",
+                "images": [
+                    "loyalty_program.jpg"
+                ]
+            },
+            {
+                "id": 13,
+                "author": "Admin",
+                "image": "tech_review_2026.jpg",
+                "block": 0,
+                "status": 1,
+                "sort": 7,
+                "meta": null,
+                "created_at": "2026-01-26 13:10:00",
+                "updated_at": "2026-01-26 13:10:00",
+                "author_id": 0,
+                "translations": [
+                    {
+                        "title": "Top 10 Tech Gadgets of the Year",
+                        "slug": "top-10-tech-gadgets-2026",
+                        "locale": "en",
+                        "summary": "A deep dive into the most innovative gadgets hitting the market."
+                    }
+                ],
+                "categories": [],
+                "date_added": "January 26, 2026",
+                "images": [
+                    "tech_review_2026.jpg"
+                ]
+            },
+            {
+                "id": 14,
+                "author": "Admin",
+                "image": "office_setup.jpg",
+                "block": 0,
+                "status": 1,
+                "sort": 8,
+                "meta": null,
+                "created_at": "2026-01-27 10:00:00",
+                "updated_at": "2026-01-27 10:00:00",
+                "author_id": 0,
+                "translations": [
+                    {
+                        "title": "Perfect Home Office Setup",
+                        "slug": "perfect-home-office-setup",
+                        "locale": "en",
+                        "summary": "Boost your productivity with these ergonomic workspace ideas."
+                    }
+                ],
+                "categories": [],
+                "date_added": "January 27, 2026",
+                "images": [
+                    "office_setup.jpg"
+                ]
+            },
+            {
+                "id": 15,
+                "author": "Admin",
+                "image": "gift_guide_2026.jpg",
+                "block": 0,
+                "status": 1,
+                "sort": 9,
+                "meta": null,
+                "created_at": "2026-01-28 15:30:00",
+                "updated_at": "2026-01-28 15:30:00",
+                "author_id": 0,
+                "translations": [
+                    {
+                        "title": "Ultimate Gift Guide for Him",
+                        "slug": "ultimate-gift-guide-for-him",
+                        "locale": "en",
+                        "summary": "Finding the perfect gift just got easier with our curated list."
+                    }
+                ],
+                "categories": [],
+                "date_added": "January 28, 2026",
+                "images": [
+                    "gift_guide_2026.jpg"
+                ]
+            },
+            {
+                "id": 16,
+                "author": "Admin",
+                "image": "customer_feedback.jpg",
+                "block": 0,
+                "status": 1,
+                "sort": 10,
+                "meta": null,
+                "created_at": "2026-01-29 11:20:00",
+                "updated_at": "2026-01-29 11:20:00",
+                "author_id": 0,
+                "translations": [
+                    {
+                        "title": "Customer Stories & Feedback",
+                        "slug": "customer-stories-feedback",
+                        "locale": "en",
+                        "summary": "See how our products are making a difference in people's lives."
+                    }
+                ],
+                "categories": [],
+                "date_added": "January 29, 2026",
+                "images": [
+                    "customer_feedback.jpg"
+                ]
+            }
+        ],
+        "first_page_url": "https://demo.zucandu.com/api/v1/storefront/blog/listing?page=1",
+        "from": 1,
+        "last_page": 1,
+        "last_page_url": "https://demo.zucandu.com/api/v1/storefront/blog/listing?page=1",
+        "links": [
+            {
+                "url": null,
+                "label": "&laquo; Previous",
+                "active": false
+            },
+            {
+                "url": "https://demo.zucandu.com/api/v1/storefront/blog/listing?page=1",
+                "label": "1",
+                "active": true
+            },
+            {
+                "url": null,
+                "label": "Next &raquo;",
+                "active": false
+            }
+        ],
+        "next_page_url": null,
+        "path": "https://demo.zucandu.com/api/v1/storefront/blog/listing",
+        "per_page": 20,
+        "prev_page_url": null,
+        "to": 10,
+        "total": 10
+    }
+}

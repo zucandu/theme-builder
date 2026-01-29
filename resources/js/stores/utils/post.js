@@ -16,7 +16,7 @@ export const usePostStore = defineStore('post', {
 
         async fetchPosts(params) {
             try {
-                const response = await import('../../../../data/latest_posts.json');
+                const response = await import('../../../../data/posts_listing.json');
                 const posts = response.default.posts || response.posts;
                 return {
                     paginator: {
