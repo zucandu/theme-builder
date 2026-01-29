@@ -49,23 +49,6 @@ const sortByItems = ref([
 ]);
 const selectedFilters = ref([]);
 
-const showFilterBar = ref(window.innerWidth > 992);
-
-const toggleFilterSidebar = () => {
-	showFilterBar.value = !showFilterBar.value;
-	localStorage.setItem("enabled_filter_sidebar", showFilterBar.value ? 1 : 0);
-}
-
-const filterSideBarStatus = () => {
-	if(window.innerWidth > 992) {
-		if(localStorage.getItem("enabled_filter_sidebar")) {
-			showFilterBar.value = +localStorage.getItem("enabled_filter_sidebar") === 1 ? true : false;
-		}
-	} else {
-		showFilterBar.value = false;
-	}
-}
-
 onMounted(async () => {
 	
 	suppressQuerySync.value = true;
@@ -78,9 +61,6 @@ onMounted(async () => {
 	if(route.name === `category`) sessionStorage.setItem('fromCategoryId', listingStore.object.id);
     
 	loaded.value = true;
-	
-	// Show the filter sidebar
-	filterSideBarStatus();
 });
 
 const listingComputed = computed(() => {
@@ -175,36 +155,18 @@ watch(
 			<div class="h-8 bg-gray-300 rounded w-48"></div>
 		</section>
 		
-		<div class="mt-4">
-			<button
-				@click.stop="toggleFilterSidebar"
-				id="filter-button"
-				type="button"
-				:class="[
-					'px-6 py-2 rounded bg-gray-800 hover:bg-gray-700 text-white font-semibold shadow-sm uppercase flex items-center transition cursor-pointer',
-					showFilterBar ? 'hidden' : 'flex'
-				]"
-			>
-				<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5 mr-2">
-					<path stroke-linecap="round" stroke-linejoin="round" d="M6 13.5V3.75m0 9.75a1.5 1.5 0 0 1 0 3m0-3a1.5 1.5 0 0 0 0 3m0 3.75V16.5m12-3V3.75m0 9.75a1.5 1.5 0 0 1 0 3m0-3a1.5 1.5 0 0 0 0 3m0 3.75V16.5m-6-9V3.75m0 3.75a1.5 1.5 0 0 1 0 3m0-3a1.5 1.5 0 0 0 0 3m0 9.75V10.5" />
-				</svg>
-				<span v-if="showFilterBar">{{ $t('Hide Filter') }}</span>
-				<span v-else>{{ $t('Filter') }}</span>
-			</button>
-		</div>
-
 		<section v-if="loaded" class="grid grid-cols-12 gap-4">
 		
 			<!-- Sidebar Filter -->
 			<div
 				id="col-filter"
-				:class="`block col-span-12 lg:col-span-2 filter-${showFilterBar ? 'show' : 'hide'}`"
+				class="block col-span-12 lg:col-span-2"
 			>
 				<FilterSidebar v-model:selected="selectedFilters" :filters="listingStore.filters" :reset-filter="resetFilter" :object-id="listingStore.object.id" />
 			</div>
 
 			<!-- Main Product List -->
-			<div :class="showFilterBar ? 'col-span-12 lg:col-span-10' : 'col-span-12'">
+			<div class="col-span-12 lg:col-span-10">
 				<template v-if="+listingStore.paginationInfo.total > 0">
 				
 					<!-- Display items text and sort -->

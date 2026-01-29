@@ -79,31 +79,10 @@ onBeforeMount(async () => {
 	
 	loadAccordionState();
 	filterSeeMore.value = JSON.parse(localStorage.getItem("filter_see_more")) || [];
-	
-	await nextTick();
-	setupObserver();
 });
 
 // Make filters reactive
 const filters = computed(() => props.filters);
-
-const closeFilterSidebar = () => {
-	document.getElementById('filter-button').click();
-}
-
-const handleTouchStart = (event) => {
-	this.touchStartX = event.changedTouches[0].screenX;
-}
-
-const handleTouchMove = (event) => {
-	this.touchEndX = event.changedTouches[0].screenX;
-}
-
-const handleTouchEnd = () => {
-	if (this.touchStartX < this.touchEndX - 50) {
-		closeFilterSidebar();
-	}
-}
 
 const minPrice = ref();
 const maxPrice = ref();
@@ -146,78 +125,14 @@ const resetPriceRange = () => {
 	document.getElementById('price-range-trigger').click()
 }
 
-const isStuck = ref(false)
-const stickySentinel = ref(null)
-const filterEl = ref(null)
-
-let observer
-
-/**
- * Convert a string like "170px" to a number 170
- */
-function parsePx(px) {
-    const n = Number(String(px).replace('px', ''))
-    return Number.isFinite(n) ? n : 0
-}
-
-/**
- * Setup an IntersectionObserver to detect when the sticky element
- * reaches the top of the viewport
- */
-function setupObserver() {
-    if (!stickySentinel.value || !filterEl.value) return
-
-    // Get the current "top" value from computed styles (e.g., '170px')
-    const { top } = getComputedStyle(filterEl.value)
-    const topPx = parsePx(top) || 170
-
-    // Disconnect the previous observer before creating a new one
-    if (observer) observer.disconnect()
-
-    observer = new IntersectionObserver(
-        ([entry]) => {
-            // If the sentinel is no longer intersecting the viewport,
-            // it means the sticky element has reached the top
-            isStuck.value = entry.intersectionRatio === 0
-        },
-        {
-            root: null,
-            threshold: [0, 1],
-            // Shift the root margin upwards by topPx so that "0" matches
-            // the moment the sticky element touches the top
-            rootMargin: `-${topPx}px 0px 0px 0px`,
-        }
-    )
-
-    observer.observe(stickySentinel.value)
-}
-
 </script>
 
 <template>
     <div class="filter-sidebar-outer h-full">
-		<div ref="stickySentinel" aria-hidden="true" class="h-px w-full"></div>
         <div 
 			v-if="Object.keys(filters).length > 0" 
 			id="filter-sidebar" 
-			ref="filterEl"
-			:class="[
-				'lg:sticky overflow-y-auto transition-all duration-300 ease-in-out',
-				isStuck
-					? 'lg:top-[150px] lg:max-h-[calc(100vh-165px)]'
-					: 'lg:top-[170px] lg:max-h-[calc(100vh-290px)]'
-			]"
 		>
-			<button
-				@click.prevent="closeFilterSidebar"
-				type="button"
-				class="mb-4 px-6 py-2 rounded bg-gray-800 text-white font-semibold uppercase shadow-sm flex items-center hover:bg-gray-700 transition cursor-pointer"
-			>
-				<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5 mr-2">
-					<path stroke-linecap="round" stroke-linejoin="round" d="M6 13.5V3.75m0 9.75a1.5 1.5 0 0 1 0 3m0-3a1.5 1.5 0 0 0 0 3m0 3.75V16.5m12-3V3.75m0 9.75a1.5 1.5 0 0 1 0 3m0-3a1.5 1.5 0 0 0 0 3m0 3.75V16.5m-6-9V3.75m0 3.75a1.5 1.5 0 0 1 0 3m0-3a1.5 1.5 0 0 0 0 3m0 9.75V10.5" />
-				</svg>
-				{{ $t('Hide Filter') }}
-			</button>
 			
 			<template v-if="+objectId > 0">
 				<NavSubcategories :menu-key="`custom_category_${objectId}`" />
@@ -390,13 +305,5 @@ function setupObserver() {
 				</button>
 			</div>
         </div>
-		<div
-			@click="closeFilterSidebar"
-			@touchstart="handleTouchStart"
-			@touchmove="handleTouchMove"
-			@touchend="handleTouchEnd"
-			id="filter-overlay"
-			class="fixed top-0 left-0 w-full h-full bg-black opacity-25 lg:hidden z-40"
-		></div>
     </div>
 </template>
