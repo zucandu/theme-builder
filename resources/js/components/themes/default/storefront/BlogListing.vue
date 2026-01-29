@@ -43,51 +43,48 @@ const getPaginatedArticles = async (obj) => {
     <div>
         <div class="py-12">
             <div class="container mx-auto py-6">
-                <div class="grid grid-cols-12 gap-4">
-                    <!-- Articles List -->
-                    <div class="col-span-8">
-                        <div class="space-y-4">
-                            <!-- Display items text and sort -->
-                            <div class="flex justify-between mb-4 items-center">
-                                <div class="showing">
-                                    {{ $t('listing.paginationArticle', { from: paginationInfo.from, to: paginationInfo.to, total: paginationInfo.total }) }}
-                                </div>
-                                <!-- <div class="flex items-center space-x-2">
-                                    <label for="sort-by" class="text-sm font-medium text-gray-700">{{ $t('Sort By') }}</label>
-                                    <select id="sort-by" v-model="sortBy" class="w-64 px-4 py-2 bg-white border rounded shadow-sm focus:outline-hidden focus:ring-2 focus:ring-blue-500">
-                                        <option v-for="item in sortByItems" :key="item.field" :value="item.field">{{ item.name }}</option>
-                                    </select>
-                                </div> -->
-                            </div>
-                            <!-- Articles Loop -->
-                            <div v-for="article in articles" :key="article.id" class="flex items-start p-4 border rounded-lg shadow-xs hover:shadow-md">
-                                <ArticleCard :article="article" />
-                            </div>
-                        </div>
+                <!-- Header & Search -->
+                <div class="mb-12 text-center max-w-2xl mx-auto">
+                     <h1 class="text-3xl font-bold text-gray-900 mb-6">{{ $t('Our Blog') }}</h1>
+                    <div class="relative">
+                        <SearchForm />
+                    </div>
+                </div>
 
-                        <!-- Pagination Links -->
-                        <div class="flex justify-center items-center space-x-2 mt-6">
-                            <div 
-                                v-for="(link, index) in pageLinks" 
-                                :key="index" 
-                                :class="['inline-block', link.active ? 'text-white bg-blue-500' : 'text-blue-500 hover:bg-blue-100', 'rounded px-4 py-2']"
-                            >
-                                <LocalizedLink 
-                                    :to="{ 
-                                        path: `/article/listing`, 
-                                        query: { ...getUrlParams(['page']), page: getUrlParam(link.url, 'page') } 
-                                    }" 
-                                    class="disabled-active"
-                                >
-                                    <span v-html="link.label"></span>
-                                </LocalizedLink>
-                            </div>
+                <div class="flex flex-col gap-8">
+                     <!-- Sort & Info -->
+                    <div class="flex justify-between items-center pb-4 border-b border-gray-100">
+                        <div class="text-sm text-gray-500 font-medium">
+                            {{ $t('listing.paginationArticle', { from: paginationInfo.from, to: paginationInfo.to, total: paginationInfo.total }) }}
                         </div>
                     </div>
 
-                    <!-- Search Form -->
-                    <div class="col-span-4">
-						
+                    <!-- Articles Grid -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <div v-for="article in articles" :key="article.id" class="h-full">
+                            <ArticleCard :article="article" />
+                        </div>
+                    </div>
+
+                    <!-- Pagination -->
+                    <div v-if="pageLinks.length > 0" class="flex justify-center items-center space-x-2 mt-12">
+                        <div 
+                            v-for="(link, index) in pageLinks" 
+                            :key="index" 
+                            :class="['inline-block transition-colors', link.active ? 'text-white bg-blue-600 shadow-md' : 'text-gray-600 hover:bg-gray-100', 'rounded-lg px-4 py-2 font-medium']"
+                        >
+                            <LocalizedLink 
+                                v-if="link.url"
+                                :to="{ 
+                                    path: `/article/listing`, 
+                                    query: { ...getUrlParams(['page']), page: getUrlParam(link.url, 'page') } 
+                                }" 
+                                class="disabled-active block w-full h-full"
+                            >
+                                <span v-html="link.label"></span>
+                            </LocalizedLink>
+                            <span v-else v-html="link.label" class="opacity-50 cursor-not-allowed block w-full h-full"></span>
+                        </div>
                     </div>
                 </div>
             </div>

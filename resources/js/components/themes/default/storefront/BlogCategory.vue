@@ -1,6 +1,6 @@
 <script setup>
 import SearchForm from '@theme/storefront/components/article/SearchForm.vue'
-import DisplayBlock from '@theme/storefront/components/menu/DisplayBlock.vue'
+import ArticleCard from '@theme/storefront/components/article/ArticleCard.vue'
 
 import { ref, onMounted, nextTick } from 'vue';
 import { onBeforeRouteUpdate, useRoute } from 'vue-router';
