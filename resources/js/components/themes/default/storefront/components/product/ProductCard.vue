@@ -13,7 +13,7 @@ const cartStore = useCartStore();
 const { translateItemObj, translateItemField } = useHelpers();
 
 const props = defineProps({
-    product: Array,
+    product: Object,
 	index: {
 		type: Number,
 		default: 0
