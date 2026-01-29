@@ -9,6 +9,11 @@ import { useAuthCustomerStore } from '@/stores/auth/customer';
 import { useProductStore } from '@/stores/catalog/product';
 import { useCartStore } from '@/stores/cart';
 
+// Components
+import PriceConverter from '@theme/cores/PriceConverter.vue';
+import MetaTags from '@theme/cores/MetaTags.vue';
+import Carousel from '@theme/storefront/components/product/Carousel.vue';
+
 const { t, locale } = useI18n();
 const toast = useToast();
 const productStore = useProductStore();
@@ -44,9 +49,6 @@ const productComputed = computed(() => {
     // Set readonly attributes
 	const readonlyAttributes = productStore.getAttributes(productData, 'readonly');
 	
-	// Set meta title
-	document.title = translation?.meta_title;
-
     return { productData, translation, manufacturerTranslation, readonlyAttributes };
 });
 
@@ -95,79 +97,145 @@ function updateMetaForm(obj) {
 <template>
     <div>
         <MetaTags v-if="loaded" :title="productComputed.translation.meta_title" :description="productComputed.translation.meta_description" />
-        <div class="py-12">
-            <div class="container mx-auto py-6">
-                <div v-if="loaded">
-                    <div class="grid grid-cols-12 gap-4">
-                        <div class="col-span-6">
-                            <img :src="`${zucConfig.store_url}/storage/${productComputed.productData.images[0]?.src}`" :alt="productComputed.translation.name">
+        <div class="py-12 bg-gray-50 min-h-screen">
+            <div class="container mx-auto px-4 py-6">
+                <div v-if="loaded" class="bg-white rounded-xl shadow-sm p-6 lg:p-10">
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+                        <!-- Left Column: Carousel -->
+                        <div class="lg:col-span-7">
+                            <Carousel 
+                                :images="productComputed.productData?.images" 
+                                :embeds="productComputed.productData?.embeds" 
+                                :product-name="productComputed.translation?.name" 
+                            />
                         </div>
-                        <div class="col-span-6">
-                            <form @submit.prevent="addToCart">
-                                <h2 class="text-3xl">{{ productComputed.translation.name }}</h2>
-                                <ul class="flex divide-x divide-gray-300">
-                                    <li class="pr-4">{{ productComputed.productData.sku }}</li>
-                                    <li class="px-4">{{ productComputed.productData.quantity }} {{ $t('In stock') }}</li>
-                                    <li v-if="productComputed.manufacturerTranslation" class="px-4">
-                                        <LocalizedLink :to="`/manufacturer/${productComputed.manufacturerTranslation.slug}`" class="text-blue-600 hover:text-blue-400 hover:underline">{{ productComputed.manufacturerTranslation.name }}</LocalizedLink>
-                                    </li>
-                                </ul>
-                                <div class="mt-4">
-                                    <LocalizedLink :to="`/product/${productComputed.translation.slug}/write-review`">{{ $t('Write a Review') }}</LocalizedLink>
+
+                        <!-- Right Column: Details -->
+                        <div class="lg:col-span-5">
+                            <h1 class="text-3xl font-bold text-gray-900 mb-2">{{ productComputed.translation.name }}</h1>
+                            
+                            <div class="flex items-center text-sm text-gray-500 mb-6 space-x-4">
+                                <div><span class="font-medium text-gray-700">SKU:</span> {{ productComputed.productData.sku }}</div>
+                                <div class="w-px h-4 bg-gray-300"></div>
+                                <div class="flex items-center">
+                                    <span class="w-2 h-2 rounded-full mr-2" :class="productComputed.productData.quantity > 0 ? 'bg-green-500' : 'bg-red-500'"></span>
+                                    {{ productComputed.productData.quantity > 0 ? $t('In stock') : $t('Out of stock') }}
                                 </div>
-                                <div class="mt-4">
-                                    <PriceConverter :product="productComputed.productData" class="text-2xl" />
-                                </div>
-                                <div v-if="productStore.getVariants.length > 0" class="mt-4">
-                                    <div v-for="ao in productStore.getVariants" :key="ao.id" class="mb-3">
-                                        <div :id="`option${ao.id}`">
-                                            <div class="mb-2">
-                                                <span class="fw-bold">{{ translateItemField(ao, 'name', $i18n.locale) }}:</span>
-                                                <span class="ms-2">{{ translateItemField(ao.values.find(v => v.id === selectedAttributes[ao.id]), 'name', $i18n.locale) }}</span>
-                                            </div>
-                                            <div class="flex flex-wrap gap-3">
-                                                <div v-for="aov in ao.values" :value="aov.vid" :key="aov.vid" @click.stop="selectedAttributes[ao.id] = aov.vid" :data-aovid="aov.vid" :id="`attr-${ao.id}-${aov.vid}`" :class="`aov-item cursor-pointer py-2 px-3 border rounded text-center min-w-24 min-h-8 flex items-center justify-center ${selectedAttributes[ao.id] === aov.vid ? 'bg-blue-100 border-blue-500 text-blue-700 font-semibold shadow-md' : 'bg-gray-100 border-gray-300 text-gray-700'}`">
-                                                    <template v-if="+ao.display_ov_image === 1 && aov.image">
-                                                        <img :src="`/storage/${zucConfig.small_image_size}/${aov.image}`" :alt="productComputed.translation.name" :width="zucConfig.small_image_size" :height="zucConfig.small_image_size" class="img-fluid">
-                                                    </template>
-                                                    <template v-else>
-                                                        {{ translateItemField(aov, 'name', $i18n.locale) }}
-                                                    </template>
-                                                </div>
+                                <div v-if="productComputed.manufacturerTranslation" class="hidden sm:block w-px h-4 bg-gray-300"></div>
+                                <LocalizedLink 
+                                    v-if="productComputed.manufacturerTranslation" 
+                                    :to="`/manufacturer/${productComputed.manufacturerTranslation.slug}`" 
+                                    class="hidden sm:block text-blue-600 hover:text-blue-700 font-medium"
+                                >
+                                    {{ productComputed.manufacturerTranslation.name }}
+                                </LocalizedLink>
+                            </div>
+
+                            <div class="mb-8 p-4 bg-gray-50 rounded-lg border border-gray-100">
+                                <PriceConverter :product="productComputed.productData" class="text-3xl font-bold text-gray-900" />
+                            </div>
+
+                            <!-- Attributes -->
+                            <div v-if="productStore.getVariants.length > 0" class="mb-8 space-y-6">
+                                <div v-for="ao in productStore.getVariants" :key="ao.id">
+                                    <div :id="`option${ao.id}`">
+                                        <div class="flex justify-between mb-2">
+                                            <span class="font-semibold text-gray-800">{{ translateItemField(ao, 'name', $i18n.locale) }}</span>
+                                            <span class="text-gray-600 font-medium">{{ translateItemField(ao.values.find(v => v.id === selectedAttributes[ao.id]), 'name', $i18n.locale) }}</span>
+                                        </div>
+                                        <div class="flex flex-wrap gap-3">
+                                            <div 
+                                                v-for="aov in ao.values" 
+                                                :key="aov.vid" 
+                                                @click.stop="selectedAttributes[ao.id] = aov.vid" 
+                                                :data-aovid="aov.vid" 
+                                                :id="`attr-${ao.id}-${aov.vid}`" 
+                                                :class="[
+                                                    'aov-item cursor-pointer px-4 py-2 border-2 rounded-lg text-sm font-medium transition-all duration-200 flex items-center justify-center min-w-[3rem]',
+                                                    selectedAttributes[ao.id] === aov.vid 
+                                                        ? 'border-blue-600 bg-blue-50 text-blue-700' 
+                                                        : 'border-gray-200 bg-white text-gray-700 hover:border-gray-300 hover:bg-gray-50'
+                                                ]"
+                                            >
+                                                <template v-if="+ao.display_ov_image === 1 && aov.image">
+                                                    <img :src="`/storage/${zucConfig.small_image_size}/${aov.image}`" :alt="productComputed.translation.name" class="w-8 h-8 object-contain">
+                                                </template>
+                                                <template v-else>
+                                                    {{ translateItemField(aov, 'name', $i18n.locale) }}
+                                                </template>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="cart-block-outer">
-                                    <div class="cart-block inline-block mt-3 w-auto">
-                                        <template v-if="productComputed.productData.quantity > 0">
-                                            <input v-model="formdata.qty" class="form-input inline-block mr-2 px-3 py-2 border border-gray-300 rounded-md focus:outline-hidden focus:ring-2 focus:ring-blue-500" type="number">
-                                            <button class="inline-block text-white bg-green-500 hover:bg-green-600 focus:ring-2 focus:ring-green-400 px-4 py-2 rounded" type="submit">{{ $t('Add to Cart') }}</button>
-                                        </template>
-                                        <!-- <button v-else @click.prevent="showModal = true, picked = { id: productComputed.productData.id, name: productComputed.translation.name }" class="btn btn-warning inline-block align-items-center me-2" type="button">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-magic me-2" viewBox="0 0 16 16">
-                                                <path d="M9.5 2.672a.5.5 0 1 0 1 0V.843a.5.5 0 0 0-1 0v1.829Zm4.5.035A.5.5 0 0 0 13.293 2L12 3.293a.5.5 0 1 0 .707.707L14 2.707ZM7.293 4A.5.5 0 1 0 8 3.293L6.707 2A.5.5 0 0 0 6 2.707L7.293 4Zm-.621 2.5a.5.5 0 1 0 0-1H4.843a.5.5 0 1 0 0 1h1.829Zm8.485 0a.5.5 0 1 0 0-1h-1.829a.5.5 0 0 0 0 1h1.829ZM13.293 10A.5.5 0 1 0 14 9.293L12.707 8a.5.5 0 1 0-.707.707L13.293 10ZM9.5 11.157a.5.5 0 0 0 1 0V9.328a.5.5 0 0 0-1 0v1.829Zm1.854-5.097a.5.5 0 0 0 0-.706l-.708-.708a.5.5 0 0 0-.707 0L8.646 5.94a.5.5 0 0 0 0 .707l.708.708a.5.5 0 0 0 .707 0l1.293-1.293Zm-3 3a.5.5 0 0 0 0-.706l-.708-.708a.5.5 0 0 0-.707 0L.646 13.94a.5.5 0 0 0 0 .707l.708.708a.5.5 0 0 0 .707 0L8.354 9.06Z"/>
-                                            </svg>
-                                            {{ $t('Notify when available') }}
-                                        </button> -->
-                                    </div>
+                            </div>
 
-                                    <!-- Hook after add to cart button. -->
+                            <!-- Actions -->
+                            <form @submit.prevent="addToCart" class="mt-8 border-t pt-8 border-gray-100">
+                                <div class="flex flex-col sm:flex-row gap-4">
+                                    <template v-if="productComputed.productData.quantity > 0">
+                                        <div class="w-full sm:w-32">
+                                            <label class="block text-xs font-semibold text-gray-500 mb-1 uppercase tracking-wide">{{ $t('Quantity') }}</label>
+                                            <div class="relative">
+                                                <input 
+                                                    v-model="formdata.qty" 
+                                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 font-medium text-center" 
+                                                    type="number" 
+                                                    min="1"
+                                                >
+                                            </div>
+                                        </div>
+                                        <button 
+                                            class="flex-1 bg-gray-900 text-white font-bold py-3 px-8 rounded-lg hover:bg-black transition-colors duration-200 flex items-center justify-center shadow-lg hover:shadow-xl transform hover:-translate-y-0.5" 
+                                            type="submit"
+                                        >
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                                            </svg>
+                                            {{ $t('Add to Cart') }}
+                                        </button>
+                                    </template>
+                                    <div v-else class="w-full bg-red-50 text-red-600 rounded-lg p-4 text-center font-medium border border-red-100">
+                                        {{ $t('This product is currently out of stock') }}
+                                    </div>
+                                </div>
+
+                                <!-- Hooks -->
+                                <div class="mt-6">
                                     <template v-for="(component, index) in $pluginStorefrontHooks['product_after_add_to_cart_button']" :key="index">
-                                        <component :is="component" :product="productComputed.productData" :translation="productComputed.translation" :formdata="formdata" @updateMetaForm="updateMetaForm"></component>
+                                        <component 
+                                            :is="component" 
+                                            :product="productComputed.productData" 
+                                            :translation="productComputed.translation" 
+                                            :formdata="formdata" 
+                                            @updateMetaForm="updateMetaForm"
+                                        ></component>
                                     </template>
                                 </div>
                             </form>
+                            
+                            <!-- Write Review Link -->
+                             <div class="mt-6 text-center">
+                                <LocalizedLink :to="`/product/${productComputed.translation.slug}/write-review`" class="text-sm text-gray-500 hover:text-gray-900 underline decoration-gray-300 hover:decoration-gray-900 transition-all">
+                                    {{ $t('Write a Review') }}
+                                </LocalizedLink>
+                            </div>
+
                         </div>
                     </div>
-                    <div v-html="productComputed.translation.description"></div>
+
+                    <!-- Description Tab/Section -->
+                    <div class="mt-16 border-t border-gray-100 pt-10">
+                        <h3 class="text-xl font-bold mb-6 text-gray-900">{{ $t('Description') }}</h3>
+                        <div v-html="productComputed.translation.description" class="prose prose-blue max-w-none text-gray-600"></div>
+                    </div>
                 </div>
-                <div v-else class="flex items-center justify-center">
-                    <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500"></div>
-                    <p class="mt-4 text-gray-600 ps-4">{{ $t('Loading, please wait...') }}</p>
+                
+                <!-- Loading State -->
+                <div v-else class="flex flex-col items-center justify-center min-h-[60vh]">
+                    <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900 mb-4"></div>
+                    <p class="text-gray-500 font-medium">{{ $t('Loading product details...') }}</p>
                 </div>
             </div>
-            
         </div>
     </div>
 </template>

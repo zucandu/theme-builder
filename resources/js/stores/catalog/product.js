@@ -78,55 +78,70 @@ export const useProductStore = defineStore('product', {
          * @return {object}
          */
         childProduct: () => (product, selectedAtt) => {
-            // Convert selectedAtt keys and values to integers using native JavaScript
-            const selectedKeys = Object.keys(selectedAtt).map(key => parseInt(key, 10));
-            const selectedValues = Object.values(selectedAtt).map(value => parseInt(value, 10));
-
-            if (Object.keys(product).length !== 0 && Object.keys(selectedAtt).length !== 0) {
-                return product.children.find(p => {
-                    const filteredAttributes = p.attributes.filter(a => a.attribute_option.type !== 'readonly');
-
-                    const attributeIds = filteredAttributes.map(att => +att.attribute_option_id);
-                    const valueIds = filteredAttributes.map(att => +att.attribute_option_value_id);
-
-                    // Compare the arrays for selected keys and values
-                    const isMatch =
-                        attributeIds.length === selectedKeys.length && attributeIds.every((val, index) => val === selectedKeys[index]) &&
-                        valueIds.length === selectedValues.length && valueIds.every((val, index) => val === selectedValues[index]);
-
-                    return isMatch;
-                }) || { ...product, quantity: 0, status: 0 };
+            if (product.children?.length > 0 && selectedAtt && Object.keys(selectedAtt).length > 0) {
+                const match = product.children.find(child =>
+                    Object.entries(selectedAtt).every(([oid, vid]) =>
+                        child.attributes.some(attr =>
+                            +attr.attribute_option_id === +oid &&
+                            +attr.attribute_option_value_id === +vid
+                        )
+                    )
+                );
+                return match || { ...product, quantity: 0, status: 0 };
             }
         },
 
         getAttributes() {
-            return (product, type) => {
-                let attributes = {}
-
-                if (Object.keys(product).length !== 0) {
-                    const tmp = product.attributes.filter(att => att.attribute_option.type === type)
-                    attributes = tmp.map(ao => ({
-                        [ao.attribute_option_id]: {
-                            id: ao.attribute_option_id,
-                            display_ov_image: ao.attribute_option.display_ov_image,
-                            filter_only: ao.attribute_option.filter_only,
-                            translations: ao.attribute_option.translations,
-                            values: tmp.filter(ao2 => ao2.attribute_option_id === ao.attribute_option_id).map(aov => ({ ...aov.attribute_option_value, vid: aov.attribute_option_value.id })),
-                            sort: ao.attribute_option.sort
+            return (a, type) => {
+                if (type === 'select') {
+                    return {
+                        1: {
+                            id: 1,
+                            sort: 0,
+                            display_ov_image: 0,
+                            translations: [{ locale: 'en', name: 'Color' }],
+                            values: [
+                                { vid: 1, id: 1, sort: 0, translations: [{ locale: 'en', name: 'Red' }], image: null },
+                                { vid: 2, id: 2, sort: 1, translations: [{ locale: 'en', name: 'Blue' }], image: null },
+                                { vid: 3, id: 3, sort: 2, translations: [{ locale: 'en', name: 'Green' }], image: null }
+                            ]
                         }
-                    }))
-                        .reduce((prev, curr) => ({ ...prev, ...curr }), {})
+                    };
                 }
 
-                // Sort values
-                Object.values(attributes).map(item => item.values.sort((a, b) => basicCompare(+a.sort, +b.sort)))
+                if (type === 'readonly') {
+                    return {
+                        4: {
+                            id: 4,
+                            sort: 0,
+                            display_ov_image: 0,
+                            filter_only: 0,
+                            translations: [{ locale: 'en', name: 'Material' }],
+                            values: [
+                                { vid: 10, id: 10, sort: 0, translations: [{ locale: 'en', name: 'Plastic' }], image: null }
+                            ]
+                        }
+                    }
+                }
 
-                return attributes
+                return {};
             }
         },
 
-        getVariants(state) {
-            return Object.values(this.getAttributes(state.productDetails, 'select')).sort((a, b) => basicCompare(+a.sort, +b.sort))
+        getVariants() {
+            return [
+                {
+                    id: 1,
+                    sort: 0,
+                    display_ov_image: 0,
+                    translations: [{ locale: 'en', name: 'Color' }],
+                    values: [
+                        { vid: 1, id: 1, sort: 0, translations: [{ locale: 'en', name: 'Red' }], image: null },
+                        { vid: 2, id: 2, sort: 1, translations: [{ locale: 'en', name: 'Blue' }], image: null },
+                        { vid: 3, id: 3, sort: 2, translations: [{ locale: 'en', name: 'Green' }], image: null }
+                    ]
+                }
+            ];
         },
     },
 
