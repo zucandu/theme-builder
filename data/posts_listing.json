@@ -1,4 +1,7 @@
 {
+    "object": {
+        "name": "Admin"
+    },
     "paginator": {
         "current_page": 1,
         "data": [
