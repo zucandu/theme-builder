@@ -218,7 +218,24 @@ export const useProductStore = defineStore('product', {
         },
 
         async fetchProductsByIds() {
-
+            return [
+                {
+                    "id": 43,
+                    "type": "simple",
+                    "sku": "Model2Green",
+                    "price": "292.0000",
+                    "sale_price": null,
+                    "status": 1,
+                    "images": [{ "src": "38.jpg" }],
+                    "translations": [
+                        {
+                            "locale": "en",
+                            "name": "Water Kettle SWK 1000OE Green",
+                            "slug": "water-kettle-swk-1000oe-green"
+                        }
+                    ]
+                }
+            ];
         },
 
         /**

@@ -157,7 +157,7 @@ export const useSettingsStore = defineStore('settings', {
          * Fetches countries
          */
         async fetchCountries() {
-            this.setCountries(countriesData.countries);
+            this.countries = countriesData.countries;
         },
 
     },
