@@ -66,7 +66,7 @@ export const useProductStore = defineStore('product', {
                         "price": "292.0000",
                         "quantity": 999,
                         "status": 1,
-                        "images": [{ "src": "38-1.jpg" }],
+                        "images": [{ "src": "38.jpg" }],
                         "translations": [
                             {
                                 "locale": "en",
@@ -110,7 +110,7 @@ export const useProductStore = defineStore('product', {
                         "price": "292.0000",
                         "quantity": 999,
                         "status": 1,
-                        "images": [{ "src": "38.jpg" }],
+                        "images": [{ "src": "38-1.jpg" }],
                         "translations": [
                             {
                                 "locale": "en",

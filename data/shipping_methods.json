@@ -1,0 +1,23 @@
+{
+    "shipping_methods": [
+        {
+            "code": "USPS",
+            "name": "USPS",
+            "description": "USPS",
+            "methods": [
+                {
+                    "id": "1",
+                    "title": "USPS Ground Advantage",
+                    "cost": 5.83,
+                    "icon": ""
+                },
+                {
+                    "id": "2",
+                    "title": "USPS Priority Mail",
+                    "cost": 9.63,
+                    "icon": ""
+                }
+            ]
+        }
+    ]
+}
