@@ -1,9 +1,4 @@
 import { defineStore } from 'pinia';
-import { useAuthCustomerStore } from '@/stores/auth/customer';
-import { useSettingsStore } from '@/stores/settings'
-import { useHelpers } from '@/composables/useHelpers.js';
-const { basicCompare } = useHelpers();
-
 
 export const useProductStore = defineStore('product', {
     state: () => ({
@@ -14,44 +9,29 @@ export const useProductStore = defineStore('product', {
 
         // taxRate: Retrieves the current customer's tax rate from the authentication store. Returns 0 if no tax rate is found.
         taxRate() {
-            const authCustomerStore = useAuthCustomerStore();
-            const customerTax = authCustomerStore.customerTax;
-            return customerTax ? customerTax.rate : 0;
+            return 0;
         },
 
         // calculateTaxAmount: Calculates the tax amount by multiplying the price by the tax rate.
         calculateTaxAmount() {
-            return (price, tax) => +price * +tax;
+            return (price, tax) => 0;
         },
 
         // basePriceWithTax: Adds the tax amount to the base price if the product configuration allows for including tax in the price.
         basePriceWithTax() {
-            return (price, taxAmount) => zucConfig.product_price_with_tax === 'y' ? +price + +taxAmount : price;
+            return (price, taxAmount) => price;
         },
 
         // finalizeProductPrice: Calculates the retail, sale, and final product price, including tax if applicable, based on product data.
         finalizeProductPrice() {
             return (product) => {
-
-                /* let finalPrice = product.price
-
-                // If product has special price
-                if(product.sale_price > 0) {
-                    finalPrice = product.sale_price
-                } */
-
                 let finalPrice = +product.sale_price > 0 ? +product.sale_price : +product.price;
 
-                let finalTaxRateAmount = 0
-                if (+product.tax_class_id === 1) {
-                    finalTaxRateAmount = +this.taxRate > 0 ? this.calculateTaxAmount(finalPrice, this.taxRate) : 0
-                }
-
                 return {
-                    retail: this.basePriceWithTax(product.price, finalTaxRateAmount),
-                    sale: +product.sale_price > 0 ? this.basePriceWithTax(product.sale_price, finalTaxRateAmount) : 0,
-                    final: this.basePriceWithTax(finalPrice, finalTaxRateAmount),
-                    tax: finalTaxRateAmount
+                    retail: this.basePriceWithTax(product.price, 0),
+                    sale: +product.sale_price > 0 ? this.basePriceWithTax(product.sale_price, 0) : 0,
+                    final: this.basePriceWithTax(finalPrice, 0),
+                    tax: 0
                 }
 
             }
@@ -60,13 +40,9 @@ export const useProductStore = defineStore('product', {
         // priceFormat: Formats the price based on the currency exchange rate and decimal digits, ensuring correct rounding.
         priceFormat() {
             return (price) => {
-                const currencyObj = useSettingsStore().selectedCurrencyObject;
-                if (currencyObj) {
-                    const digits = currencyObj.decimal_digits ?? 2;
-                    const multiplier = Math.pow(10, digits);
-                    return Math.round((currencyObj.rate * price) * multiplier + Number.EPSILON) / multiplier || 0;
-                }
-                return 0;
+                const digits = 2;
+                const multiplier = Math.pow(10, digits);
+                return Math.round(price * multiplier + Number.EPSILON) / multiplier || 0;
             }
         },
 
