@@ -80,7 +80,7 @@ const isOpen = ref(false);
 					<tbody>
 						<tr v-for="item in items" :key="item.id" class="border-b">
 							<td class="p-2 align-top w-24 h-24">
-								<img v-if="item.images && item.images.length > 0" :src="`/storage/${zucConfig.medium_image_size}/${item.images[0].src}`" alt="product" class="rounded-md border">
+								<img v-if="item.images && item.images.length > 0" :src="`/storage/${item.images[0].src}`" alt="product" class="rounded-md border">
 							</td>
 							<td class="p-2 align-top">
 								<div v-html="translateItemField(item, 'name', $i18n.locale)"></div>
