@@ -1,6 +1,6 @@
 <style>@import "dropzone/dist/dropzone.css";</style>
 <script setup>
-import { ref, onMounted, defineProps } from 'vue';
+import { ref, onMounted } from 'vue';
 import Dropzone from 'dropzone';
 import { useI18n } from 'vue-i18n';
 import { useToast } from 'vue-toastification';

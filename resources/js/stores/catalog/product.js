@@ -78,17 +78,76 @@ export const useProductStore = defineStore('product', {
          * @return {object}
          */
         childProduct: () => (product, selectedAtt) => {
-            if (product.children?.length > 0 && selectedAtt && Object.keys(selectedAtt).length > 0) {
-                const match = product.children.find(child =>
-                    Object.entries(selectedAtt).every(([oid, vid]) =>
-                        child.attributes.some(attr =>
-                            +attr.attribute_option_id === +oid &&
-                            +attr.attribute_option_value_id === +vid
-                        )
-                    )
-                );
-                return match || { ...product, quantity: 0, status: 0 };
+            if (selectedAtt && selectedAtt[1]) {
+                const colorId = +selectedAtt[1];
+
+                // Red
+                if (colorId === 1) {
+                    return {
+                        "id": 41,
+                        "type": "simple",
+                        "sku": "Model2Red",
+                        "price": "292.0000",
+                        "quantity": 999,
+                        "status": 1,
+                        "images": [{ "src": "38-1.jpg" }],
+                        "translations": [
+                            {
+                                "locale": "en",
+                                "name": "Water Kettle SWK 1000OE Red",
+                                "meta_title": "Water Kettle SWK 1000OE Red",
+                                "meta_description": "Water Kettle SWK 1000OE Red Description",
+                                "description": "<p>Detailed description for <strong>Water Kettle SWK 1000OE Red</strong>. It features a vibrant red finish...</p>"
+                            }
+                        ]
+                    };
+                }
+
+                // Blue
+                if (colorId === 2) {
+                    return {
+                        "id": 42,
+                        "type": "simple",
+                        "sku": "Model2Blue",
+                        "price": "292.0000",
+                        "quantity": 0, // Out of stock
+                        "status": 1,
+                        "images": [{ "src": "38-2.jpg" }],
+                        "translations": [
+                            {
+                                "locale": "en",
+                                "name": "Water Kettle SWK 1000OE Blue",
+                                "meta_title": "Water Kettle SWK 1000OE Blue",
+                                "meta_description": "Water Kettle SWK 1000OE Blue Description",
+                                "description": "<p>Detailed description for <strong>Water Kettle SWK 1000OE Blue</strong>. It comes in a cool blue shade...</p>"
+                            }
+                        ]
+                    };
+                }
+
+                // Green
+                if (colorId === 3) {
+                    return {
+                        "id": 43,
+                        "type": "simple",
+                        "sku": "Model2Green",
+                        "price": "292.0000",
+                        "quantity": 999,
+                        "status": 1,
+                        "images": [{ "src": "38.jpg" }],
+                        "translations": [
+                            {
+                                "locale": "en",
+                                "name": "Water Kettle SWK 1000OE Green",
+                                "meta_title": "Water Kettle SWK 1000OE Green",
+                                "meta_description": "Water Kettle SWK 1000OE Green Description",
+                                "description": "<p>Detailed description for <strong>Water Kettle SWK 1000OE Green</strong>. Eco-friendly green design...</p>"
+                            }
+                        ]
+                    };
+                }
             }
+            return { ...product, quantity: 0, status: 0 };
         },
 
         getAttributes() {

@@ -1,7 +1,7 @@
 <script setup>
 import CheckoutForm from '@theme/storefront/components/checkout/Form.vue'
 import AddressAutocomplete from '@theme/storefront/components/checkout/AddressAutocomplete.vue'
-import { ref, onMounted, computed, defineProps, watch } from 'vue';
+import { ref, onMounted, computed, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useToast } from 'vue-toastification';
 import { useSettingsStore } from '@/stores/settings';

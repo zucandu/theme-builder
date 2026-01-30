@@ -1,5 +1,5 @@
 <script setup>
-import { defineProps } from 'vue';
+
 import { useHelpers } from '@/composables/useHelpers';
 
 const { translateItemField } = useHelpers();
