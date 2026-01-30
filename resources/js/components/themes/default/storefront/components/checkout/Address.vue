@@ -1,6 +1,5 @@
 <script setup>
 import CheckoutForm from '@theme/storefront/components/checkout/Form.vue'
-import AddressAutocomplete from '@theme/storefront/components/checkout/AddressAutocomplete.vue'
 import { ref, onMounted, computed, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useToast } from 'vue-toastification';
@@ -59,7 +58,6 @@ onMounted(async () => {
     if(props.params) {
         Object.keys(props.params).map(k => formdata.value[k] = props.params[k])
         editAddressType.value = formdata.value.edit_address_type;
-		enterAddressManually.value = true;
     }
 
     // Set default country when empty
@@ -85,8 +83,6 @@ onMounted(async () => {
 });
 
 const editAddress = (address) => {
-	
-	enterAddressManually.value = true;
 	
     // Uncheck the new address checkbox
     if(isNewAddress.value)  isNewAddress.value = false
@@ -174,8 +170,6 @@ watch(
     () => isNewAddress.value,
     (v) => {
         if (v) {
-			enterAddressManually.value = false;
-			
             Object.keys(formdata.value).map(k => formdata.value[k] = undefined)
             if(!formdata.value.country_id) {
                 formdata.value.country_id = settingsStore.countries.find(country => country.id > 0).id;
@@ -183,48 +177,6 @@ watch(
         }
     }
 );
-
-const enterAddressManually = ref(false);
-const radarQuery = ref('');
-const onAddressSelected = (a) => {
-	
-	enterAddressManually.value = true;
-	
-    formdata.value.address_line_1 = a.address_line_1 || formdata.value.address_line_1;
-    formdata.value.city = a.city || formdata.value.city;
-    formdata.value.postcode = a.postalCode || formdata.value.postcode;
-
-    // Map country
-    if (a.countryCode) {
-        const matchCountry = settingsStore.countries.find(
-            c => (c.iso_code_2 || '').toUpperCase() === a.countryCode.toUpperCase()
-        );
-        if (matchCountry) {
-            formdata.value.country_id = matchCountry.id;
-        }
-    }
-
-    // Map zone state
-    const country = settingsStore.getCountryById(formdata.value.country_id);
-    if (country && Array.isArray(country.zones) && country.zones.length > 0) {
-        const stCode = (a.stateCode || '').toUpperCase();
-        const stName = (a.state || '').toUpperCase();
-
-        const zByCode = country.zones.find(z => (z.code || '').toUpperCase() === stCode);
-        const zByName = zByCode || country.zones.find(z => (z.name || '').toUpperCase() === stName);
-        if (zByName) {
-            formdata.value.zone_id = zByName.id;
-            formdata.value.zone_name = undefined;
-        } else {
-            formdata.value.zone_id = undefined;
-            formdata.value.zone_name = a.state || a.stateCode || '';
-        }
-    } else {
-        formdata.value.zone_id = undefined;
-        formdata.value.zone_name = a.state || a.stateCode || '';
-    }
-	
-};
 
 </script>
 
@@ -315,116 +267,106 @@ const onAddressSelected = (a) => {
 						</div>
                     </div>
 					
-					<div v-if="!enterAddressManually" class="md:col-span-7">
-						<AddressAutocomplete v-model="radarQuery" @selected="onAddressSelected" />
-					</div>
-		
-					<div v-if="!enterAddressManually" class="md:col-span-7">
-						<button @click.prevent="enterAddressManually = true" class="text-gray-900 underline cursor-pointer hover:text-gray-700">{{ $t('Enter address manually') }}</button>
-					</div>
-					
-					<template v-if="enterAddressManually">
-						<!-- Address Line 1 -->
-						<div class="md:col-span-3">
-							<div class="w-full">
-								<div class="relative">
-									<input v-model="formdata.address_line_1" id="address-line-1" type="text" :placeholder="$t('Street address')" class="peer block w-full rounded-md border border-gray-300 bg-white px-3 pt-5 pb-2 text-sm text-gray-900 outline-none focus:border-black focus:ring-3 focus:ring-black/30 placeholder-transparent dark:bg-gray-900 dark:border-gray-700 dark:text-gray-100" required />
+					<!-- Address Line 1 -->
+                    <div class="md:col-span-3">
+                        <div class="w-full">
+                            <div class="relative">
+                                <input v-model="formdata.address_line_1" id="address-line-1" type="text" :placeholder="$t('Street address')" class="peer block w-full rounded-md border border-gray-300 bg-white px-3 pt-5 pb-2 text-sm text-gray-900 outline-none focus:border-black focus:ring-3 focus:ring-black/30 placeholder-transparent dark:bg-gray-900 dark:border-gray-700 dark:text-gray-100" required />
 
-									<label for="address-line-1" class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm transition-all duration-150 ease-out peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-gray-400 peer-placeholder-shown:text-sm peer-focus:top-[13px] peer-focus:text-xs peer-focus:text-gray-700 peer-[&:not(:placeholder-shown)]:top-[13px] peer-[&:not(:placeholder-shown)]:text-xs">
-										{{ $t('Street address') }}
-									</label>
-								</div>
-							</div>
-						</div>
+                                <label for="address-line-1" class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm transition-all duration-150 ease-out peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-gray-400 peer-placeholder-shown:text-sm peer-focus:top-[13px] peer-focus:text-xs peer-focus:text-gray-700 peer-[&:not(:placeholder-shown)]:top-[13px] peer-[&:not(:placeholder-shown)]:text-xs">
+                                    {{ $t('Street address') }}
+                                </label>
+                            </div>
+                        </div>
+                    </div>
 
-						<!-- Address Line 2 -->
-						<div class="md:col-span-2">
-							<div class="w-full">
-								<div class="relative">
-									<input v-model="formdata.address_line_2" id="address-line-2" type="text" :placeholder="$t('Apt/Suite')" class="peer block w-full rounded-md border border-gray-300 bg-white px-3 pt-5 pb-2 text-sm text-gray-900 outline-none focus:border-black focus:ring-3 focus:ring-black/30 placeholder-transparent dark:bg-gray-900 dark:border-gray-700 dark:text-gray-100" />
+                    <!-- Address Line 2 -->
+                    <div class="md:col-span-2">
+                        <div class="w-full">
+                            <div class="relative">
+                                <input v-model="formdata.address_line_2" id="address-line-2" type="text" :placeholder="$t('Apt/Suite')" class="peer block w-full rounded-md border border-gray-300 bg-white px-3 pt-5 pb-2 text-sm text-gray-900 outline-none focus:border-black focus:ring-3 focus:ring-black/30 placeholder-transparent dark:bg-gray-900 dark:border-gray-700 dark:text-gray-100" />
 
-									<label for="address-line-2" class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm transition-all duration-150 ease-out peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-gray-400 peer-placeholder-shown:text-sm peer-focus:top-[13px] peer-focus:text-xs peer-focus:text-gray-700 peer-[&:not(:placeholder-shown)]:top-[13px] peer-[&:not(:placeholder-shown)]:text-xs">
-										{{ $t('Apt/Suite') }} <span class="text-gray-400">(optional)</span>
-									</label>
-								</div>
-							</div>
-						</div>
+                                <label for="address-line-2" class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm transition-all duration-150 ease-out peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-gray-400 peer-placeholder-shown:text-sm peer-focus:top-[13px] peer-focus:text-xs peer-focus:text-gray-700 peer-[&:not(:placeholder-shown)]:top-[13px] peer-[&:not(:placeholder-shown)]:text-xs">
+                                    {{ $t('Apt/Suite') }} <span class="text-gray-400">(optional)</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
 
-						<!-- City -->
-						<div class="md:col-span-2">
-							<div class="w-full">
-								<div class="relative">
-									<input v-model="formdata.city" id="city" type="text" :placeholder="$t('City')" class="peer block w-full rounded-md border border-gray-300 bg-white px-3 pt-5 pb-2 text-sm text-gray-900 outline-none focus:border-black focus:ring-3 focus:ring-black/30 placeholder-transparent dark:bg-gray-900 dark:border-gray-700 dark:text-gray-100" required />
+                    <!-- City -->
+                    <div class="md:col-span-2">
+                        <div class="w-full">
+                            <div class="relative">
+                                <input v-model="formdata.city" id="city" type="text" :placeholder="$t('City')" class="peer block w-full rounded-md border border-gray-300 bg-white px-3 pt-5 pb-2 text-sm text-gray-900 outline-none focus:border-black focus:ring-3 focus:ring-black/30 placeholder-transparent dark:bg-gray-900 dark:border-gray-700 dark:text-gray-100" required />
 
-									<label for="city" class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm transition-all duration-150 ease-out peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-gray-400 peer-placeholder-shown:text-sm peer-focus:top-[13px] peer-focus:text-xs peer-focus:text-gray-700 peer-[&:not(:placeholder-shown)]:top-[13px] peer-[&:not(:placeholder-shown)]:text-xs">
-										{{ $t('City') }}
-									</label>
-								</div>
-							</div>
-						</div>
+                                <label for="city" class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm transition-all duration-150 ease-out peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-gray-400 peer-placeholder-shown:text-sm peer-focus:top-[13px] peer-focus:text-xs peer-focus:text-gray-700 peer-[&:not(:placeholder-shown)]:top-[13px] peer-[&:not(:placeholder-shown)]:text-xs">
+                                    {{ $t('City') }}
+                                </label>
+                            </div>
+                        </div>
+                    </div>
 
-						<!-- Country -->
-						<div class="md:col-span-2">
-							<div v-if="loadedCountry" class="w-full">
-								<div class="relative">
-									<select v-model="formdata.country_id" id="country" class="peer block w-full appearance-none rounded-md border border-gray-300 bg-white px-3 pt-5 pb-2 text-sm text-gray-900 outline-none focus:border-black focus:ring-3 focus:ring-black/30 dark:bg-gray-900 dark:border-gray-700 dark:text-gray-100 select-bg" required>
-										<option v-for="(country, index) in settingsStore.countries" :key="index" :value="country.id">
-											{{ country.name }}
-										</option>
-									</select>
-									
-									<label for="country" class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm transition-all duration-150 ease-out peer-focus:top-[13px] peer-focus:text-xs peer-focus:text-gray-700 peer-[&:not([value=''])]:top-[13px] peer-[&:not([value=''])]:text-xs peer-[&:not([value=''])]:text-gray-700">
-										{{ $t('Country') }}
-									</label>
-								</div>
-							</div>
-							<div v-else class="h-12 w-full rounded-lg bg-gray-100 dark:bg-gray-800"></div>
-						</div>
+                    <!-- Country -->
+                    <div class="md:col-span-2">
+                        <div v-if="loadedCountry" class="w-full">
+                            <div class="relative">
+                                <select v-model="formdata.country_id" id="country" class="peer block w-full appearance-none rounded-md border border-gray-300 bg-white px-3 pt-5 pb-2 text-sm text-gray-900 outline-none focus:border-black focus:ring-3 focus:ring-black/30 dark:bg-gray-900 dark:border-gray-700 dark:text-gray-100 select-bg" required>
+                                    <option v-for="(country, index) in settingsStore.countries" :key="index" :value="country.id">
+                                        {{ country.name }}
+                                    </option>
+                                </select>
+                                
+                                <label for="country" class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm transition-all duration-150 ease-out peer-focus:top-[13px] peer-focus:text-xs peer-focus:text-gray-700 peer-[&:not([value=''])]:top-[13px] peer-[&:not([value=''])]:text-xs peer-[&:not([value=''])]:text-gray-700">
+                                    {{ $t('Country') }}
+                                </label>
+                            </div>
+                        </div>
+                        <div v-else class="h-12 w-full rounded-lg bg-gray-100 dark:bg-gray-800"></div>
+                    </div>
 
-						<!-- Region -->
-						<div class="md:col-span-3">
-							<template v-if="loadedCountry">
-								<div v-if="regions.length > 0" class="w-full">
-									<div class="w-full">
-										<div class="relative">
-											<select v-model="formdata.zone_id" id="zone-id" required class="peer block w-full appearance-none rounded-md border border-gray-300 bg-white px-3 pt-5 pb-2 text-sm text-gray-900 outline-none focus:border-black focus:ring-3 focus:ring-black/30 dark:bg-gray-900 dark:border-gray-700 dark:text-gray-100 select-bg">
-												<option v-for="(region, index) in regions" :key="index" :value="region.id">
-													{{ region.name }}
-												</option>
-											</select>
-											
-											<label for="zone-id" class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm transition-all duration-150 ease-out peer-focus:top-[13px] peer-focus:text-xs peer-focus:text-gray-700 peer-[&:not([value=''])]:top-[13px] peer-[&:not([value=''])]:text-xs peer-[&:not([value=''])]:text-gray-700">
-												{{ $t('Region') }}
-											</label>
-										</div>
-									</div>
-								</div>
-								<div v-else class="w-full">
-									<div class="relative">
-										<input v-model="formdata.zone_name" id="zone-name" type="text" :placeholder="$t('Region')" class="peer block w-full rounded-md border border-gray-300 bg-white px-3 pt-5 pb-2 text-sm text-gray-900 outline-none focus:border-black focus:ring-3 focus:ring-black/30 placeholder-transparent dark:bg-gray-900 dark:border-gray-700 dark:text-gray-100" required />
+                    <!-- Region -->
+                    <div class="md:col-span-3">
+                        <template v-if="loadedCountry">
+                            <div v-if="regions.length > 0" class="w-full">
+                                <div class="w-full">
+                                    <div class="relative">
+                                        <select v-model="formdata.zone_id" id="zone-id" required class="peer block w-full appearance-none rounded-md border border-gray-300 bg-white px-3 pt-5 pb-2 text-sm text-gray-900 outline-none focus:border-black focus:ring-3 focus:ring-black/30 dark:bg-gray-900 dark:border-gray-700 dark:text-gray-100 select-bg">
+                                            <option v-for="(region, index) in regions" :key="index" :value="region.id">
+                                                {{ region.name }}
+                                            </option>
+                                        </select>
+                                        
+                                        <label for="zone-id" class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm transition-all duration-150 ease-out peer-focus:top-[13px] peer-focus:text-xs peer-focus:text-gray-700 peer-[&:not([value=''])]:top-[13px] peer-[&:not([value=''])]:text-xs peer-[&:not([value=''])]:text-gray-700">
+                                            {{ $t('Region') }}
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div v-else class="w-full">
+                                <div class="relative">
+                                    <input v-model="formdata.zone_name" id="zone-name" type="text" :placeholder="$t('Region')" class="peer block w-full rounded-md border border-gray-300 bg-white px-3 pt-5 pb-2 text-sm text-gray-900 outline-none focus:border-black focus:ring-3 focus:ring-black/30 placeholder-transparent dark:bg-gray-900 dark:border-gray-700 dark:text-gray-100" required />
 
-										<label for="zone-name" class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm transition-all duration-150 ease-out peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-gray-400 peer-placeholder-shown:text-sm peer-focus:top-[13px] peer-focus:text-xs peer-focus:text-gray-700 peer-[&:not(:placeholder-shown)]:top-[13px] peer-[&:not(:placeholder-shown)]:text-xs">
-											{{ $t('Region') }}
-										</label>
-									</div>
-								</div>
-							</template>
-							<div v-else class="h-12 w-full rounded-lg bg-gray-100 dark:bg-gray-800"></div>
-						</div>
+                                    <label for="zone-name" class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm transition-all duration-150 ease-out peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-gray-400 peer-placeholder-shown:text-sm peer-focus:top-[13px] peer-focus:text-xs peer-focus:text-gray-700 peer-[&:not(:placeholder-shown)]:top-[13px] peer-[&:not(:placeholder-shown)]:text-xs">
+                                        {{ $t('Region') }}
+                                    </label>
+                                </div>
+                            </div>
+                        </template>
+                        <div v-else class="h-12 w-full rounded-lg bg-gray-100 dark:bg-gray-800"></div>
+                    </div>
 
-						<!-- Postcode -->
-						<div class="md:col-span-2">
-							<div class="w-full">
-								<div class="relative">
-									<input v-model="formdata.postcode" id="postcode" type="text" :placeholder="$t('Zip/Postcode')" class="peer block w-full rounded-md border border-gray-300 bg-white px-3 pt-5 pb-2 text-sm text-gray-900 outline-none focus:border-black focus:ring-3 focus:ring-black/30 placeholder-transparent dark:bg-gray-900 dark:border-gray-700 dark:text-gray-100" required />
+                    <!-- Postcode -->
+                    <div class="md:col-span-2">
+                        <div class="w-full">
+                            <div class="relative">
+                                <input v-model="formdata.postcode" id="postcode" type="text" :placeholder="$t('Zip/Postcode')" class="peer block w-full rounded-md border border-gray-300 bg-white px-3 pt-5 pb-2 text-sm text-gray-900 outline-none focus:border-black focus:ring-3 focus:ring-black/30 placeholder-transparent dark:bg-gray-900 dark:border-gray-700 dark:text-gray-100" required />
 
-									<label for="postcode" class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm transition-all duration-150 ease-out peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-gray-400 peer-placeholder-shown:text-sm peer-focus:top-[13px] peer-focus:text-xs peer-focus:text-gray-700 peer-[&:not(:placeholder-shown)]:top-[13px] peer-[&:not(:placeholder-shown)]:text-xs">
-										{{ $t('Zip/Postcode') }}
-									</label>
-								</div>
-							</div>
-						</div>
-					</template>
+                                <label for="postcode" class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm transition-all duration-150 ease-out peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-gray-400 peer-placeholder-shown:text-sm peer-focus:top-[13px] peer-focus:text-xs peer-focus:text-gray-700 peer-[&:not(:placeholder-shown)]:top-[13px] peer-[&:not(:placeholder-shown)]:text-xs">
+                                    {{ $t('Zip/Postcode') }}
+                                </label>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Checkboxes for Default Address -->

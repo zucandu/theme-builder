@@ -1,8 +1,6 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue';
 
-import AddressAutocomplete from '@theme/storefront/components/checkout/AddressAutocomplete.vue'
-
 import { useRoute } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 
@@ -127,47 +125,6 @@ const handleAddress = async () => {
     }
 }
 
-const radarQuery = ref('');
-const onAddressSelected = (a) => {
-	formdata.value.address_line_1 = a.address_line_1 || a.raw?.addressLabel || '';
-    formdata.value.address_line_2 = a.address_line_2 || a.raw?.dependentLocality || '';
-    formdata.value.city = a.city || '';
-    formdata.value.postcode = a.postalCode || '';
-
-    // Country
-    formdata.value.country_code = a.countryCode || undefined;
-
-    const country = settingsStore.getCountryByCode(a.countryCode);
-    if (country) {
-        formdata.value.country_id = country.id;
-        formdata.value.country_name = country.name;
-
-        // Zone / State
-        if (country.zones && country.zones.length > 0) {
-            // try match by code trước, không được thì match name
-            const zone =
-                country.zones.find(z => z.code === a.stateCode) ||
-                country.zones.find(z => z.name === a.state);
-
-            if (zone) {
-                formdata.value.zone_id = zone.id;
-                formdata.value.zone_code = zone.code;
-                formdata.value.zone_name = zone.name;
-            } else {
-                // Không match được zone thì clear
-                formdata.value.zone_id = undefined;
-                formdata.value.zone_code = undefined;
-                formdata.value.zone_name = undefined;
-            }
-        } else {
-            // Country không có zone
-            formdata.value.zone_id = undefined;
-            formdata.value.zone_code = undefined;
-            formdata.value.zone_name = undefined;
-        }
-    }
-}
-
 </script>
 <template>
     <div>
@@ -199,10 +156,6 @@ const onAddressSelected = (a) => {
 					</div>
                 </div>
 				
-				<div class="col-span-12">
-					<AddressAutocomplete v-model="radarQuery" @selected="onAddressSelected" />
-				</div>
-
                 <!-- Street address -->
                 <div class="col-span-12 md:col-span-7">
 					<div class="w-full">
