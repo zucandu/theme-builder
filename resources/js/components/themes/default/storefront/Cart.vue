@@ -93,72 +93,93 @@ onMounted(() => {
 </script>
 
 <template>
-	<div class="container mx-auto px-4">
+	<div class="container mx-auto px-4 py-8 max-w-7xl">
 		<template v-if="cartStore.numberOfItems > 0">
-			<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+			<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
 							
 				<!-- Left - Cart Items -->
-				<div class="lg:col-span-2">
-					<h2 class="text-2xl font-semibold mb-6">{{ $t('Shopping Cart') }}</h2>
+				<div class="lg:col-span-8">
+					<div class="flex items-center justify-between mb-6">
+						<h1 class="text-3xl font-bold text-gray-900">{{ $t('Shopping Cart') }}</h1>
+						<span class="text-gray-500">{{ cartStore.numberOfItems }} {{ $t('items') }}</span>
+					</div>
 					
-					<p v-if="!!cartStore.hasOutOfStock || !!cartStore.hasMaxQty" class="text-red-600">
-						{{ $t('Some items in your shopping cart currently do not have enough stock. Please make adjustments before continuing to checkout.') }}
-					</p>
+					<div v-if="!!cartStore.hasOutOfStock || !!cartStore.hasMaxQty" class="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg text-red-700 flex items-start">
+						<svg class="w-5 h-5 mr-3 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path></svg>
+						<div>
+							<p class="font-medium">{{ $t('Attention needed') }}</p>
+							<p class="text-sm mt-1">{{ $t('Some items in your shopping cart currently do not have enough stock. Please make adjustments before continuing to checkout.') }}</p>
+						</div>
+					</div>
 					
-					<div class="space-y-6">
+					<div class="space-y-4">
 					
 						<!-- Product Item -->
-						<div v-for="(item, index) in cartStore.items" :key="item.id" :class="`flex md:flex-col md:flex-row gap-4 ${index > 0 ? `border-t pt-6` : ``}`">
+						<div v-for="(item, index) in cartStore.items" :key="item.id" class="bg-white p-4 rounded-xl shadow-sm border border-gray-100 flex gap-6 transition-shadow hover:shadow-md">
 						
 							<!-- Image -->
-							<img :src="`${zucConfig.store_url}/storage/${item.images[0].src}`" :alt="translateItemField(item, 'name', $i18n.locale)" class="w-24 h-24 md:w-32 md:h-32 object-contain border p-2 rounded-lg" />
+							<div class="w-24 h-24 sm:w-32 sm:h-32 flex-shrink-0 bg-gray-50 rounded-lg p-2 border border-gray-100 overflow-hidden">
+								<img :src="`${zucConfig.store_url}/storage/${item.images[0].src}`" :alt="translateItemField(item, 'name', $i18n.locale)" class="w-full h-full object-contain mix-blend-multiply" />
+							</div>
 
 							<!-- Info -->
-							<div class="flex-1 space-y-2 text-sm">
-								<div class="flex justify-between items-start">
+							<div class="flex-1 flex flex-col justify-between">
+								<div class="flex justify-between items-start gap-4">
 									<div>
-										<p class="font-semibold text-base">
-											<LocalizedLink :to="`/product/${translateItemField(item, 'slug', $i18n.locale)}`" class="underline">
+										<h3 class="font-bold text-lg text-gray-900 leading-snug">
+											<LocalizedLink :to="`/product/${translateItemField(item, 'slug', $i18n.locale)}`" class="hover:text-blue-600 transition-colors">
 												{{ translateItemField(item, 'name', $i18n.locale) }} 
 											</LocalizedLink>
-											<span class="text-gray-400 ml-2">({{ item.sku }})</span>
-										</p>
-										<p class="text-gray-600 text-sm">
-											<div class="hidden md:block">
-												{{ $t('Unit Price:') }} 
-												<PriceConverter :product="item" :qty="1" />
-											</div>
-											<div class="block md:hidden">
-												<PriceConverter :product="item" :qty="item.qty" />
-											</div>
-										</p>
-										<p v-if="item.qty > item.inventory" class="text-sm text-red-600 !mb-1">{{ $t('Current inventory in stock:') }} {{ item.inventory }}</p>
-										<p v-if="item.max_qty > 0 && item.qty > item.max_qty" class="text-sm text-red-600 !mb-1">{{ $t('Max quantity:') }} {{ item.max_qty }}</p>
-										<p v-if="+item.meta?.is_oversized === 1" class="text-yellow-600">Oversized product, not available for free shipping</p>
+										</h3>
+										<p class="text-xs text-gray-500 mt-1 uppercase tracking-wide font-medium">SKU: {{ item.sku }}</p>
 										
+										<!-- Unit Price Mobile -->
+										<div class="block sm:hidden mt-2 font-semibold text-gray-900">
+											<PriceConverter :product="item" :qty="item.qty" />
+										</div>
+
+										<!-- Warnings -->
+										<div class="mt-2 text-sm space-y-1">
+											<p v-if="item.qty > item.inventory" class="text-red-600 font-medium flex items-center">
+												<svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+												{{ $t('Stock available:') }} {{ item.inventory }}
+											</p>
+											<p v-if="item.max_qty > 0 && item.qty > item.max_qty" class="text-red-600 font-medium">
+												{{ $t('Max limit:') }} {{ item.max_qty }}
+											</p>
+											<p v-if="+item.meta?.is_oversized === 1" class="text-amber-600 flex items-center">
+												<svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"></path></svg>
+												Oversized item
+											</p>
+										</div>
 									</div>
-									<div class="font-semibold text-right whitespace-nowrap hidden md:block">
-										<PriceConverter :product="item" :qty="item.qty" />
+
+									<!-- Unit Price Desktop -->
+									<div class="hidden sm:block text-right">
+										<div class="text-lg font-bold text-gray-900">
+											<PriceConverter :product="item" :qty="item.qty" />
+										</div>
+										<p class="text-xs text-gray-400 mt-1">{{ $t('each') }}</p>
 									</div>
 								</div>
 
-								<div class="flex items-center gap-4 mt-2">
+								<div class="flex items-center justify-between mt-4">
 									<!-- Quantity control -->
-									<div class="flex items-center border rounded px-2">
-										<button @click="decrementQty(item)" class="text-lg px-2 cursor-pointer">−</button>
-										<input @input="setProductQtyInput(item, $event.target.value)" :value="item.qty" type="text" class="w-12 text-center focus:outline-none" />
-										<button @click="incrementQty(item)" class="text-lg px-2 cursor-pointer">+</button>
-									</div>
-
-									<!-- Delete & Wishlist -->
-									<div class="flex gap-2">
-										<button @click.stop="removeProduct(item.id)" class="ml-3 p-1 text-xs font-medium cursor-pointer">
-											<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
-												<path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
-												<path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
-											</svg>
+									<div class="flex items-center bg-gray-50 rounded-lg border border-gray-200">
+										<button @click="decrementQty(item)" class="w-8 h-8 flex items-center justify-center text-gray-500 hover:text-gray-900 hover:bg-gray-200 rounded-l-lg transition-colors disabled:opacity-50" :disabled="item.qty <= 1">
+											<svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"></path></svg>
+										</button>
+										<input @input="setProductQtyInput(item, $event.target.value)" :value="item.qty" type="text" class="w-10 text-center bg-transparent text-sm font-semibold text-gray-900 focus:outline-none" />
+										<button @click="incrementQty(item)" class="w-8 h-8 flex items-center justify-center text-gray-500 hover:text-gray-900 hover:bg-gray-200 rounded-r-lg transition-colors">
+											<svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
 										</button>
 									</div>
+
+									<!-- Actions -->
+									<button @click.stop="removeProduct(item.id)" class="text-sm font-medium text-gray-400 hover:text-red-500 flex items-center transition-colors group px-2 py-1">
+										<svg class="w-4 h-4 mr-1.5 group-hover:stroke-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+										<span class="hidden sm:inline">{{ $t('Remove') }}</span>
+									</button>
 								</div>
 							</div>
 						</div>
@@ -166,61 +187,90 @@ onMounted(() => {
 				</div>
 
 				<!-- Right - Summary -->
-				<div class="cart-right">
-					<div class="border rounded-lg p-6 bg-gray-50">
-						<h2 class="text-xl font-semibold mb-4">Summary</h2>
-						<div class="flex justify-between mb-2 text-sm">
-							<span>Subtotal</span>
-							<PriceDisplay :price="cartStore.total" class="inline font-bold" />
-						</div>
-						<div class="flex justify-between items-start mb-4 text-sm">
-							<div>
-								<div class="text-gray-700">Estimated Delivery & Handling:</div>
-								<button @click="toggleShippingEstimator" class="text-blue-600 text-xs underline hover:text-blue-800 cursor-pointer">
-									{{ isShow ? $t('Hide details') : $t('Show details') }}
-								</button>
-								<div v-show="isShow">
-									<ShippingEstimator
-										:subtotal="+cartStore.total"
-										@update:shippingMethods="handleShippingMethods"
-										@loading="loadingShipping = $event"
-									/>
-								</div>
+				<div class="lg:col-span-4 lg:sticky lg:top-8">
+					<div class="bg-gray-50 rounded-2xl p-6 shadow-sm border border-gray-100">
+						<h2 class="text-xl font-bold text-gray-900 mb-6">{{ $t('Order Summary') }}</h2>
+						
+						<div class="space-y-4 text-sm text-gray-600">
+							<div class="flex justify-between">
+								<span>{{ $t('Subtotal') }}</span>
+								<PriceDisplay :price="cartStore.total" class="font-semibold text-gray-900" />
 							</div>
 							
-							<span class="font-medium text-green-600">
-								<svg v-if="loadingShipping" class="size-4 animate-spin text-blue-600 inline mr-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
-								<template v-if="shippingCost !== null && shippingCost !== undefined">
-									<template v-if="shippingCost > 0">
-										<PriceDisplay :price="shippingCost" class="inline font-bold" />
-									</template>
-									<template v-else>
-										{{ $t(`Free`) }}
-									</template>
-								</template>
-								<template v-else>
-									{{ $t(`N/A`) }}
-								</template>
-							</span>
+							<div class="pt-4 border-t border-gray-200">
+								<div class="flex justify-between items-center mb-2">
+									<span class="text-gray-900 font-medium">{{ $t('Shipping') }}</span>
+									<span v-if="loadingShipping" class="flex items-center text-blue-600 text-xs">
+										<svg class="animate-spin -ml-1 mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+										{{ $t('Calculating...') }}
+									</span>
+									<span v-else class="font-semibold text-gray-900">
+										<template v-if="shippingCost !== null && shippingCost !== undefined">
+											<PriceDisplay v-if="shippingCost > 0" :price="shippingCost" />
+											<span v-else class="text-green-600">{{ $t('Free') }}</span>
+										</template>
+										<span v-else class="text-gray-400 italic">{{ $t('Not calculated') }}</span>
+									</span>
+								</div>
+								
+								<!-- Shipping Estimator Toggle -->
+								<div class="bg-white rounded-lg border border-gray-200 overflow-hidden">
+									<button @click="toggleShippingEstimator" class="w-full flex justify-between items-center px-4 py-3 text-left text-xs font-medium text-gray-700 bg-gray-50 hover:bg-gray-100 transition-colors">
+										<span>{{ $t('Calculate Shipping') }}</span>
+										<svg :class="{'rotate-180': isShow}" class="w-4 h-4 transform transition-transform text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+									</button>
+									<div v-show="isShow" class="p-4 border-t border-gray-200">
+										<ShippingEstimator
+											:subtotal="+cartStore.total"
+											@update:shippingMethods="handleShippingMethods"
+											@loading="loadingShipping = $event"
+										/>
+									</div>
+								</div>
+							</div>
 						</div>
-						<div class="flex justify-between text-base font-semibold border-t pt-4">
-							<span>Total</span>
-							<PriceDisplay :price="totalWithShipping" class="inline font-bold" />
+
+						<div class="mt-6 pt-6 border-t border-dashed border-gray-300">
+							<div class="flex justify-between items-center text-lg font-bold text-gray-900">
+								<span>{{ $t('Total') }}</span>
+								<PriceDisplay :price="totalWithShipping" />
+							</div>
+							<p class="text-xs text-gray-500 mt-1 text-right">{{ $t('Tax included. Shipping calculated at checkout.') }}</p>
 						</div>
-						<div class="mt-6 space-y-3">
-							<LocalizedLink to="/checkout" class="w-full py-3 bg-black text-white rounded-full text-sm hover:bg-gray-800 transition shadow text-center block">{{ $t('Go to the checkout') }}</LocalizedLink>
+
+						<LocalizedLink to="/checkout" class="mt-8 w-full block bg-black text-white text-center font-bold py-4 rounded-full shadow-lg hover:bg-gray-800 hover:shadow-xl transform transition-all active:scale-95">
+							{{ $t('Proceed to Checkout') }}
+						</LocalizedLink>
+						
+						<div class="mt-4 flex justify-center space-x-2 text-gray-400">
+							<!-- Minimal trust badges/icons could go here -->
+							<svg class="h-6 w-auto grayscale opacity-50" viewBox="0 0 24 24" fill="currentColor"><!-- Placeholder for card icon --></svg>
 						</div>
 					</div>
 				</div>
 			</div>
 			
-			<div v-if="viewedProducts.length > 0" class="grid grid-cols-6 gap-4 mt-12">
-				<div class="text-xl font-bold col-span-6">{{ $t(`Recently viewed`) }}</div>
-				<div v-for="(item, index) in viewedProducts" :key="item.id" class="col-span-3 lg:col-span-1 rounded-lg p-4 items-center relative">
-					<ProductCard :product="item" :index="index" />
+			<!-- Recently Viewed -->
+			<div v-if="viewedProducts.length > 0" class="mt-16 pt-16 border-t border-gray-200">
+				<h2 class="text-2xl font-bold text-gray-900 mb-8">{{ $t('Recently viewed') }}</h2>
+				<div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
+					<div v-for="(item, index) in viewedProducts" :key="item.id" class="group">
+						<ProductCard :product="item" :index="index" />
+					</div>
 				</div>
 			</div>
 		</template>
-		<div v-else class="text-2xl text-center col-span-3 py-12">{{ $t('Your cart is empty!') }}</div>
+
+		<!-- Empty State -->
+		<div v-else class="min-h-[50vh] flex flex-col items-center justify-center text-center py-12">
+			<div class="w-24 h-24 bg-gray-50 rounded-full flex items-center justify-center mb-6">
+				<svg class="w-10 h-10 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+			</div>
+			<h2 class="text-2xl font-bold text-gray-900 mb-2">{{ $t('Your cart is empty') }}</h2>
+			<p class="text-gray-500 mb-8 max-w-sm">{{ $t('Looks like you haven\'t added any items to the cart yet.') }}</p>
+			<LocalizedLink to="/" class="px-8 py-3 bg-black text-white rounded-full font-medium hover:bg-gray-800 transition shadow-lg">
+				{{ $t('Start Shopping') }}
+			</LocalizedLink>
+		</div>
 	</div>
 </template>
