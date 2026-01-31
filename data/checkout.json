@@ -1,0 +1,24 @@
+{
+    "checkoutDraftId": "c362a23c-a590-490a-bb37-4b5cd3a2ab58",
+    "shippingModules": [
+        {
+            "code": "Flat",
+            "name": "Flat Rate",
+            "description": "",
+            "methods": [
+                {
+                    "id": "Flat",
+                    "title": "Flat Rate",
+                    "cost": 1.52
+                }
+            ]
+        }
+    ],
+    "paymentModules": [
+        {
+            "id": "MoneyOrder",
+            "module": "Check\/Money Order"
+        }
+    ],
+    "discountModules": []
+}
